@@ -3,14 +3,25 @@
     <svg v-if="icon" class="icon">
       <use :xlink:href="`#i-${icon}`"></use>
     </svg>
-    <slot></slot>
+    <div class="content">
+      <slot></slot>
+    </div>
   </button>
 </template>
 
 <script>
   export default {
     name: "g-button",
-    props: ['icon', 'iconPosition']
+    props: {
+      icon: {},
+      iconPosition: {
+        type: String,
+        default: 'left',
+        validator(value) {
+          return (value === 'left' || value === 'right')
+        }
+      }
+    }
   }
 </script>
 
@@ -24,9 +35,10 @@
     color: var(--color);
     border: 1px solid var(--border-color);
     cursor: pointer;
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
+    vertical-align: middle;
     &:hover {
       border-color: var(--border-color-hover);
     }
@@ -36,9 +48,22 @@
     &:focus {
       outline: none;
     }
+    &.icon-left {
+      .icon {
+        order: 1;
+        margin-right: .2em;
+      }
+      .content {
+        order: 2;
+      }
+    }
     &.icon-right {
       .icon {
         order: 2;
+        margin-left: .2em;
+      }
+      .content {
+        order: 1;
       }
     }
   }
