@@ -17,6 +17,17 @@
   },
   "homepage": "https://github.com/wpsumsun/guluer#readme",
   "dependencies": {
-    "vue": "^2.5.16"
+    "vue": "^2.5.17",
+    "vue-hot-reload-api": "^2.3.0",
+    "vue-loader": "^15.2.6",
+    "vue-template-compiler": "^2.5.17"
+  },
+  "devDependencies": {
+    "@vue/component-compiler-utils": "^2.0.0",
+    "node-sass": "^4.9.2",
+    "parcel-bundler": "^1.9.2"
+  },
+  "alias": {
+    "vue" : "./node_modules/vue/dist/vue.common.js"
   }
 }
