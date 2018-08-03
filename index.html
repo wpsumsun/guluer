@@ -15,7 +15,7 @@
       --button-active-bg: #eee;
       --border-color: #999;
       --color: #333;
-      --border-color-hover: #666;
+      --border-color-hover: red;
     }
 
     #app {
@@ -35,6 +35,15 @@
   <g-button icon="settings" icon-position="left" :loading="loading2" @click="loading2 = !loading2">
     按钮
   </g-button>
+  <g-button-group>
+    <g-button icon="left">
+      上一页
+    </g-button>
+    <g-button>更多</g-button>
+    <g-button icon="Right" icon-position="right">
+      下一页
+    </g-button>
+  </g-button-group>
   <g-icon name="settings"></g-icon>
 </div>
 <script src="./src/app.js"></script>
