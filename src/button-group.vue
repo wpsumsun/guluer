@@ -6,7 +6,14 @@
 
 <script>
   export default {
-    name: "button-group"
+    name: "button-group",
+	  mounted() {
+      for(let node of this.$el.children) {
+        if (node.nodeName.toLowerCase() !== 'button') {
+          console.warn('g-button-group 的子元素应为 g-button,否则会有样式问题')
+        }
+      }
+	  },
   }
 </script>
 
@@ -15,8 +22,10 @@
 	display: inline-flex;
 	vertical-align: middle;
 	.g-button {
+		&:not(:first-child) {
+			margin-left: -1px;
+		}
 		border-radius: 0;
-		margin-left: -1px;
 		&:first-child {
 			border-top-left-radius: var(--border-radius);
 			border-bottom-left-radius: var(--border-radius);
