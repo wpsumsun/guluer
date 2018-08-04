@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Button from './button'
 import Icon from './icon'
 import buttonGroup from './button-group'
-import chai from 'chai'
 
 Vue.component('g-button', Button)
 Vue.component('g-icon', Icon)
@@ -18,6 +17,10 @@ new Vue({
 })
 
 // 单元测试
+import chai from 'chai'
+import spies from 'chai-spies'
+chai.use(spies)
+
 const expect = chai.expect
 {
   const Constructor = Vue.extend(Button)
@@ -81,11 +84,11 @@ const expect = chai.expect
     }
   }).$mount(div)
 
-  vm.$on('click', function() { 
-    expect(1).to.equal(1)
-   })
+  let spy = chai.spy(function() {})
 
+  vm.$on('click', spy)
   vm.$el.click()
+  expect(spy).to.be.have.called()
 
   vm.$el.remove()
   vm.$destroy()
