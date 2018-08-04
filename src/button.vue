@@ -12,8 +12,12 @@
 </template>
 
 <script>
+  import gIcon from './icon.vue'
   export default {
     name: "g-button",
+    components: {
+      gIcon
+    },
     props: {
       icon: {},
       loading: {
