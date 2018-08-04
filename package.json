@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "vue ui",
   "main": "index.js",
+  "keywords": ["vue ui"],
   "scripts": {
     "dev-test": "parcel  watch test/* --no-cache & karma start",
     "test": "parcel build test/* --no-cache --no-minify && karma start --single-run"
