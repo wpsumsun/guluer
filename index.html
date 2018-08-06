@@ -21,32 +21,45 @@
     #app {
       margin: 20px;
     }
+	  .box {
+		  margin-bottom: 50px;
+	  }
 
   </style>
 </head>
 <body>
 <div id="app">
-  <g-button :loading="loading3" @click="loading3 = !loading3">
-    按钮
-  </g-button>
-  <g-button icon="settings" icon-position="right" :loading="loading1" @click="loading1 = !loading1">
-    按钮
-  </g-button>
-  <g-button icon="settings" icon-position="left" :loading="loading2" @click="loading2 = !loading2">
-    按钮
-  </g-button>
-  <g-button-group>
-    <div>
-      <g-button icon="left">
-        上一页
-    </div>
-    <g-button>更多</g-button>
-    <g-button icon="Right" icon-position="right">
-      下一页
-    </g-button>
-  </g-button-group>
-  <g-icon name="settings"></g-icon>
-  <div id="test"></div>
+
+	<div class="box">
+		<g-input value="123" disabled></g-input>
+		<g-input value="123" readonly></g-input>
+		<g-input value="123"></g-input>
+		<g-input value="123" error="抱朴子"></g-input>
+		<g-input value="123" tips="抱朴子"></g-input>
+	</div>
+
+  <div class="box">
+	  <g-button :loading="loading3" @click="loading3 = !loading3">
+		  按钮
+	  </g-button>
+	  <g-button icon="settings" icon-position="right" :loading="loading1" @click="loading1 = !loading1">
+		  按钮
+	  </g-button>
+	  <g-button icon="settings" icon-position="left" :loading="loading2" @click="loading2 = !loading2">
+		  按钮
+	  </g-button>
+	  <g-button-group>
+		  <div>
+			  <g-button icon="left">
+				  上一页
+		  </div>
+		  <g-button>更多</g-button>
+		  <g-button icon="Right" icon-position="right">
+			  下一页
+		  </g-button>
+	  </g-button-group>
+	  <g-icon name="settings"></g-icon>
+  </div>
 </div>
 <script src="./src/app.js"></script>
 <!--<script src="//at.alicdn.com/t/font_775269_l9sgl9t8ie.js"></script>-->
