@@ -11,7 +11,7 @@
     @blur="blurHandler">
 
   <template v-if="error">
-    <Icon name="warning" class="icon-warning"></Icon>
+    <Icon name="error" class="icon-warning"></Icon>
     <span class="errorMessage">{{ error }}</span>
   </template>
   <template v-if="tips">
@@ -49,16 +49,16 @@
     },
     methods: {
       changeHandler(e) {
-        this.$emit('change', 'hi')
+        this.$emit('change', e)
       },
       inputHandler(e) {
-        this.$emit('input', 'hi')
+        this.$emit('input', e)
       },
       focusHandler(e) {
-        this.$emit('focus',  'hi')
+        this.$emit('focus', e)
       },
       blurHandler(e) {
-        this.$emit('blur',  'hi')
+        this.$emit('blur', e)
       },
     },
   }
