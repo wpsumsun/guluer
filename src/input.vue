@@ -49,16 +49,16 @@
     },
     methods: {
       changeHandler(e) {
-        this.$emit('change', e)
+        this.$emit('change', e.target.value)
       },
       inputHandler(e) {
-        this.$emit('input', e)
+        this.$emit('input', e.target.value)
       },
       focusHandler(e) {
-        this.$emit('focus', e)
+        this.$emit('focus', e.target.value)
       },
       blurHandler(e) {
-        this.$emit('blur', e)
+        this.$emit('blur', e.target.value)
       },
     },
   }

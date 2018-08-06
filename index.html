@@ -35,7 +35,10 @@
 		<g-input value="123" readonly></g-input>
 		<g-input value="123"></g-input>
 		<g-input value="123" error="抱朴子"></g-input>
-		<g-input value="123" tips="抱朴子"></g-input>
+    <g-input value="123" tips="抱朴子"></g-input>
+    <g-input v-model="message"> </g-input>
+    <button @click="message+=2">add</button>
+    <p>{{ message }}</p>
 	</div>
 
   <div class="box">
