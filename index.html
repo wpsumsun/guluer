@@ -26,6 +26,13 @@
 	  }
 		.row {
 			margin-bottom: 20px;
+			height: 100px;
+		}
+		.row .col:nth-child(odd) {
+			background: rgba(0, 160, 233, 0.7);
+		}
+		.row .col:nth-child(even) {
+			background: #00a0e9;
 		}
 
   </style>
@@ -39,9 +46,9 @@
 			<g-col span="24" :ipad="{ span: 12}"  :narrow-pc="{ span: 8 }"></g-col>
 			<g-col span="24" :ipad="{ span: 12}"  :narrow-pc="{ span: 8 }"></g-col>
 			<g-col span="24" :ipad="{ span: 12}"  :narrow-pc="{ span: 8 }"></g-col>
-			<g-col span="24" :ipad="{ span: 12}"  :narrow-pc="{ span: 8 }"></g-col>
+			<g-col span="24" :ipad="{ span: 12}"  :narrow-pc="{ span: 8 }"></g-col> 
 		</g-row>
-		  <g-row gutter="20">
+		  <!-- <g-row gutter="20">
 			<g-col></g-col>
 			<g-col></g-col>
 			<g-col></g-col>
@@ -65,7 +72,7 @@
 			<g-col span="10" offset="3"></g-col>
 			<g-col span="5" offset="1"></g-col>
 			<g-col span="4"></g-col>
-		</g-row>  
+		</g-row>   -->
 	</div>
 	<div class="box">
 		<g-input value="123" disabled></g-input>

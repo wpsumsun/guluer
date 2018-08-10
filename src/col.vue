@@ -3,9 +3,7 @@
     class="col" 
     :class="colClass"
     :style="colStyle">
-    <div class="col-box">
-      <slot></slot>
-    </div>
+    <slot></slot>
   </div>
 </template>
 
@@ -49,14 +47,13 @@
     },
     computed: {
       colClass() {
-        const { span, offset, ipad, narrowPc, pc, widePc } = this
+        const { span, offset, ipad, narrowPc, pc, widePc, createClass } = this
         return [ 
-          span && [`col-${span}`],
-          offset&&[`offset-${offset}`],
-          ipad&&[`col-ipad-${ipad.span}`],
-          narrowPc&&[`col-narrowPc-${narrowPc.span}`],
-          pc&&[`col-pc-${pc.span}`],
-          widePc&&[`col-widePc-${widePc.span}`]
+          ...createClass({ span, offset }),
+          ...createClass(ipad, 'ipad-'),
+          ...createClass(narrowPc, 'narrowPc-'),
+          ...createClass(pc, 'pc-'),
+          ...createClass(widePc, 'widePc-'),
         ]
       },
       colStyle() {
@@ -72,22 +69,25 @@
         gutter: 0
       }
     },
+    methods: {
+      createClass(obj, str='') {
+        if (!obj) { return [] }
+        let array = []
+        if(obj.span) {
+          array.push(`col-${str}${obj.span}`)
+        }
+        if(obj.offset) {
+          array.push(`offset-${str}${obj.offset}`)
+        }
+        return array
+      }
+    },
   }
 </script>
 
 <style lang="scss" scoped>
   .col {
     width: 50%;
-    .col-box {
-      height: 100%;
-      width: 100%;
-    }
-    &:nth-child(odd) .col-box{
-      background: rgba(0, 160, 233, 0.7);
-    }
-    &:nth-child(even) .col-box{
-      background: #00a0e9;
-    }
 
     $classprefix: col-;
     @for $n from 1 through 24 {
