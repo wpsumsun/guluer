@@ -25,9 +25,7 @@
       },
       rowClass() {
         const { align } = this
-        return [
-          [`align-${align}`]
-        ]
+        return !!align ? [`align-${align}`] : []
       }
     },
     mounted() {
