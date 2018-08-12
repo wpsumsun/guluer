@@ -7,6 +7,10 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>轱辘儿</title>
   <style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
     html {
       --button-height: 32px;
       --font-size: 14px;
@@ -19,10 +23,10 @@
     }
 
     #app {
-      margin: 20px;
+      /* margin: 20px; */
     }
 	  .box {
-		  margin-bottom: 50px;
+		  /* margin-bottom: 50px; */
 	  }
 		.row {
 			margin-bottom: 20px;
@@ -34,20 +38,41 @@
 		.row .col:nth-child(even) {
 			background: #00a0e9;
 		}
-
+		.layout >div {
+			min-height: 100px;
+		}
+		.layout .sider {
+			background: #3db !important;
+		}
+		.layout >div:nth-child(odd) {
+			background: rgba(0, 160, 233, 0.7);
+		}
+		.layout >div:nth-child(even) {
+			background: #00a0e9;
+		}
   </style>
 </head>
 <body>
 <div id="app">
 	<div class="box">
-		<g-row>
+		 <g-layout style="height: 100vh">
+			 <g-sider>sider</g-sider>
+			<g-layout>
+				<g-header>header</g-header>
+				<g-content>content</g-content>
+				<g-footer>footer</g-footer>
+			</g-layout>
+		</g-layout>
+	</div>
+	<div class="box">
+		<!-- <g-row>
 			<g-col span="24" :ipad="{ span: 12}"  :narrow-pc="{ span: 8 }"></g-col>
 			<g-col span="24" :ipad="{ span: 12}"  :narrow-pc="{ span: 8 }"></g-col>
 			<g-col span="24" :ipad="{ span: 12}"  :narrow-pc="{ span: 8 }"></g-col>
 			<g-col span="24" :ipad="{ span: 12}"  :narrow-pc="{ span: 8 }"></g-col>
 			<g-col span="24" :ipad="{ span: 12}"  :narrow-pc="{ span: 8 }"></g-col>
 			<g-col span="24" :ipad="{ span: 12}"  :narrow-pc="{ span: 8 }"></g-col>   
-		</g-row>
+		</g-row> -->
 		  <!-- <g-row gutter="20">
 			<g-col></g-col>
 			<g-col></g-col>
@@ -74,7 +99,7 @@
 			<g-col span="4"></g-col>
 		</g-row>   -->
 	</div>
-	<div class="box">
+	<!-- <div class="box">
 		<g-input value="123" disabled></g-input>
 		<g-input value="123" readonly></g-input>
 		<g-input value="123"></g-input>
@@ -106,7 +131,7 @@
 		  </g-button>
 	  </g-button-group>
 	  <g-icon name="settings"></g-icon>
-  </div>
+  </div> -->
 </div>
 <script src="./src/app.js"></script>
 <!--<script src="//at.alicdn.com/t/font_775269_l9sgl9t8ie.js"></script>-->
