@@ -1,15 +1,45 @@
 <template>
-  <div class="sider">
-    <slot></slot>
-  </div>
+  <transition name="fade">
+    <div class="sider" v-show="isVisible">
+      <slot></slot>
+      <Icon name="close" class="close" @click="isVisible=false"></Icon>
+    </div>
+  </transition>
 </template>
 
 <script>
+  import Icon from './icon.vue'
   export default {
-    name: 'g-sider'
+    name: 'g-sider',
+    components: {
+      Icon,
+    },
+    data() {
+      return {
+        isVisible: true
+      }
+    },
+    methods: {
+    },
   }
 </script>
 
 <style lang="scss" scoped>
-  
+  .sider {
+    position: relative;
+    &>.close {
+      fill: #fff;
+      width: 16px;
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      cursor: pointer;
+    }
+  }
+  .fade-enter-active, .fade-leave-active {
+    transition: all .5s;
+  }
+  .fade-enter, .fade-leave-to {
+    margin-left: -200px;
+  }
 </style>

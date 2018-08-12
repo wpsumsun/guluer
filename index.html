@@ -43,6 +43,7 @@
 		}
 		.layout .sider {
 			background: #3db !important;
+			width: 200px;
 		}
 		.layout >div:nth-child(odd) {
 			background: rgba(0, 160, 233, 0.7);
@@ -50,13 +51,22 @@
 		.layout >div:nth-child(even) {
 			background: #00a0e9;
 		}
+		.layout .layout {
+			background: #fff !important;
+		}
+		.layout .header{
+			height: 100px;
+		}
+		.sider.fade-enter, .sider.fade-leave-to {
+			margin-left: -150px !important;
+		}
   </style>
 </head>
 <body>
 <div id="app">
 	<div class="box">
 		 <g-layout style="height: 100vh">
-			 <g-sider>sider</g-sider>
+			 <g-sider style="width: 150px;">sider</g-sider>
 			<g-layout>
 				<g-header>header</g-header>
 				<g-content>content</g-content>
