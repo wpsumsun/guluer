@@ -23,7 +23,7 @@
     }
 
     #app {
-      /* margin: 20px; */
+       margin: 20px; 
     }
 	  .box {
 		  /* margin-bottom: 50px; */
@@ -64,84 +64,7 @@
 </head>
 <body>
 <div id="app">
-	<div class="box">
-		 <g-layout style="height: 100vh">
-			 <g-sider style="width: 150px;">sider</g-sider>
-			<g-layout>
-				<g-header>header</g-header>
-				<g-content>content</g-content>
-				<g-footer>footer</g-footer>
-			</g-layout>
-		</g-layout>
-	</div>
-	<div class="box">
-		<!-- <g-row>
-			<g-col span="24" :ipad="{ span: 12}"  :narrow-pc="{ span: 8 }"></g-col>
-			<g-col span="24" :ipad="{ span: 12}"  :narrow-pc="{ span: 8 }"></g-col>
-			<g-col span="24" :ipad="{ span: 12}"  :narrow-pc="{ span: 8 }"></g-col>
-			<g-col span="24" :ipad="{ span: 12}"  :narrow-pc="{ span: 8 }"></g-col>
-			<g-col span="24" :ipad="{ span: 12}"  :narrow-pc="{ span: 8 }"></g-col>
-			<g-col span="24" :ipad="{ span: 12}"  :narrow-pc="{ span: 8 }"></g-col>   
-		</g-row> -->
-		  <!-- <g-row gutter="20">
-			<g-col></g-col>
-			<g-col></g-col>
-			<g-col></g-col>
-		</g-row>
-		<g-row gutter="20" align="right">
-			<g-col>1</g-col>
-			<g-col>2</g-col>
-			<g-col>3</g-col>
-			<g-col>4</g-col>
-		</g-row>
-		<g-row gutter="20">
-			<g-col span="2"></g-col>
-			<g-col span="20" offset="2"></g-col>
-		</g-row>
-		<g-row gutter="20">
-			<g-col span="2"></g-col>
-			<g-col span="22"></g-col>
-		</g-row>
-		<g-row gutter="20">
-			<g-col span="1"></g-col>
-			<g-col span="10" offset="3"></g-col>
-			<g-col span="5" offset="1"></g-col>
-			<g-col span="4"></g-col>
-		</g-row>   -->
-	</div>
-	<!-- <div class="box">
-		<g-input value="123" disabled></g-input>
-		<g-input value="123" readonly></g-input>
-		<g-input value="123"></g-input>
-		<g-input value="123" error="抱朴子"></g-input>
-    <g-input value="123" tips="抱朴子"></g-input>
-    <g-input v-model="message"> </g-input>
-    <button @click="message+=2">add</button>
-    <p>{{ message }}</p>
-	</div>
-
-  <div class="box">
-	  <g-button :loading="loading3" @click="loading3 = !loading3">
-		  按钮
-	  </g-button>
-	  <g-button icon="settings" icon-position="right" :loading="loading1" @click="loading1 = !loading1">
-		  按钮
-	  </g-button>
-	  <g-button icon="settings" icon-position="left" :loading="loading2" @click="loading2 = !loading2">
-		  按钮
-	  </g-button>
-	  <g-button-group>
-		  <div>
-			  <g-button icon="left">
-				  上一页
-		  </div>
-		  <g-button>更多</g-button>
-		  <g-button icon="Right" icon-position="right">
-			  下一页
-		  </g-button>
-	  </g-button-group>
-	  <g-icon name="settings"></g-icon>
-  </div> -->
+	<button @click="showToast">toast</button>
 </div>
 <script src="./src/app.js"></script>
 <!--<script src="//at.alicdn.com/t/font_775269_l9sgl9t8ie.js"></script>-->
