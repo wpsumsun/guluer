@@ -37,6 +37,14 @@ new Vue({
     message: '123fff',
   },
   created() {
+    this.$toast('toast', {
+      closeButton: {
+        text: '知道了',
+        callback(toast) {
+          console.log('知道了收拾收拾', toast)
+        }
+      }
+    })
   },
   methods: {
     showToast() {
