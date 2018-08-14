@@ -39,7 +39,7 @@ new Vue({
   created() {
     this.$toast('文字', {
       enableHtml: false,
-      duration: 10
+      duration: 10,
     })
   },
   methods: {
