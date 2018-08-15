@@ -37,14 +37,10 @@ new Vue({
     message: '123fff',
   },
   created() {
-    this.$toast('文字', {
-      enableHtml: false,
-      duration: 10,
-    })
   },
   methods: {
     showToast() {
-      this.$toast('toast')
+      this.$toast(`假猪套天下第一${parseInt(Math.random() * 10 + 1)}`)
     }
   },
 })
