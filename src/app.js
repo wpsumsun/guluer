@@ -39,10 +39,19 @@ new Vue({
   created() {
   },
   methods: {
-    showToast() {
+    showToast1() {
+      this.showToast('top')
+    },
+    showToast2() {
+      this.showToast('middle')
+    },
+    showToast3() {
+      this.showToast('bottom')
+    },
+    showToast(position) {
       this.$toast(`假猪套天下第一${parseInt(Math.random() * 10 + 1)}`, {
         duration: 10,
-        position: 'bottom',
+        position,
         closeButton: {
           text: '滚啊',
         }
