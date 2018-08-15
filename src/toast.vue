@@ -21,12 +21,11 @@
     name: 'g-toast',
     props: {
       autoClose: {
-        type: Boolean,
-        default: true
-      },
-      duration: {
-        type: [Number, String],
-        default: 3,
+        type: [Boolean, Number],
+        default: true,
+        validator(value) {
+          return value === true || typeof value === 'number'
+        }
       },
       closeButton: {
         type: Object,
@@ -72,7 +71,7 @@
         if (this.autoClose) {
           setTimeout(() => {
             this.close()
-          }, this.duration * 1000)
+          }, this.autoClose * 1000)
         }
       },
       close() {

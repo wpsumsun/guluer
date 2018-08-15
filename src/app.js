@@ -50,7 +50,7 @@ new Vue({
     },
     showToast(position) {
       this.$toast(`假猪套天下第一${parseInt(Math.random() * 10 + 1)}`, {
-        duration: 10,
+        autoClose: 1,
         position,
         closeButton: {
           text: '滚啊',
