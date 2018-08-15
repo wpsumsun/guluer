@@ -40,7 +40,13 @@ new Vue({
   },
   methods: {
     showToast() {
-      this.$toast(`假猪套天下第一${parseInt(Math.random() * 10 + 1)}`)
+      this.$toast(`假猪套天下第一${parseInt(Math.random() * 10 + 1)}`, {
+        duration: 10,
+        position: 'bottom',
+        closeButton: {
+          text: '滚啊',
+        }
+      })
     }
   },
 })
