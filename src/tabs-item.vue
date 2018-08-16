@@ -26,7 +26,8 @@
 		computed: {
 	    classList() {
 	      return {
-          active: this.active
+          active: this.active,
+		      disabled: this.disabled
 	      }
 	    },
 		},
@@ -37,7 +38,9 @@
 		},
 		methods: {
       change() {
-        this.eventBus.$emit('update:selected', this.name, this)
+        if (!this.disabled) {
+          this.eventBus.$emit('update:selected', this.name, this)
+        }
       },
 		}
 	}
@@ -54,6 +57,10 @@
 		&.active {
 			color: #1890ff;
 			font-weight: bold;
+		}
+		&.disabled {
+			pointer-events: none;
+			color: rgba(0, 0, 0, 0.25);
 		}
 	}
 </style>
