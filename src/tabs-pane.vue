@@ -1,5 +1,5 @@
 <template>
-	<div class="tabs-pane">
+	<div class="tabs-pane" :class="classList" v-if="active">
 		<slot></slot>
 	</div>
 </template>
@@ -8,9 +8,27 @@
 	export default {
 	  name: 'g-tabs-pane',
 		inject: ['eventBus'],
+		props: {
+	    name: {
+	      type: String,
+		    require: true
+	    }
+		},
+		data() {
+	    return {
+	      active: false
+	    }
+		},
+    computed: {
+      classList() {
+        return {
+          active: this.active
+        }
+      },
+    },
     created() {
-      this.eventBus.$on('update:selected', (name) => {
-        console.log('pane', name)
+      this.eventBus.$on('update:selected', (selected) => {
+        this.active = (selected === this.name)
       })
     },
 
@@ -18,5 +36,9 @@
 </script>
 
 <style lang="scss" scoped>
-
+.tabs-pane {
+	&.active {
+		background: #67c23a;
+	}
+}
 </style>
