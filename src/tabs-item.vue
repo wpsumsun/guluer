@@ -37,7 +37,7 @@
 		},
 		methods: {
       change() {
-        this.eventBus.$emit('update:selected', this.name)
+        this.eventBus.$emit('update:selected', this.name, this)
       },
 		}
 	}
@@ -47,8 +47,13 @@
 	.tabs-item {
 		padding: 0 3em;
 		flex-shrink: 0;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		cursor: pointer;
 		&.active {
-			background: #3db;
+			color: #1890ff;
+			font-weight: bold;
 		}
 	}
 </style>
