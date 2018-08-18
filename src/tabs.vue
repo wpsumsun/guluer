@@ -32,6 +32,9 @@
 	    }
 		},
 		mounted() {
+	    if (!this.$children.length) {
+        console&&console.warn&&console.warn('Tbas组件的子组件不能为空')
+	    }
       this.$children.forEach(vm => {
         if (vm.$options.name === 'g-tabs-head') {
           vm.$children.forEach(childVm => {
