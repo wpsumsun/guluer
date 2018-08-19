@@ -64,8 +64,6 @@
 		  margin: 200px auto;
 		  border: 1px solid red;
 		  overflow: hidden;
-		  padding-left: 2000px;
-		  width: 500px;
 	  }
 	  }
   </style>
@@ -73,8 +71,11 @@
 <body>
 <div id="app">
 	<div class="box">
-		<div style="height: 1000px;"></div>
 		<div class="wrapper" @click="xxx">
+			<g-popover>
+				<template slot="content">我是谁</template>
+				<button>click me!</button>
+			</g-popover>
 			<g-popover>
 				<template slot="content">我是谁</template>
 				<button>click me!</button>

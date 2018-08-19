@@ -49,7 +49,7 @@ new Vue({
   },
   methods: {
     xxx() {
-      alert(1)
+      console.log('外部点击事件')
     },
     showToast1() {
       this.showToast('top')

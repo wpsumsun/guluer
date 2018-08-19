@@ -1,6 +1,6 @@
 <template>
-	<div class="popover" @click.stop="toggle">
-		<div class="content-wrapper" v-if="visible" @click.stop ref="contentWrapper">
+	<div class="popover" @click="toggle" ref="popover">
+		<div class="content-wrapper" v-if="visible" ref="contentWrapper">
 			<slot name="content"></slot>
 		</div>
 		<div class="trigger" ref="trigger">
@@ -18,19 +18,34 @@
       }
 	  },
 	  methods: {
-      toggle() {
-        this.visible = !this.visible
-	      if (this.visible) {
-		      this.$nextTick(() => {
-		        document.body.appendChild(this.$refs.contentWrapper)
-			      const { left, top } = this.$refs.trigger.getBoundingClientRect()
-			      this.$refs.contentWrapper.style.left = `${left + window.scrollX}px`
-			      this.$refs.contentWrapper.style.top = `${top + window.scrollY}px`
-	          document.addEventListener('click', this.closeHandler)
-		      })
-	      }
+      getPosition() {
+        document.body.appendChild(this.$refs.contentWrapper)
+        const { left, top } = this.$refs.trigger.getBoundingClientRect()
+        this.$refs.contentWrapper.style.left = `${left + window.scrollX}px`
+        this.$refs.contentWrapper.style.top = `${top + window.scrollY}px`
       },
-		  closeHandler() {
+      toggle(event) {
+        if (this.$refs.trigger.contains(event.target)) {
+          this.visible = !this.visible
+          if (this.visible) {
+            this.$nextTick(() => {
+              this.getPosition()
+              document.addEventListener('click', this.closeHandler)
+            })
+          } else {
+            this.close()
+          }
+        }
+      },
+		  closeHandler(event) {
+        if (this.$refs.popover
+		        && (this.$refs.popover.contains(event.target) || this.$refs.popover === event.target)
+            || this.$refs.contentWrapper === event.target) {
+          return
+        }
+        this.close()
+		  },
+		  close() {
         this.visible = false
         document.removeEventListener('click', this.closeHandler)
 		  }
