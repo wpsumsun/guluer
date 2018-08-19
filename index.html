@@ -64,24 +64,12 @@
 </head>
 <body>
 <div id="app">
-	<g-tabs :selected.sync="currentTab">
-    <g-tabs-head>
-      <g-tabs-item name="left">左asdf</g-tabs-item>
-      <g-tabs-item name="middle">
-        <g-icon name="settings"></g-icon>
-        中111
-      </g-tabs-item>
-      <g-tabs-item disabled name="right">右ffffffffffff</g-tabs-item>
-      <template slot="actions">
-        <button>actions</button>
-      </template>
-    </g-tabs-head>
-    <g-tabs-body>
-      <g-tabs-pane name="left">左手</g-tabs-pane>
-      <g-tabs-pane name="middle">中间</g-tabs-pane>
-      <g-tabs-pane name="right">右手</g-tabs-pane>
-    </g-tabs-body>
-  </g-tabs>
+	<div class="box">
+		<g-popover style="margin: 200px auto;">
+			<template slot="content">我是谁</template>
+			<button>click me!</button>
+		</g-popover>
+	</div>
 </div>
 <script src="./src/app.js"></script>
 <!--<script src="//at.alicdn.com/t/font_775269_l9sgl9t8ie.js"></script>-->
