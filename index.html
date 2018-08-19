@@ -60,15 +60,26 @@
 		.sider.fade-enter, .sider.fade-leave-to {
 			margin-left: -150px !important;
 		}
+	  .wrapper {
+		  margin: 200px auto;
+		  border: 1px solid red;
+		  overflow: hidden;
+		  padding-left: 2000px;
+		  width: 500px;
+	  }
+	  }
   </style>
 </head>
 <body>
 <div id="app">
 	<div class="box">
-		<g-popover style="margin: 200px auto;">
-			<template slot="content">我是谁</template>
-			<button>click me!</button>
-		</g-popover>
+		<div style="height: 1000px;"></div>
+		<div class="wrapper" @click="xxx">
+			<g-popover>
+				<template slot="content">我是谁</template>
+				<button>click me!</button>
+			</g-popover>
+		</div>
 	</div>
 </div>
 <script src="./src/app.js"></script>
