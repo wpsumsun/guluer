@@ -1,6 +1,6 @@
 <template>
 	<div class="popover" @click="toggle" ref="popover">
-		<div class="content-wrapper" v-if="visible" ref="contentWrapper">
+		<div class="content-wrapper" v-if="visible" ref="contentWrapper" :class="{ [`${position}`]: !!position }">
 			<slot name="content"></slot>
 		</div>
 		<span class="trigger" ref="trigger">
@@ -12,6 +12,15 @@
 <script>
   export default {
     name: 'g-popover',
+	  props: {
+      position: {
+        type: String,
+	      default: 'top',
+	      validator(value) {
+	        return ['top', 'left', 'right', 'bottom'].indexOf(value) !== -1
+	      }
+      }
+	  },
 	  data() {
       return {
         visible: false
@@ -20,9 +29,27 @@
 	  methods: {
       getPosition() {
         document.body.appendChild(this.$refs.contentWrapper)
-        const { left, top } = this.$refs.trigger.getBoundingClientRect()
-        this.$refs.contentWrapper.style.left = `${left + window.scrollX}px`
-        this.$refs.contentWrapper.style.top = `${top + window.scrollY}px`
+	      const { contentWrapper, trigger } = this.$refs
+        const { left, top, height, width } = trigger.getBoundingClientRect()
+        if (this.position === 'top') {
+          contentWrapper.style.left = `${left + window.scrollX}px`
+          contentWrapper.style.top = `${top + window.scrollY}px`
+        }
+        if (this.position === 'bottom') {
+          contentWrapper.style.left = `${left + window.scrollX}px`
+          contentWrapper.style.top = `${top + window.scrollY + height}px`
+        }
+        if (this.position === 'left') {
+          const { height: contentHeight } = contentWrapper.getBoundingClientRect()
+          contentWrapper.style.left = `${left + window.scrollX}px`
+          contentWrapper.style.top = `${top + window.scrollY - (contentHeight - height)/2}px`
+        }
+        if (this.position === 'right') {
+          const { height: contentHeight } = contentWrapper.getBoundingClientRect()
+          contentWrapper.style.left = `${left + window.scrollX + width}px`
+          contentWrapper.style.top = `${top + window.scrollY - (contentHeight - height)/2}px`
+        }
+
       },
       toggle(event) {
         if (this.$refs.trigger.contains(event.target)) {
@@ -66,8 +93,6 @@
 		border: 1px solid #ebeef5;
 		border-radius: 4px;
 		box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
-		transform: translateY(-100%);
-		margin-top: -10px;
 		max-width: 20em;
 		word-break: break-all;
 		background: #fff;
@@ -76,12 +101,50 @@
 			display: inline-block;
 			width: 0;
 			height: 0;
-			border-top: 6px solid #fff;
-			border-left: 6px solid transparent;
-			border-right: 6px solid transparent;
 			position: absolute;
-			top: 100%;
-			left: 10px;
+		}
+		&.top {
+			transform: translateY(-100%);
+			margin-top: -10px;
+			&:before {
+				border-top: 6px solid #fff;
+				border-left: 6px solid transparent;
+				border-right: 6px solid transparent;
+				top: 100%;
+				left: 10px;
+			}
+		}
+		&.bottom {
+			margin-top: 10px;
+			&:before {
+				border-bottom: 6px solid #fff;
+				border-left: 6px solid transparent;
+				border-right: 6px solid transparent;
+				top: -5px;
+				left: 10px;
+
+			}
+		}
+		&.left {
+			transform: translateX(-100%);
+			margin-left: -10px;
+			&:before {
+				border-bottom: 6px solid transparent;
+				border-left: 6px solid #fff;
+				border-top: 6px solid transparent;
+				top: calc(50% - 4px);
+				left: 100%;
+			}
+		}
+		&.right {
+			margin-left: 10px;
+			&:before {
+				border-bottom: 6px solid transparent;
+				border-right: 6px solid #fff;
+				border-top: 6px solid transparent;
+				top: calc(50% - 4px);
+				right: 100%;
+			}
 		}
 	}
 </style>
