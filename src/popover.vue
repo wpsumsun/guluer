@@ -1,6 +1,6 @@
 <template>
-	<div class="popover" @click="visible = !visible">
-		<div class="content-wrapper" v-if="visible">
+	<div class="popover" @click.stop="toggle">
+		<div class="content-wrapper" v-if="visible" @click.stop>
 			<slot name="content"></slot>
 		</div>
 		<slot></slot>
@@ -14,6 +14,20 @@
       return {
         visible: false
       }
+	  },
+	  methods: {
+      toggle() {
+        this.visible = !this.visible
+	      this.$nextTick(() => {
+          document.addEventListener('click', this.closeHandler)
+	      })
+      },
+		  closeHandler() {
+        if (this.visible) {
+          this.visible = false
+	        document.removeEventListener('click', this.closeHandler)
+        }
+		  }
 	  },
   }
 </script>
