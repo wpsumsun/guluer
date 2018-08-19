@@ -3,9 +3,9 @@
 		<div class="content-wrapper" v-if="visible" ref="contentWrapper">
 			<slot name="content"></slot>
 		</div>
-		<div class="trigger" ref="trigger">
+		<span class="trigger" ref="trigger">
 			<slot></slot>
-		</div>
+		</span>
 	</div>
 </template>
 
@@ -40,7 +40,8 @@
 		  closeHandler(event) {
         if (this.$refs.popover
 		        && (this.$refs.popover.contains(event.target) || this.$refs.popover === event.target)
-            || this.$refs.contentWrapper === event.target) {
+            || (this.$refs.contentWrapper
+				        && (this.$refs.contentWrapper === event.target || this.$refs.contentWrapper.contains(event.target)))) {
           return
         }
         this.close()
@@ -66,5 +67,21 @@
 		border-radius: 4px;
 		box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
 		transform: translateY(-100%);
+		margin-top: -10px;
+		max-width: 20em;
+		word-break: break-all;
+		background: #fff;
+		&:before {
+			content: '';
+			display: inline-block;
+			width: 0;
+			height: 0;
+			border-top: 6px solid #fff;
+			border-left: 6px solid transparent;
+			border-right: 6px solid transparent;
+			position: absolute;
+			top: 100%;
+			left: 10px;
+		}
 	}
 </style>
