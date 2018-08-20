@@ -30,20 +30,13 @@
 		},
 		mounted() {
       this.eventBus && this.eventBus.$on('update:selected', names => {
-	      if (names.indexOf(this.name) !== -1) {
-          this.open = true
-	      } else {
-	        this.open = false
-	      }
+	      this.open = names.indexOf(this.name) !== -1
 	    })
 		},
 		methods: {
 	    toggle() {
-	      if(this.open) {
-          this.eventBus && this.eventBus.$emit('update:removeSelected', this.name)
-	      } else {
-          this.eventBus && this.eventBus.$emit('update:addSelected', this.name)
-	      }
+		    const eventName = this.open ? 'update:removeSelected' : 'update:addSelected'
+        this.eventBus && this.eventBus.$emit(eventName, this.name)
 	    }
 		},
 	}
