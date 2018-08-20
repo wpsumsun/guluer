@@ -16,7 +16,10 @@
 	    title: {
 	      type: String,
 		    require: true
-	    }
+	    },
+			name: {
+	      type: String
+			}
 		},
 		inject: ['eventBus'],
 		data() {
@@ -25,9 +28,11 @@
 	    }
 		},
 		mounted() {
-      this.eventBus && this.eventBus.$on('update:selected', (vm) => {
-	      if (this !== vm) {
+      this.eventBus && this.eventBus.$on('update:selected', name => {
+	      if (this.name !== name) {
 	        this.open = false
+	      } else {
+	        this.open = true
 	      }
 	    })
 		},
@@ -36,8 +41,7 @@
 	      if(this.open) {
 	        this.open = false
 	      } else {
-	        this.open = true
-          this.eventBus && this.eventBus.$emit('update:selected', this)
+          this.eventBus && this.eventBus.$emit('update:selected', this.name)
 	      }
 	    }
 		},

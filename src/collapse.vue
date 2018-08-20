@@ -12,19 +12,23 @@
 	    single: {
 	      type: Boolean,
 		    default: false
-	    }
+	    },
+			selected: {
+	      type: String
+			},
 		},
 		data() {
 	    return {
 	      eventBus: new Vue(),
 	    }
 		},
+		mounted() {
+	    this.eventBus.$emit('update:selected', this.selected)
+		},
 		provide() {
-	    if (this.single) {
-        return {
-          eventBus: this.eventBus
-        }
-	    }
+      return {
+        eventBus: this.eventBus
+      }
 		},
 	}
 </script>
