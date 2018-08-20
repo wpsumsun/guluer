@@ -1,0 +1,48 @@
+<template>
+	<div class="collapse-item">
+		<div class="title" @click="open = !open">
+			{{ title }}
+		</div>
+		<div class="content" v-show="open">
+			<slot></slot>
+		</div>
+	</div>
+</template>
+
+<script>
+	export default {
+	  name: 'g-collapse-item',
+		props: {
+	    title: {
+	      type: String,
+		    require: true
+	    }
+		},
+		data() {
+	    return {
+	      open: false
+	    }
+		}
+	}
+</script>
+
+<style lang="scss" scoped>
+	.collapse-item {
+		border-bottom: 1px solid #d9d9d9;
+		.title {
+			line-height: 22px;
+			padding: 12px 0 12px 40px;
+			color: rgba(0, 0, 0, 0.85);
+			cursor: pointer;
+			position: relative;
+			transition: all .3s;
+		}
+		.content {
+			padding: 16px;
+			overflow: hidden;
+			color: rgba(0, 0, 0, 0.65);
+			background-color: #fff;
+			border-top: 1px solid #d9d9d9;
+		}
+	}
+</style>
