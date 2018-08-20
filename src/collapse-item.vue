@@ -24,24 +24,25 @@
 		inject: ['eventBus'],
 		data() {
 	    return {
-	      open: false
+	      open: false,
+		    single: false
 	    }
 		},
 		mounted() {
-      this.eventBus && this.eventBus.$on('update:selected', name => {
-	      if (this.name !== name) {
-	        this.open = false
+      this.eventBus && this.eventBus.$on('update:selected', names => {
+	      if (names.indexOf(this.name) !== -1) {
+          this.open = true
 	      } else {
-	        this.open = true
+	        this.open = false
 	      }
 	    })
 		},
 		methods: {
 	    toggle() {
 	      if(this.open) {
-	        this.open = false
+          this.eventBus && this.eventBus.$emit('update:removeSelected', this.name)
 	      } else {
-          this.eventBus && this.eventBus.$emit('update:selected', this.name)
+          this.eventBus && this.eventBus.$emit('update:addSelected', this.name)
 	      }
 	    }
 		},

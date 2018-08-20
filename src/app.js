@@ -47,7 +47,7 @@ Vue.component('g-collapse-item', CollapseItem)
 new Vue({
   el: '#app',
   data: {
-    currentTab: '2'
+    currentTab: ['2', '3']
   },
   created() {
   },
