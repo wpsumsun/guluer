@@ -81,7 +81,7 @@
 				<button>click me!</button>
 			</g-popover>
 			<g-popover position="left" trigger="hover">
-				<template slot="content">asdfssssssssssssssssssssssssssssssssssssssssssssssssssssssss</template>
+				<template slot="content">xxxxxxxxxxx</template>
 				<button>click me!</button>
 			</g-popover>
 			<g-popover position="right" trigger="hover">
@@ -89,11 +89,14 @@
 				<button>click me!</button>
 			</g-popover>
 			<g-popover>
-				<template slot="content">我是谁</template>
+				<template slot="content"><a href="http://www.w3school.com.cn">xxxx</a></template>
 				<button>click me!</button>
 			</g-popover>
 			<g-popover position="bottom">
-				<template slot="content">我是谁</template>
+				<template slot="content" slot-scope="{ close }">
+					我是谁
+					<g-button @click="close">关闭</g-button>
+				</template>
 				<button>click me!</button>
 			</g-popover>
 			<g-popover position="left">
