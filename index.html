@@ -72,11 +72,27 @@
 <div id="app">
 	<div class="box">
 		<div class="wrapper" @click="xxx">
-			<g-popover position="bottom">
+			<g-popover position="bottom" trigger="hover">
+				<template slot="content">asdfssssssssssssssssssssssssssssssssssssssssssssssssssssssss</template>
+				<button>click me!</button>
+			</g-popover>
+			<g-popover position="top" trigger="hover">
+				<template slot="content">asdfssssssssssssssssssssssssssssssssssssssssssssssssssssssss</template>
+				<button>click me!</button>
+			</g-popover>
+			<g-popover position="left" trigger="hover">
+				<template slot="content">asdfssssssssssssssssssssssssssssssssssssssssssssssssssssssss</template>
+				<button>click me!</button>
+			</g-popover>
+			<g-popover position="right" trigger="hover">
 				<template slot="content">asdfssssssssssssssssssssssssssssssssssssssssssssssssssssssss</template>
 				<button>click me!</button>
 			</g-popover>
 			<g-popover>
+				<template slot="content">我是谁</template>
+				<button>click me!</button>
+			</g-popover>
+			<g-popover position="bottom">
 				<template slot="content">我是谁</template>
 				<button>click me!</button>
 			</g-popover>

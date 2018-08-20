@@ -1,5 +1,5 @@
 <template>
-	<div class="popover" @click="toggle" ref="popover">
+	<div class="popover" ref="popover">
 		<div class="content-wrapper" v-if="visible" ref="contentWrapper" :class="{ [`${position}`]: !!position }">
 			<slot name="content"></slot>
 		</div>
@@ -19,11 +19,35 @@
 	      validator(value) {
 	        return ['top', 'left', 'right', 'bottom'].indexOf(value) !== -1
 	      }
-      }
+      },
+		  trigger: {
+        type: String,
+			  default: 'click',
+			  validator(value) {
+			    return ['click', 'hover'].indexOf(value) !== -1
+			  }
+		  },
 	  },
 	  data() {
       return {
         visible: false
+      }
+	  },
+	  computed: {
+      openEvent() {
+        return this.trigger === 'click' ? 'click' : 'mouseenter'
+      },
+		  closeEvent() {
+        return this.trigger === 'click' ? 'click' : 'mouseout'
+		  }
+	  },
+	  mounted() {
+      if (this.trigger === 'click') {
+        this.$refs.popover.addEventListener('click', this.toggle)
+      }
+      if (this.trigger === 'hover') {
+        this.$refs.popover.addEventListener('mouseenter', this.open)
+        this.$refs.popover.addEventListener('mouseleave', this.close)
       }
 	  },
 	  methods: {
@@ -57,15 +81,7 @@
       },
       toggle(event) {
         if (this.$refs.trigger.contains(event.target)) {
-          this.visible = !this.visible
-          if (this.visible) {
-            this.$nextTick(() => {
-              this.getPosition()
-              document.addEventListener('click', this.closeHandler)
-            })
-          } else {
-            this.close()
-          }
+          this.visible ? this.close() : this.open()
         }
       },
 		  closeHandler(event) {
@@ -76,6 +92,13 @@
           return
         }
         this.close()
+		  },
+		  open() {
+        this.visible = true
+        this.$nextTick(() => {
+          this.getPosition()
+          document.addEventListener('click', this.closeHandler)
+        })
 		  },
 		  close() {
         this.visible = false
