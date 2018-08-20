@@ -28,27 +28,31 @@
 	  },
 	  methods: {
       getPosition() {
-        document.body.appendChild(this.$refs.contentWrapper)
 	      const { contentWrapper, trigger } = this.$refs
+        document.body.appendChild(contentWrapper)
         const { left, top, height, width } = trigger.getBoundingClientRect()
-        if (this.position === 'top') {
-          contentWrapper.style.left = `${left + window.scrollX}px`
-          contentWrapper.style.top = `${top + window.scrollY}px`
-        }
-        if (this.position === 'bottom') {
-          contentWrapper.style.left = `${left + window.scrollX}px`
-          contentWrapper.style.top = `${top + window.scrollY + height}px`
-        }
-        if (this.position === 'left') {
-          const { height: contentHeight } = contentWrapper.getBoundingClientRect()
-          contentWrapper.style.left = `${left + window.scrollX}px`
-          contentWrapper.style.top = `${top + window.scrollY - (contentHeight - height)/2}px`
-        }
-        if (this.position === 'right') {
-          const { height: contentHeight } = contentWrapper.getBoundingClientRect()
-          contentWrapper.style.left = `${left + window.scrollX + width}px`
-          contentWrapper.style.top = `${top + window.scrollY - (contentHeight - height)/2}px`
-        }
+        const { height: contentHeight } = contentWrapper.getBoundingClientRect()
+	      const positions = {
+          top: {
+            left: left + window.scrollX,
+	          top: top + window.scrollY
+          },
+		      bottom: {
+            left: left + window.scrollX,
+            top: top + window.scrollY + height
+		      },
+		      left: {
+            left: left + window.scrollX,
+            top: top + window.scrollY - (contentHeight - height)/2
+		      },
+		      right: {
+            left: left + window.scrollX + width,
+            top: top + window.scrollY - (contentHeight - height)/2
+		      },
+	      }
+
+        contentWrapper.style.left = `${positions[this.position].left}px`
+        contentWrapper.style.top = `${positions[this.position].top}px`
 
       },
       toggle(event) {
