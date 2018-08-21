@@ -1,11 +1,13 @@
 <template>
 	<div class="collapse-item">
 		<div class="title" @click="toggle">
-			<g-icon class="icon" name="right"></g-icon>
+			<g-icon class="icon" :class="{ active: open }" name="right"></g-icon>
 			{{ title }}
 		</div>
-		<div class="content" v-show="open">
-			<slot></slot>
+		<div class="content-wrapper" :class="{ active : open }">
+			<div class="content">
+				<slot></slot>
+			</div>
 		</div>
 	</div>
 </template>
@@ -44,6 +46,14 @@
 </script>
 
 <style lang="scss" scoped>
+	@keyframes expand {
+		0% {
+			height: 0;
+		}
+		100% {
+			height: auto;
+		}
+	}
 	.collapse-item {
 		border-bottom: 1px solid #d9d9d9;
 		.title {
@@ -61,14 +71,26 @@
 				width: 12px;
 				position: absolute;
 				left: 16px;
+				transition: all .3s;
+				&.active {
+					transform: rotate(90deg);
+				}
 			}
 		}
-		.content {
-			padding: 16px;
-			overflow: hidden;
+		.content-wrapper {
+			box-sizing: content-box;
+			overflow: auto;
 			color: rgba(0, 0, 0, 0.65);
 			background-color: #fff;
-			border-top: 1px solid #d9d9d9;
+			transition: all .3s;
+			max-height: 0;
+			&.active {
+				max-height: 300px;
+			}
+			.content {
+				border-top: 1px solid #d9d9d9;
+				padding: 16px;
+			}
 		}
 	}
 </style>
