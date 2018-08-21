@@ -1,6 +1,6 @@
 <template>
 	<div class="collapse-item">
-		<div class="title" @click="open = !open">
+		<div class="title" @click="toggle">
 			<g-icon class="icon" name="right"></g-icon>
 			{{ title }}
 		</div>
@@ -17,13 +17,29 @@
 	    title: {
 	      type: String,
 		    require: true
-	    }
+	    },
+			name: {
+	      type: String
+			}
 		},
+		inject: ['eventBus'],
 		data() {
 	    return {
-	      open: false
+	      open: false,
+		    single: false
 	    }
-		}
+		},
+		mounted() {
+      this.eventBus && this.eventBus.$on('update:selected', names => {
+	      this.open = names.indexOf(this.name) !== -1
+	    })
+		},
+		methods: {
+	    toggle() {
+		    const eventName = this.open ? 'update:removeSelected' : 'update:addSelected'
+        this.eventBus && this.eventBus.$emit(eventName, this.name)
+	    }
+		},
 	}
 </script>
 
