@@ -1,6 +1,7 @@
 <template>
 	<div class="collapse-item">
 		<div class="title" @click="open = !open">
+			<g-icon class="icon" name="right"></g-icon>
 			{{ title }}
 		</div>
 		<div class="content" v-show="open">
@@ -30,12 +31,21 @@
 	.collapse-item {
 		border-bottom: 1px solid #d9d9d9;
 		.title {
-			line-height: 22px;
+			height: 22px;
+			display: flex;
+			align-items: center;
 			padding: 12px 0 12px 40px;
 			color: rgba(0, 0, 0, 0.85);
 			cursor: pointer;
 			position: relative;
 			transition: all .3s;
+			position: relative;
+			.icon {
+				fill: rgba(0, 0, 0, 0.85);
+				width: 12px;
+				position: absolute;
+				left: 16px;
+			}
 		}
 		.content {
 			padding: 16px;
