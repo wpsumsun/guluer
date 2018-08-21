@@ -44,24 +44,32 @@
       transform: rotate(360deg);
     }
   }
+  $button-height: 32px;
+  $font-size: 14px;
+  $border-radius: 4px;
+  $button-bg: #fff;
+  $button-active-bg: #eee;
+  $border-color: #999;
+  $color: #333;
+  $border-color-hover: #666;
   .g-button {
-    height: var(--button-height);
-    line-height: var(--button-height);
+    height: $button-height;
+    line-height: $button-height;
     padding: 0 1em;
-    border-radius: var(--border-radius);
-    background: var(--button-bg);
-    color: var(--color);
-    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    background: $button-bg;
+    color: $color;
+    border: 1px solid $border-color;
     cursor: pointer;
     display: inline-flex;
     justify-content: center;
     align-items: center;
     vertical-align: middle;
     &:hover {
-      border-color: var(--border-color-hover);
+      border-color: $border-color-hover;
     }
     &:active {
-      background: var(--button-active-bg);
+      background: $button-active-bg;
     }
     &:focus {
       outline: none;
