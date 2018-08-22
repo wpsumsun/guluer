@@ -1,7 +1,7 @@
 ---
 title: Text
 ---
-# 文本输入框
+### 文本输入框
 
 <ClientOnly>
 <text-demo></text-demo>
