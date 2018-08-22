@@ -65,6 +65,9 @@
     justify-content: center;
     align-items: center;
     vertical-align: middle;
+    .content {
+      padding: 0;
+    }
     &:hover {
       border-color: $border-color-hover;
     }
