@@ -1,7 +1,7 @@
 <template>
 	<div id="app">
 		<div class="box">
-
+			<g-button icon="settings"></g-button>
 			<g-collapse :selected.sync="currentTab">
 				<g-collapse-item title="标题1" name="1">内容1</g-collapse-item>
 				<g-collapse-item title="标题2" name="2">内容2</g-collapse-item>

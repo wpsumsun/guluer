@@ -36,6 +36,7 @@
 </script>
 
 <style scoped lang="scss">
+  @import "var";
   @keyframes spin{
     0 {
       transform: rotate(0deg);
@@ -44,14 +45,6 @@
       transform: rotate(360deg);
     }
   }
-  $button-height: 32px;
-  $font-size: 14px;
-  $border-radius: 4px;
-  $button-bg: #fff;
-  $button-active-bg: #eee;
-  $border-color: #999;
-  $color: #333;
-  $border-color-hover: #666;
   .g-button {
     height: $button-height;
     line-height: $button-height;
