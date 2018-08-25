@@ -1,6 +1,7 @@
 <template>
 	<div class="cascader">
 		<div class="trigger" @click="visible = !visible" ref="trigger">
+			{{ result }}
 		</div>
 		<div class="popover" ref="popover" v-if="visible">
 			<cascaderItem
@@ -28,6 +29,11 @@
 		components: {
 	    cascaderItem
 		},
+		computed: {
+	    result() {
+	      return this.selected.map(item => item.label).join('/')
+	    }
+		},
 		data() {
 	    return {
 	      visible: false
@@ -52,6 +58,9 @@
 			padding-left: 1em;
 			border-radius: 4px;
 			cursor: pointer;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
 		}
 		.popover {
 			display: inline-flex;

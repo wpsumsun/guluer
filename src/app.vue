@@ -1,11 +1,6 @@
 <template>
 	<div id="app">
 		<div class="box">
-			<div>
-				{{ selected[0]&&selected[0].label}}
-				{{ selected[1]&&selected[1].label}}
-				{{ selected[2]&&selected[2].label}}
-			</div>
 			<g-cascader
 				:options="options"
 				:selected="selected"
