@@ -51,8 +51,12 @@ export default {
 	},
 	computed: {
     nextLevel() {
-      const current =this.selected[this.level]
-      return  current && current.children ? current.children : []
+      if (this.selected[this.level]) {
+        let selected = this.options.filter(option => option.label === this.selected[this.level].label)
+        if (selected && selected[0].children && selected[0].children.length > 0) {
+          return selected[0].children
+        }
+      }
     },
 	},
 	methods: {
@@ -60,7 +64,7 @@ export default {
       const copy = JSON.parse(JSON.stringify(this.selected))
 	    copy[this.level] = option
 	    copy.splice(this.level + 1)
-	    this.$emit('update:selected', copy)
+      this.$emit('update:selected', copy)
     },
     updateSelected(selected) {
       this.$emit('update:selected', selected)

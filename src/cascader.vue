@@ -24,6 +24,9 @@
 			selected: {
 	      type: Array,
 				default() { return [] }
+			},
+			loadData: {
+	      type: Function
 			}
 		},
 		components: {
@@ -36,13 +39,51 @@
 		},
 		data() {
 	    return {
-	      visible: false
+	      visible: false,
 	    }
 		},
 		methods: {
 	    updateSelected(selected) {
 	      this.$emit('update:selected', selected)
-	    }
+		    const lastSelected = selected[selected.length - 1]
+		    const simplest = (array, target) => {
+          return array.filter(item => item.id === target.id)[0]
+		    }
+		    const deeper = (array, target) => {
+			    const noChildren = []
+			    const hasChildren = []
+			    let current
+			    array.forEach((option) => {
+						if (option.children) {
+						  hasChildren.push(option)
+						}	else {
+						  noChildren.push(option)
+						}
+			    })
+					current = simplest(noChildren, lastSelected)
+			    if (current) {
+			      return current
+			    } else {
+            current = simplest(array, target)
+				    if (current) {
+				      return current
+				    } else {
+				      for (let i = 0; i < hasChildren.length; i++) {
+                current = deeper(hasChildren[i].children, target)
+		          }
+				    }
+			    }
+			    return current
+		    }
+		    const updateOptions = (result) => {
+          // const targetOption = this.options.filter(option => option.id === lastSelected.id)[0]
+			    const copy = JSON.parse(JSON.stringify(this.options))
+			    const current = deeper(copy, lastSelected)
+          this.$set(current, 'children', result)
+			    this.$emit('update:options', copy)
+        }
+		    this.loadData(lastSelected, updateOptions)
+	    },
 		},
 	}
 </script>

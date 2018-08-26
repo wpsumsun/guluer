@@ -2,10 +2,12 @@
 	<div id="app">
 		<div class="box">
 			<g-cascader
-				:options="options"
+				:options.sync="options"
 				:selected="selected"
-				@update:selected="updateSelected">
+				@update:selected="updateSelected"
+				:load-data="loadData">
 			</g-cascader>
+			{{ selected }}
 		</div>
 	</div>
 </template>
@@ -14,7 +16,12 @@
 	import db from './db'
 
 	function ajax(parentId = 0) {
-    return db.filter(item => item.parent_id === parentId)
+	  return new Promise((resolve, reject)=> {
+      setTimeout(() => {
+        const result = db.filter(item => item.parent_id === parentId)
+        resolve(result)
+      }, 1000)
+	  })
   }
 
 	export default {
@@ -22,14 +29,25 @@
 		data() {
 	    return {
 	      selected: [],
-        options: ajax(),
+        options: null,
 	    }
 		},
+		mounted() {
+	    ajax().then((result) => {
+        this.options = result
+	    })
+		},
 		methods: {
-	    updateSelected(selected) {
-	      this.selected = selected
-	    }
-		}
+	    loadData({ id }, callback) {
+	      ajax(id).then(result => {
+          callback(result)
+	      })
+	    },
+      updateSelected(selected) {
+        console.log(selected);
+        this.selected = selected
+      }
+		},
 	}
 </script>
 
