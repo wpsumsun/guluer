@@ -8,6 +8,7 @@
 				:options="options"
 				:selected="selected"
 				:load-data="loadData"
+				:loading-item="loadingItem"
 				@update:selected="updateSelected">
 			</cascaderItem>
 		</div>
@@ -29,7 +30,7 @@
 			},
 			loadData: {
 	      type: Function
-			}
+			},
 		},
 		components: {
 	    cascaderItem
@@ -42,6 +43,7 @@
 		data() {
 	    return {
 	      visible: false,
+		    loadingItem: {}
 	    }
 		},
 		methods: {
@@ -87,12 +89,16 @@
 			    return current
 		    }
 		    const updateOptions = (result) => {
+	        this.loadingItem = {}
 			    const copy = JSON.parse(JSON.stringify(this.options))
 			    const current = deeper(copy, lastSelected)
           this.$set(current, 'children', result)
 			    this.$emit('update:options', copy)
         }
-        this.loadData && this.loadData(lastSelected, updateOptions)
+        if (!lastSelected.isLeaf) {
+          this.loadData && this.loadData(lastSelected, updateOptions)
+	        this.loadingItem = lastSelected
+        }
 	    },
 		},
 	}
@@ -125,7 +131,7 @@
 			top: 100%;
 			margin-top: 8px;
 			background: #fff;
-
+			z-index: 1;
 		}
 	}
 </style>

@@ -8,10 +8,14 @@
 				@click="select(option)"
 				:key="index">
 				{{ option.label }}
-				<g-icon
-					v-if="showRightArrow(option)"
-					name="right"
-					class="icon"></g-icon>
+				<g-icon name="loading" class="loading" v-if="loadingItem.label === option.label"></g-icon>
+				<template v-else>
+					<g-icon
+						v-if="showRightArrow(option)"
+						name="right"
+						class="icon">
+					</g-icon>
+				</template>
 			</div>
 		</div>
 		<div class="right wrapper" v-if="nextLevel&&nextLevel.length">
@@ -20,6 +24,7 @@
 				:selected="selected"
 				:level="level+1"
 				:load-data="loadData"
+				:loading-item="loadingItem"
 				@update:selected="updateSelected">
 			</g-cascader-item>
 		</div>
@@ -44,6 +49,9 @@ export default {
 		},
 		loadData: {
       type: Function
+		},
+		loadingItem: {
+      type: Object
 		}
 	},
 	components: {
@@ -74,7 +82,7 @@ export default {
       this.$emit('update:selected', selected)
     },
 		showRightArrow(option) {
-      return this.loadData ? option.isLeaf : option.children
+      return this.loadData ? !option.isLeaf : option.children
 		}
 	}
 }
@@ -111,6 +119,10 @@ export default {
 			.icon {
 				width: 12px;
 				fill: #bfcbd9;
+			}
+			.loading {
+				fill: #bfcbd9;
+				animation: spin 1.5s infinite linear;
 			}
 			&:hover {
 				background: $gray-light;

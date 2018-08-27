@@ -13,3 +13,11 @@ $tipsColor: #67c23a;
 $tabs-height: 40px;
 $blue-light: #409eff;
 $gray-light: #f5f7fa;
+@keyframes spin{
+0 {
+  transform: rotate(0deg);
+}
+100% {
+     transform: rotate(360deg);
+   }
+}
