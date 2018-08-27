@@ -7,6 +7,7 @@
 			<cascaderItem
 				:options="options"
 				:selected="selected"
+				:load-data="loadData"
 				@update:selected="updateSelected">
 			</cascaderItem>
 		</div>
@@ -76,13 +77,12 @@
 			    return current
 		    }
 		    const updateOptions = (result) => {
-          // const targetOption = this.options.filter(option => option.id === lastSelected.id)[0]
 			    const copy = JSON.parse(JSON.stringify(this.options))
 			    const current = deeper(copy, lastSelected)
           this.$set(current, 'children', result)
 			    this.$emit('update:options', copy)
         }
-		    this.loadData(lastSelected, updateOptions)
+        this.loadData && this.loadData(lastSelected, updateOptions)
 	    },
 		},
 	}

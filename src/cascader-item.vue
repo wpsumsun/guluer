@@ -9,7 +9,7 @@
 				:key="index">
 				{{ option.label }}
 				<g-icon
-					v-if="option.children"
+					v-if="showRightArrow(option)"
 					name="right"
 					class="icon"></g-icon>
 			</div>
@@ -19,6 +19,7 @@
 				:options="nextLevel"
 				:selected="selected"
 				:level="level+1"
+				:load-data="loadData"
 				@update:selected="updateSelected">
 			</g-cascader-item>
 		</div>
@@ -40,6 +41,9 @@ export default {
 		level: {
       type: Number,
 			default: 0,
+		},
+		loadData: {
+      type: Function
 		}
 	},
 	components: {
@@ -68,7 +72,10 @@ export default {
     },
     updateSelected(selected) {
       this.$emit('update:selected', selected)
-    }
+    },
+		showRightArrow(option) {
+      return this.loadData ? option.isLeaf : option.children
+		}
 	}
 }
 </script>

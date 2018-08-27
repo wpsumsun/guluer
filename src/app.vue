@@ -4,8 +4,8 @@
 			<g-cascader
 				:options.sync="options"
 				:selected="selected"
-				@update:selected="updateSelected"
-				:load-data="loadData">
+				:load-data="loadData"
+				@update:selected="updateSelected">
 			</g-cascader>
 			{{ selected }}
 		</div>
@@ -29,22 +29,27 @@
 		data() {
 	    return {
 	      selected: [],
-        options: null,
+        options: null
 	    }
 		},
 		mounted() {
 	    ajax().then((result) => {
+	      result.forEach(item => {
+          item.isLeaf = (db.filter(child => child.parent_id === item.id).length > 0)
+	      })
         this.options = result
 	    })
 		},
 		methods: {
 	    loadData({ id }, callback) {
 	      ajax(id).then(result => {
+          result.forEach(item => {
+            item.isLeaf = (db.filter(child => child.parent_id === item.id).length > 0)
+          })
           callback(result)
 	      })
 	    },
       updateSelected(selected) {
-        console.log(selected);
         this.selected = selected
       }
 		},
