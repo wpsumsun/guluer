@@ -1,5 +1,5 @@
 <template>
-	<div class="cascader" ref="cascader">
+	<div class="cascader" ref="cascader" v-click-outside="close">
 		<div class="trigger" @click="toggle" ref="trigger">
 			{{ result }}
 		</div>
@@ -16,6 +16,8 @@
 
 <script>
 	import cascaderItem from './cascader-item'
+	import clickOutside from './click-outside'
+
 	export default {
 	  name: 'g-cascader',
 		props: {
@@ -29,6 +31,9 @@
 			loadData: {
 	      type: Function
 			}
+		},
+		directives: {
+      'click-outside': clickOutside
 		},
 		components: {
 	    cascaderItem
@@ -44,23 +49,14 @@
 	    }
 		},
 		methods: {
-	    onClickDocument(e) {
-	      const { cascader } = this.$refs
-        if (cascader.contains(e.target) || cascader === e.target) { return }
-        this.close()
-      },
 	    toggle() {
 	      this.visible ? this.close() : this.open()
 	    },
 	    open() {
 	      this.visible = true
-		    this.$nextTick(() => {
-          document.addEventListener('click', this.onClickDocument)
-		    })
 	    },
 			close() {
 	      this.visible = false
-        document.removeEventListener('click', this.onClickDocument)
 			},
 	    updateSelected(selected) {
 	      this.$emit('update:selected', selected)
