@@ -6,11 +6,6 @@
 				:selected="selected"
 				@update:selected="updateSelected">
 			</g-cascader>
-			<g-cascader
-				:options.sync="options"
-				:selected="selected"
-				@update:selected="updateSelected">
-			</g-cascader>
 			{{ selected }}
 		</div>
 	</div>

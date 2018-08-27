@@ -2,6 +2,7 @@ import Toast from './toast.vue'
 
 
 let currentToast
+const eventHubs = []
 
 export default {
   install(Vue, options) {
@@ -18,8 +19,26 @@ export default {
         },
       })
     }
+
+    Vue.directive('click-outside', {
+      bind (el, binding) {
+        eventHubs.push({ el, callback: binding.value })
+      }
+    })
   }
 }
+
+const onClickDocument = (e) => {
+  eventHubs.forEach(item => {
+    if (item.el.contains(e.target) || item.el === e.target) {
+      return
+    } else {
+      item.callback()
+    }
+  })
+}
+document.addEventListener('click', onClickDocument)
+
 
 function createToast({ Vue, message, propsData, onClose }) {
   const Constructor = Vue.extend(Toast)

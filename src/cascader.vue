@@ -16,7 +16,6 @@
 
 <script>
 	import cascaderItem from './cascader-item'
-	import clickOutside from './click-outside'
 
 	export default {
 	  name: 'g-cascader',
@@ -31,9 +30,6 @@
 			loadData: {
 	      type: Function
 			}
-		},
-		directives: {
-      'click-outside': clickOutside
 		},
 		components: {
 	    cascaderItem
