@@ -8,6 +8,10 @@
 				@update:selected="updateSelected">
 			</g-cascader>
 			<br>
+			<g-popover>
+				<template slot="content"><div>123</div></template>
+				<template><button>casdf</button></template>
+			</g-popover>
 			{{ selected }}
 		</div>
 	</div>
