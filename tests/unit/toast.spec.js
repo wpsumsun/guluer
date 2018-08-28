@@ -31,40 +31,38 @@ describe('Toast', () => {
         propsData: {
           closeButton: {
             text: '啊哈',
-            callback
           }
         }
       })
       const callback = sinon.fake()
       const closeButton = wrapper.find('.close')
       expect(closeButton.element.innerHTML.trim()).to.equal('啊哈')
-      closeButton.on('click', callback)
+      // on 不可以，只能使用 addEventListener
+      closeButton.element.addEventListener('click', callback)
       closeButton.element.click()
       expect(callback).to.have.been.called
     })
-    //
-    // it('接收 enableHtml', () => {
-    //   const Constructor = Vue.extend(Toast)
-    //   const vm = new Constructor({
-    //     propsData: {
-    //       enableHtml: true
-    //     }
-    //   })
-    //   vm.$slots.default = ['<strong id="tests">tests</strong>>']
-    //   vm.$mount()
-    //   const strong = vm.$el.querySelector('#tests')
-    //   expect(strong).to.exist
-    // })
-    //
-    // it('接收 position', () => {
-    //   const Constructor = Vue.extend(Toast)
-    //   const vm = new Constructor({
-    //     propsData: {
-    //       position: 'middle'
-    //     }
-    //   }).$mount()
-    //   expect(vm.$el.classList.contains('middle')).to.eq(true)
-    // })
+
+    xit('接收 enableHtml', () => {
+      const wrapper = mount(Toast, {
+        propsData: {
+          enableHtml: true
+        },
+      })
+      // 存疑
+      wrapper.vm.$slots.default = ['<strong id="tests">tests</strong>>']
+      const strong = wrapper.find('#tests')
+      expect(strong).to.exist
+    })
+
+    it('接收 position', () => {
+      const wrapper = mount(Toast, {
+        propsData: {
+          position: 'middle'
+        },
+      })
+      expect(wrapper.classes()).contains('middle')
+    })
 
   })
 })

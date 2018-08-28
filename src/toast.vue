@@ -3,7 +3,7 @@
     <div class="toast" ref="toast">
       <div class="message">
         <slot v-if="!enableHtml"></slot>
-        <div v-else v-html="$slots.default[0]"></div>
+        <div v-else v-html="$slots.default"></div>
       </div>
       <span
         v-if="closeButton"
