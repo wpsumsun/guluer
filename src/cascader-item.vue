@@ -1,21 +1,23 @@
 <template>
 	<div class="cascader-item">
 		<div class="left wrapper">
-			<div
-				class="row"
-				:class="{ active: selected[level]&&selected[level].label === option.label }"
-				v-for="(option, index) in options"
-				@click="select(option)"
-				:key="index">
-				{{ option.label }}
-				<g-icon name="loading" class="loading" v-if="loadingItem.label === option.label"></g-icon>
-				<template v-else>
-					<g-icon
-						v-if="showRightArrow(option)"
-						name="right"
-						class="icon">
-					</g-icon>
-				</template>
+			<div class="content">
+				<div
+					class="row"
+					:class="{ active: selected[level]&&selected[level].label === option.label }"
+					v-for="(option, index) in options"
+					@click="select(option)"
+					:key="index">
+					{{ option.label }}
+					<g-icon name="loading" class="loading" v-if="loadingItem.label === option.label"></g-icon>
+					<template v-else>
+						<g-icon
+							v-if="showRightArrow(option)"
+							name="right"
+							class="icon">
+						</g-icon>
+					</template>
+				</div>
 			</div>
 		</div>
 		<div class="right wrapper" v-if="nextLevel&&nextLevel.length">
@@ -104,6 +106,9 @@ export default {
 		overflow-x: hidden;
 		overflow-y: auto;
 		border-left: 1px solid #e4e7ed;
+		.content {
+			padding: 6px 0;
+		}
 		.row {
 			padding: 8px 20px;
 			color: #606266;
