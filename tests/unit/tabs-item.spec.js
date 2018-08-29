@@ -11,6 +11,7 @@ import TabsPane from '@/tabs-pane'
 chai.use(sinonChai);
 
 describe('TabsItem', () => {
+
   it('存在', () => {
     expect(TabsItem).to.exist
   })
