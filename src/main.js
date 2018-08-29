@@ -22,6 +22,8 @@ import Popover from './popover'
 import Collapse from './collapse'
 import CollapseItem from './collapse-item'
 import Cascader from './cascader'
+import Carousel from './carousel'
+import CarouselItem from './carousel-item'
 
 Vue.use(toast)
 
@@ -46,6 +48,9 @@ Vue.component('g-popover', Popover)
 Vue.component('g-collapse', Collapse)
 Vue.component('g-collapse-item', CollapseItem)
 Vue.component('g-cascader', Cascader)
+Vue.component('g-carousel', Carousel)
+Vue.component('g-carousel-item', CarouselItem)
+
 
 Vue.config.productionTip = false;
 
