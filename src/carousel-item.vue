@@ -48,12 +48,14 @@
 }
 .slide-leave-to {
 	transform: translateX(-100%);
+	position: absolute;
+	left: 0;
+	top: 0;
 }
 
 .g-carousel-item {
 	width: 100%;
 	height: 100%;
 	flex-shrink: 0;
-	background: #00a0e9;
 }
 </style>
