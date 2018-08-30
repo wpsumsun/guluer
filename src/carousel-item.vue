@@ -32,7 +32,7 @@
 <style lang="scss" scoped>
 .slide-enter-active,
 .slide-leave-active {
-	transition: all .4s;
+	transition: all 1s;
 }
 .slide-enter.reverse {
 	transform: translateX(-100%);
@@ -51,10 +51,13 @@
 	position: absolute;
 	left: 0;
 	top: 0;
+	width: 100%;
+	height: 100%;
 }
 .g-carousel-item {
 	width: 100%;
 	height: 100%;
 	flex-shrink: 0;
+	background: #00a0e9;
 }
 </style>

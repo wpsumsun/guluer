@@ -46,4 +46,8 @@
 	* {
 		box-sizing: border-box;
 	}
+	.box {
+		margin: 50px;
+		height: 300px;
+	}
 </style>
