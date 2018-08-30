@@ -21,7 +21,7 @@ export default {
 		},
 		reverse: {
       type: Boolean,
-			default: true
+			default: false
 		}
 	},
 	mounted() {
