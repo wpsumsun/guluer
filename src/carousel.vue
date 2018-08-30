@@ -1,5 +1,11 @@
 <template>
-	<div class="g-carousel" @mouseenter="mouseHandler('enter')" @mouseleave="mouseHandler('leave')">
+	<div
+		class="g-carousel"
+		@mouseenter="mouseHandler('enter')"
+		@mouseleave="mouseHandler('leave')"
+		@touchstart="onTouchStart"
+		@touchmove="onTouchMove"
+		@touchend="onTouchEnd">
 		<div class="window">
 			<slot></slot>
 		</div>
@@ -34,7 +40,8 @@ export default {
     return {
       childrenLength: 0,
 	    lastSelectedIndex: null,
-	    timerId: null
+	    timerId: null,
+	    startPoint: null
     }
 	},
 	computed: {
@@ -54,6 +61,29 @@ export default {
     this.updateChildren()
   },
 	methods: {
+    onTouchStart(e) {
+      if (e.touches.length > 1) { return }
+      this.startPoint = e.touches[0]
+	    this.pause()
+    },
+    onTouchMove(e) {
+    },
+    onTouchEnd(e) {
+      const { clientX: x1, clientY: y1 } = this.startPoint
+	    const { clientX: x2, clientY: y2 } = e.changedTouches[0]
+      const deltaY = Math.abs(y1 - y2)
+	    const distance = Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2))
+	    if ((distance / deltaY) > 2) {
+		    if (x2 > x1) {
+		      this.select(this.selectedIndex - 1)
+		    } else {
+          this.select(this.selectedIndex + 1)
+		    }
+	    }
+	    this.$nextTick(() => {
+	      this.playAutomatically()
+	    })
+    },
     mouseHandler(type) {
       if (type === 'enter') {
 				this.pause()
@@ -73,8 +103,6 @@ export default {
 	    const run = () => {
 				let index = names.indexOf(this.getSelected())
 	      let newIndex = index + 1
-		    if (newIndex === names.length) { newIndex = 0 }
-		    if (newIndex === -1) { newIndex = names.length - 1 }
 	      this.select(newIndex)
 	      this.timerId = setTimeout(run, this.duration * 1000)
 	    }
@@ -84,11 +112,13 @@ export default {
       const selected = this.getSelected()
 	    this.$children.forEach(vm => {
         let reverse = (this.selectedIndex < this.lastSelectedIndex)
-		    if (this.selectedIndex === 0 && this.lastSelectedIndex === this.$children.length - 1) {
-		      reverse = false
-		    }
-		    if (this.selectedIndex === this.$children.length - 1 && this.lastSelectedIndex === 0) {
-		      reverse = true
+        if (this.timerId) {
+          if (this.selectedIndex === 0 && this.lastSelectedIndex === this.$children.length - 1) {
+            reverse = false
+          }
+          if (this.selectedIndex === this.$children.length - 1 && this.lastSelectedIndex === 0) {
+            reverse = true
+          }
 		    }
 		    vm.reverse = reverse
         this.$nextTick(() => {
@@ -96,9 +126,15 @@ export default {
         })
 	    })
     },
-		select(index) {
+		select(newIndex) {
+      // this.pause()
+      if (newIndex === this.names.length) { newIndex = 0 }
+      if (newIndex === -1) { newIndex = this.names.length - 1 }
       this.lastSelectedIndex = this.selectedIndex
-      this.$emit('update:selected', this.names[index])
+      this.$emit('update:selected', this.names[newIndex])
+			// this.$nextTick(() => {
+			//   this.playAutomatically()
+			// })
 		},
     getSelected() {
       return this.selected || this.$children[0].name
