@@ -72,5 +72,6 @@ export default {
 	overflow: hidden;
 	position: relative;
 	border: 1px solid #67c23a;
+	background: #00a0e9;
 }
 </style>
