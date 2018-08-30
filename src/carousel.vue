@@ -18,6 +18,10 @@ export default {
 		duration: {
       type: [Number, String],
 			default: 3
+		},
+		reverse: {
+      type: Boolean,
+			default: true
 		}
 	},
 	mounted() {
@@ -27,7 +31,11 @@ export default {
 	    if (index === names.length) { index = 0 }
 	    if (index === -1) { index = names.length - 1 }
       this.$emit('update:selected', names[index])
-	    index --
+	    if (this.reverse) {
+        index --
+	    } else {
+        index ++
+	    }
 	    setTimeout(run, this.duration * 1000)
     }
     this.updateChildren()
@@ -40,10 +48,10 @@ export default {
     updateChildren() {
       const selected = this.getSelected()
 	    this.$children.forEach(vm => {
-		    const names = this.$children.map(vm => vm.name)
-		    const current = names.indexOf(this.getSelected())
-		    const index = names.indexOf(vm.name)
-		    vm.reverse = !(current - index)
+		    // const names = this.$children.map(vm => vm.name)
+		    // const current = names.indexOf(this.getSelected())
+		    // const index = names.indexOf(vm.name)
+        vm.reverse = this.reverse
         vm.selected = selected
 	    })
     },
@@ -64,6 +72,5 @@ export default {
 	overflow: hidden;
 	position: relative;
 	border: 1px solid #67c23a;
-	background: #00a0e9;
 }
 </style>
