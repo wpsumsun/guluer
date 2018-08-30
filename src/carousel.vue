@@ -53,6 +53,7 @@ export default {
 		},
 	},
 	mounted() {
+    this.isMobile()
     this.playAutomatically()
     this.updateChildren()
     this.childrenLength = this.$children.length
@@ -112,7 +113,7 @@ export default {
       const selected = this.getSelected()
 	    this.$children.forEach(vm => {
         let reverse = (this.selectedIndex < this.lastSelectedIndex)
-        if (this.timerId) {
+        if (this.timerId || this.isMobile()) {
           if (this.selectedIndex === 0 && this.lastSelectedIndex === this.$children.length - 1) {
             reverse = false
           }
@@ -127,18 +128,18 @@ export default {
 	    })
     },
 		select(newIndex) {
-      // this.pause()
       if (newIndex === this.names.length) { newIndex = 0 }
       if (newIndex === -1) { newIndex = this.names.length - 1 }
       this.lastSelectedIndex = this.selectedIndex
       this.$emit('update:selected', this.names[newIndex])
-			// this.$nextTick(() => {
-			//   this.playAutomatically()
-			// })
 		},
     getSelected() {
       return this.selected || this.$children[0].name
     },
+		isMobile() {
+      const reg = /Android|webOS|iPhone|iPod|BlackBerry/i
+      return reg.test(navigator.userAgent)
+    }
 	}
 }
 </script>
