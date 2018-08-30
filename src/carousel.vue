@@ -1,5 +1,5 @@
 <template>
-	<div class="g-carousel">
+	<div class="g-carousel" @mouseenter="mouseHandler('enter')" @mouseleave="mouseHandler('leave')">
 		<div class="window">
 			<slot></slot>
 		</div>
@@ -9,7 +9,6 @@
 				v-for="index in childrenLength"
 				:class="{ active: selectedIndex === (index - 1) }"
 				@click="select(index-1)">
-				{{ index }}
 			</span>
 		</div>
 	</div>
@@ -28,13 +27,14 @@ export default {
 		},
 		duration: {
       type: [Number, String],
-			default: 4
+			default: 3
 		},
 	},
 	data() {
     return {
       childrenLength: 0,
 	    lastSelectedIndex: null,
+	    timerId: null
     }
 	},
 	computed: {
@@ -54,7 +54,18 @@ export default {
     this.updateChildren()
   },
 	methods: {
+    mouseHandler(type) {
+      if (type === 'enter') {
+				this.pause()
+	      return
+      }
+      this.playAutomatically()
+    },
+		pause() {
+      clearTimeout(this.timerId)
+		},
     playAutomatically() {
+      if (this.timerId) { return }
 			const names  = this.names
 	    const run = () => {
 				let index = names.indexOf(this.getSelected())
@@ -62,14 +73,21 @@ export default {
 		    if (newIndex === names.length) { newIndex = 0 }
 		    if (newIndex === -1) { newIndex = names.length - 1 }
 	      this.select(newIndex)
-	      setTimeout(run, this.duration * 1000)
+	      this.timerId = setTimeout(run, this.duration * 1000)
 	    }
-	    setTimeout(run, this.duration * 1000)
+	    this.timerId = setTimeout(run, this.duration * 1000)
     },
     updateChildren() {
       const selected = this.getSelected()
 	    this.$children.forEach(vm => {
-        vm.reverse = (this.selectedIndex < this.lastSelectedIndex)
+        let reverse = (this.selectedIndex < this.lastSelectedIndex)
+		    if (this.selectedIndex === 0 && this.lastSelectedIndex === this.$children.length - 1) {
+		      reverse = false
+		    }
+		    if (this.selectedIndex === this.$children.length - 1 && this.lastSelectedIndex === 0) {
+		      reverse = true
+		    }
+		    vm.reverse = reverse
         this.$nextTick(() => {
           vm.selected = selected
         })
@@ -106,8 +124,20 @@ export default {
 		left: 50%;
 		transform: translateX(-50%);
 		.dot {
+			display: inline-block;
+			width: 16px;
+			height: 3px;
+			margin: 0 3px;
+			opacity: 0.3;
+			background: #fff;
+			cursor: pointer;
+			&:hover {
+				opacity: 1;
+			}
 			&.active {
-				background: #42b983;
+				transition: all .3s;
+				width: 24px;
+				opacity: 1;
 			}
 		}
 	}

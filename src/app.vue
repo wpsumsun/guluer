@@ -1,7 +1,7 @@
 <template>
 	<div id="app">
 		<div class="box">
-			<g-carousel :selected.sync="selected">
+			<g-carousel :selected.sync="selected" class="carousel">
 				<g-carousel-item name="1">
 					<div>1</div>
 				</g-carousel-item>
@@ -42,12 +42,25 @@
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
 	* {
 		box-sizing: border-box;
 	}
 	.box {
 		margin: 50px;
 		height: 300px;
+	}
+	.carousel {
+		&.g-carousel {
+			.g-carousel-item {
+				background: #364d79;
+				color: #fff;
+				font-size: 30px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-weight: bold;
+			}
+		}
 	}
 </style>

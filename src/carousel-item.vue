@@ -58,6 +58,5 @@
 	width: 100%;
 	height: 100%;
 	flex-shrink: 0;
-	background: #00a0e9;
 }
 </style>
