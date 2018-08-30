@@ -63,9 +63,12 @@ export default {
     },
 		pause() {
       clearTimeout(this.timerId)
+			this.timerId = null
 		},
     playAutomatically() {
-      if (this.timerId) { return }
+      if (this.timerId) {
+        return
+      }
 			const names  = this.names
 	    const run = () => {
 				let index = names.indexOf(this.getSelected())
