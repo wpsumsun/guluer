@@ -9,6 +9,24 @@
 		<div class="window">
 			<slot></slot>
 		</div>
+		<transition name="left-fade">
+			<div
+				v-if="arrow !== 'never'"
+				v-show="arrow === 'always' || visible"
+				class="pre-btn btn-wrapper"
+				@click="onClickPre">
+				<g-icon name="left" class="icon"></g-icon>
+			</div>
+		</transition>
+		<transition name="right-fade">
+			<div
+				v-if="arrow !== 'never'"
+				v-show="arrow === 'always' || visible"
+				class="next-btn btn-wrapper"
+				@click="onClickNext">
+				<g-icon name="right" class="icon"></g-icon>
+			</div>
+		</transition>
 		<div class="dots-wrapper">
 			<span
 				class="dot"
@@ -21,8 +39,13 @@
 </template>
 
 <script>
+import Icon from './icon'
+
 export default {
   name: 'g-carousel',
+	components: {
+    'g-icon': Icon
+	},
 	props: {
     selected: {
       type: String
@@ -35,13 +58,22 @@ export default {
       type: [Number, String],
 			default: 3
 		},
+		arrow: {
+      type: String,
+			default: 'always',
+			validator(value) {
+			  return ['always', 'never', 'hover'].indexOf(value) > -1
+			}
+		}
 	},
 	data() {
     return {
       childrenLength: 0,
 	    lastSelectedIndex: null,
 	    timerId: null,
-	    startPoint: null
+	    startPoint: null,
+      isArrowOperate: false,
+	    visible: false
     }
 	},
 	computed: {
@@ -49,19 +81,30 @@ export default {
       return this.names.indexOf(this.getSelected())
     },
 		names() {
-      return this.$children.map(vm => vm.name)
+      return this.items.map(vm => vm.name)
+		},
+		items() {
+      return this.$children.filter(vm => vm.$options.name === 'g-carousel-item')
 		},
 	},
 	mounted() {
     this.isMobile()
     this.playAutomatically()
     this.updateChildren()
-    this.childrenLength = this.$children.length
+    this.childrenLength = this.items.length
   },
   updated() {
     this.updateChildren()
   },
 	methods: {
+    onClickPre() {
+      this.isArrowOperate = true
+      this.select(this.selectedIndex - 1)
+    },
+    onClickNext() {
+      this.isArrowOperate = true
+      this.select(this.selectedIndex + 1)
+    },
     onTouchStart(e) {
       if (e.touches.length > 1) { return }
       this.startPoint = e.touches[0]
@@ -87,9 +130,11 @@ export default {
     },
     mouseHandler(type) {
       if (type === 'enter') {
+        this.visible = true
 				this.pause()
 	      return
       }
+      this.visible = false
       this.playAutomatically()
     },
 		pause() {
@@ -111,18 +156,19 @@ export default {
     },
     updateChildren() {
       const selected = this.getSelected()
-	    this.$children.forEach(vm => {
+	    this.items.forEach(vm => {
         let reverse = (this.selectedIndex < this.lastSelectedIndex)
-        if (this.timerId || this.isMobile()) {
-          if (this.selectedIndex === 0 && this.lastSelectedIndex === this.$children.length - 1) {
+        if (this.timerId || this.isMobile() || this.isArrowOperate) {
+          if (this.selectedIndex === 0 && this.lastSelectedIndex === this.items.length - 1) {
             reverse = false
           }
-          if (this.selectedIndex === this.$children.length - 1 && this.lastSelectedIndex === 0) {
+          if (this.selectedIndex === this.items.length - 1 && this.lastSelectedIndex === 0) {
             reverse = true
           }
 		    }
 		    vm.reverse = reverse
         this.$nextTick(() => {
+          this.isArrowOperate = false
           vm.selected = selected
         })
 	    })
@@ -134,7 +180,7 @@ export default {
       this.$emit('update:selected', this.names[newIndex])
 		},
     getSelected() {
-      return this.selected || this.$children[0].name
+      return this.selected || this.items[0].name
     },
 		isMobile() {
       const reg = /Android|webOS|iPhone|iPod|BlackBerry/i
@@ -158,6 +204,31 @@ export default {
 		width: 100%;
 		height: 100%;
 	}
+	.btn-wrapper {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: absolute;
+		width: 36px;
+		height: 36px;
+		top: 50%;
+		margin-top: -18px;
+		background-color: rgba(31,45,61,.11);
+		border-radius: 50%;
+		cursor: pointer;
+		&:hover {
+			background-color: rgba(31,45,61,.23);
+		}
+		.icon {
+			fill: #fff;
+		}
+		&.pre-btn {
+			left: 16px;
+		}
+		&.next-btn {
+			right: 16px;
+		}
+	}
 	.dots-wrapper {
 		position: absolute;
 		bottom: 12px;
@@ -180,6 +251,20 @@ export default {
 				opacity: 1;
 			}
 		}
+	}
+	.left-fade-enter-active,
+	.left-fade-leave-active,
+	.right-fade-enter-active,
+	.right-fade-leave-active {
+		transition: all .3s;
+	}
+	.left-fade-enter{
+		transform: translateX(-16px);
+		opacity: 0;
+	}
+	.right-fade-enter{
+		transform: translateX(16px);
+		opacity: 0;
 	}
 }
 </style>

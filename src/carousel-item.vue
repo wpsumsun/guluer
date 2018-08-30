@@ -8,7 +8,7 @@
 
 <script>
   export default {
-    name: 'g-carousel',
+    name: 'g-carousel-item',
 	  props: {
       name: {
         type: String,
