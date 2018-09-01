@@ -56,7 +56,7 @@ export default {
 		},
 		duration: {
       type: [Number, String],
-			default: 3
+			default: 5
 		},
 		arrow: {
       type: String,
@@ -156,7 +156,7 @@ export default {
     },
     updateChildren() {
       const selected = this.getSelected()
-	    this.items.forEach(vm => {
+      this.items.forEach(vm => {
         let reverse = (this.selectedIndex < this.lastSelectedIndex)
         if (this.timerId || this.isMobile() || this.isArrowOperate) {
           if (this.selectedIndex === 0 && this.lastSelectedIndex === this.items.length - 1) {

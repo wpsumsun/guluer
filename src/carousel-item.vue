@@ -1,6 +1,6 @@
 <template>
 	<transition name="slide">
-		<div class="g-carousel-item" v-show="visible" :class="{ reverse }">
+		<div class="g-carousel-item" v-show="visible" :class="{ reverse, active: visible }">
 			<slot></slot>
 		</div>
 	</transition>
@@ -58,5 +58,6 @@
 	width: 100%;
 	height: 100%;
 	flex-shrink: 0;
+	background: red;
 }
 </style>
