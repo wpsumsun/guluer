@@ -1,7 +1,7 @@
 <template>
 	<label
 		class="radio-wrapper"
-		:class="{ active: model === label }">
+		:class="{ active: model === label, disabled, }">
 		<span
 			class="radio-dot">
 			<input
@@ -9,6 +9,7 @@
 				:value="label"
 				@change="change"
 				aria-hidden="true"
+				:disabled="disabled"
 				v-model="model">
 		</span>
 		<span class="slot-wrapper">
@@ -28,6 +29,10 @@
 		  label: {
         type: [String, Number, Boolean],
 			  require: true
+		  },
+		  disabled: {
+        type: Boolean,
+			  default: false
 		  }
 	  },
 	  inject: {
@@ -67,7 +72,7 @@
 	  methods: {
       change() {
         this.$emit('change', this.label)
-        this.isGroup && this.eventBus.$emit('change', this.label);
+        this.isGroup && this.eventBus.$emit('change', this.label)
       },
 	  },
   }
@@ -97,6 +102,20 @@
 			&::after {
 				transform: translate(-50%, -50%) scale(1);
 				background: $blue-light;
+			}
+		}
+	}
+	&.disabled {
+		cursor: not-allowed;
+		.slot-wrapper {
+			color: #c0c4cc;
+		}
+		.radio-dot {
+			background-color: #f5f7fa;
+			border-color: #e4e7ed;
+			pointer-events: none;
+			&:after {
+				background-color: #c0c4cc
 			}
 		}
 	}
