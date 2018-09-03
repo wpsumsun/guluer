@@ -30,13 +30,34 @@
 			  require: true
 		  }
 	  },
+	  inject: {
+      eventBus: {
+        default: null
+      }
+	  },
+	  data() {
+      return {
+        radioGroup: null
+      }
+	  },
 	  created() {
-      console.log(this.label);
     },
 	  computed: {
+      isGroup() {
+        let parent = this.$parent;
+        while (parent) {
+          if (parent.$options.name !== 'g-radio-group') {
+            parent = parent.$parent;
+          } else {
+            this.radioGroup = parent;
+            return true;
+          }
+        }
+        return false;
+      },
       model: {
         get() {
-          return this.value
+          return this.isGroup ? this.radioGroup.value : this.value
         },
 	      set(val) {
           this.$emit('input', val);
@@ -46,6 +67,7 @@
 	  methods: {
       change() {
         this.$emit('change', this.label)
+        this.isGroup && this.eventBus.$emit('change', this.label);
       },
 	  },
   }

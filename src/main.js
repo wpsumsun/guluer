@@ -25,6 +25,7 @@ import Cascader from './cascader'
 import Carousel from './carousel'
 import CarouselItem from './carousel-item'
 import Radio from './radio'
+import RadioGroup from './radio-group'
 
 Vue.use(toast)
 
@@ -52,6 +53,7 @@ Vue.component('g-cascader', Cascader)
 Vue.component('g-carousel', Carousel)
 Vue.component('g-carousel-item', CarouselItem)
 Vue.component('g-radio', Radio)
+Vue.component('g-radio-group', RadioGroup)
 
 
 Vue.config.productionTip = false;

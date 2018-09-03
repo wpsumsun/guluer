@@ -3,7 +3,12 @@
 		<div class="box">
 			<g-radio v-model="radio" label="1" @change="change">备选项1</g-radio>
 			<g-radio v-model="radio" label="2" @change="change">备选项2</g-radio>
-			<g-radio v-model="radio" label="3" @change="change">备选项3</g-radio>
+		</div>
+		<div class="box">
+			<g-radio-group v-model="radio2" @change="change">
+				<g-radio label="1">备选项1</g-radio>
+				<g-radio label="2">备选项2</g-radio>
+			</g-radio-group>
 		</div>
 	</div>
 </template>
@@ -24,13 +29,15 @@
 	  name: 'app',
 		data() {
 	    return {
-	      radio: '1',
+	      radio: '2',
+	      radio2: '1',
 	    }
 		},
 		created() {
 		},
 		methods: {
 	    change(value) {
+        console.log('val', value);
       },
 		},
 	}
