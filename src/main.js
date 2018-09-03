@@ -24,6 +24,7 @@ import CollapseItem from './collapse-item'
 import Cascader from './cascader'
 import Carousel from './carousel'
 import CarouselItem from './carousel-item'
+import Radio from './radio'
 
 Vue.use(toast)
 
@@ -50,6 +51,7 @@ Vue.component('g-collapse-item', CollapseItem)
 Vue.component('g-cascader', Cascader)
 Vue.component('g-carousel', Carousel)
 Vue.component('g-carousel-item', CarouselItem)
+Vue.component('g-radio', Radio)
 
 
 Vue.config.productionTip = false;

@@ -1,17 +1,9 @@
 <template>
 	<div id="app">
 		<div class="box">
-			<g-carousel :selected.sync="selected" class="carousel">
-				<g-carousel-item name="1">
-					<div>1</div>
-				</g-carousel-item>
-				<g-carousel-item name="2">
-					<div>2</div>
-				</g-carousel-item>
-				<g-carousel-item name="3">
-					<div>3</div>
-				</g-carousel-item>
-			</g-carousel>
+			<g-radio v-model="radio" label="1" @change="change">备选项1</g-radio>
+			<g-radio v-model="radio" label="2" @change="change">备选项2</g-radio>
+			<g-radio v-model="radio" label="3" @change="change">备选项3</g-radio>
 		</div>
 	</div>
 </template>
@@ -32,12 +24,14 @@
 	  name: 'app',
 		data() {
 	    return {
-	      selected: '1',
+	      radio: '1',
 	    }
 		},
 		created() {
 		},
 		methods: {
+	    change(value) {
+      },
 		},
 	}
 </script>
