@@ -18,7 +18,7 @@
 </script>
 
 <style scoped lang="scss">
-@import "var";
+@import "../var";
 .g-button-group {
 	display: inline-flex;
 	vertical-align: middle;
