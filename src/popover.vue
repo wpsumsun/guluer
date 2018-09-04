@@ -50,6 +50,15 @@
         this.$refs.popover.addEventListener('mouseleave', this.close)
       }
 	  },
+	  beforeDestroy() {
+      if (this.trigger === 'click') {
+        this.$refs.popover.removeEventListener('click', this.toggle)
+      }
+      if (this.trigger === 'hover') {
+        this.$refs.popover.removeEventListener('mouseenter', this.open)
+        this.$refs.popover.removeEventListener('mouseleave', this.close)
+      }
+	  },
 	  methods: {
       getPosition() {
 	      const { contentWrapper, trigger } = this.$refs
