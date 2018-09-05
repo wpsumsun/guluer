@@ -20,8 +20,8 @@
 </template>
 
 <script>
-  import Collapse from '../../../src/collapse'
-  import CollapseItem from '../../../src/collapse-item'
+  import Collapse from '../../../src/collapse/collapse'
+  import CollapseItem from '../../../src/collapse/collapse-item'
   export default {
     name: 'button-demo',
     components: {

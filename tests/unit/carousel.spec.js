@@ -2,8 +2,8 @@ import chai, { expect } from "chai";
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 import { mount } from "@vue/test-utils";
-import Carousel from '@/carousel.vue';
-import CarouselItem from '@/carousel-item.vue';
+import Carousel from '@/carousel/carousel.vue';
+import CarouselItem from '@/carousel/carousel-item.vue';
 import Vue from 'vue'
 Vue.component('g-carousel-item', CarouselItem)
 

@@ -10,7 +10,7 @@
 </template>
 
 <script>
-  import Toast from '../../../src/toast.vue'
+  import Toast from '../../../src/toast/toast.vue'
   export default {
     name: 'button-demo',
     components: {

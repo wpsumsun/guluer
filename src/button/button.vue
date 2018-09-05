@@ -12,7 +12,7 @@
 </template>
 
 <script>
-  import gIcon from '../icon.vue'
+  import gIcon from '../icon/icon.vue'
   export default {
     name: "g-button",
     components: {
@@ -36,7 +36,7 @@
 </script>
 
 <style scoped lang="scss">
-  @import "../var";
+  @import "../styles/var";
   .g-button {
     height: $button-height;
     line-height: $button-height;

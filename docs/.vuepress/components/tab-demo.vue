@@ -17,11 +17,11 @@
 </template>
 
 <script>
-  import Tab from '../../../src/tabs'
-  import TabsHead from '../../../src/tabs-head'
-  import TabsBody from '../../../src/tabs-body'
-  import TabsItem from '../../../src/tabs-item'
-  import TabPane from '../../../src/tabs-pane'
+  import Tab from '../../../src/tab/tabs'
+  import TabsHead from '../../../src/tab/tabs-head'
+  import TabsBody from '../../../src/tab/tabs-body'
+  import TabsItem from '../../../src/tab/tabs-item'
+  import TabPane from '../../../src/tab/tabs-pane'
   export default {
     name: 'button-demo',
     components: {

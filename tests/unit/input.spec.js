@@ -2,7 +2,7 @@ import chai, { expect } from "chai";
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 import { mount } from "@vue/test-utils";
-import Input from '@/input.vue';
+import Input from '@/input/input.vue';
 
 
 describe('Input', () => {

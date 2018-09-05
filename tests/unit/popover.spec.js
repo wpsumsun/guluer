@@ -2,7 +2,7 @@ import chai, { expect } from "chai";
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 import { mount } from "@vue/test-utils";
-import Popover from '@/popover.vue';
+import Popover from '@/popover/popover.vue';
 
 describe('Popover', () => {
    it('存在.', () => {

@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import Icon from './icon'
+import Icon from '../icon/icon'
 
 export default {
   name: 'g-cascader-item',
@@ -91,7 +91,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-	@import "var";
+	@import "../styles/var";
 	.cascader-item {
 		display: flex;
 		flex-direction: row;

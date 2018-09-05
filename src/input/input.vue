@@ -22,7 +22,7 @@
 </template>
 
 <script>
-  import Icon from './icon.vue'
+  import Icon from '../icon/icon.vue'
   export default {
     name: 'g-input',
     components: {
@@ -65,7 +65,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "var";
+  @import "../styles/var";
   .wrapper {
     display: inline-flex;
     align-items: center;

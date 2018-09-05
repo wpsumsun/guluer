@@ -39,7 +39,7 @@
 </template>
 
 <script>
-  import Popover from '../../../src/popover'
+  import Popover from '../../../src/popover/popover'
   export default {
     name: 'button-demo',
     components: {

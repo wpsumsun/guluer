@@ -10,7 +10,7 @@
 </template>
 
 <script>
-	import Input from '../../../src/input'
+	import Input from '../../../src/input/input'
 	export default {
 	  name: 'input-demo',
 		components: {

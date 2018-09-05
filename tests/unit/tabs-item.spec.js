@@ -2,11 +2,11 @@ import chai, { expect } from "chai";
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 import { mount } from "@vue/test-utils";
-import Tabs from '@/tabs'
-import TabsHead from '@/tabs-head'
-import TabsItem from '@/tabs-item'
-import TabsBody from '@/tabs-body'
-import TabsPane from '@/tabs-pane'
+import Tabs from '@/tab/tabs'
+import TabsHead from '@/tab/tabs-head'
+import TabsItem from '@/tab/tabs-item'
+import TabsBody from '@/tab/tabs-body'
+import TabsPane from '@/tab/tabs-pane'
 
 chai.use(sinonChai);
 

@@ -2,8 +2,8 @@ import chai, { expect } from "chai";
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 import { mount } from "@vue/test-utils";
-import Row from '@/row.vue';
-import Col from '@/col.vue';
+import Row from '@/grid/row.vue';
+import Col from '@/grid/col.vue';
 
 describe('Row', () => {
   it('存在', () => {

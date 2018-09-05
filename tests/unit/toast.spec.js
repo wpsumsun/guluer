@@ -2,7 +2,7 @@ import chai, { expect } from "chai";
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 import { mount } from "@vue/test-utils";
-import Toast from '@/toast.vue'
+import Toast from '@/toast/toast.vue'
 
 chai.use(sinonChai);
 
