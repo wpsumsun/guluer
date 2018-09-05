@@ -65,7 +65,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "../styles/var";
+  @import "var";
   .wrapper {
     display: inline-flex;
     align-items: center;
