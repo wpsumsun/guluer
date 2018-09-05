@@ -1,45 +1,30 @@
 <template>
 	<div id="app">
 		<div class="box">
-			<g-radio v-model="radio" label="1" @change="change">备选项1</g-radio>
-			<!--<g-radio v-model="radio" label="2" @change="change">备选项2</g-radio>-->
-		</div>
-		<div class="box">
-			<g-radio-group v-model="radio2" @change="change">
-				<g-radio label="1" disabled="">备选项1</g-radio>
-				<g-radio label="2">备选项2</g-radio>
-				<g-radio label="3" disabled="">备选项2</g-radio>
-			</g-radio-group>
+			<g-menu :selected.sync="selected">
+				<g-menu-item name="home">首页</g-menu-item>
+				<g-sub-menu>
+					<template slot="title">关于</template>
+					<g-menu-item name="culture">文化</g-menu-item>
+					<g-menu-item name="haha">哈哈</g-menu-item>
+				</g-sub-menu>
+				<g-menu-item name="hire">招聘</g-menu-item>
+			</g-menu>
 		</div>
 	</div>
 </template>
 
 <script>
-	import db from '../tests/fixture/db'
-
-	function ajax(parentId = 0) {
-	  return new Promise((resolve, reject)=> {
-      setTimeout(() => {
-        const result = db.filter(item => item.parent_id === parentId)
-        resolve(result)
-      }, 1000)
-	  })
-  }
-
 	export default {
 	  name: 'app',
 		data() {
 	    return {
-	      radio: '2',
-	      radio2: '2',
+	      selected: ['home']
 	    }
 		},
 		created() {
 		},
 		methods: {
-	    change(value) {
-        console.log('val', value);
-      },
 		},
 	}
 </script>

@@ -1,0 +1,69 @@
+<template>
+	<div class="menu">
+		<slot></slot>
+	</div>
+</template>
+
+<script>
+  export default {
+    name: "g-menu",
+	  props: {
+      selected: {
+        type: Array,
+	      default() { return [] },
+      },
+		  multiple: {
+        type: Boolean,
+			  default: false
+		  }
+	  },
+	  data() {
+      return {
+        children: []
+      }
+	  },
+	  provide() {
+      return {
+        root: this
+      }
+	  },
+	  mounted() {
+      this.updateChildrenStatus()
+		  this.listenToChildren()
+    },
+	  updated() {
+      this.updateChildrenStatus()
+	  },
+	  methods: {
+      findChildren(vm) {
+        this.children.push(vm)
+      },
+		  updateChildrenStatus() {
+        this.children.forEach(vm => {
+          vm.selected = this.selected.indexOf(vm.name) > -1
+        })
+		  },
+      listenToChildren() {
+        this.children.forEach(vm => {
+          vm.$on('add:selected', (name) => {
+            if (this.multiple) {
+              if (this.selected.indexOf(name) < 0) {
+                const copy = JSON.parse(JSON.stringify(this.selected))
+	              copy.push(name)
+	              this.$emit("update:selected", copy)
+              }
+            } else {
+              this.$emit('update:selected', [name])
+            }
+          })
+        })
+      },
+	  }
+  }
+</script>
+
+<style lang="scss" scoped>
+.menu {
+	display: flex;
+}
+</style>

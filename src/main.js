@@ -26,6 +26,9 @@ import Carousel from './carousel/carousel'
 import CarouselItem from './carousel/carousel-item'
 import Radio from './radio/radio'
 import RadioGroup from './radio/radio-group'
+import Menu from './menu/menu'
+import MenuItem from './menu/menu-item'
+import SubMenu from './menu/sub-menu'
 
 Vue.use(toast)
 
@@ -54,6 +57,9 @@ Vue.component('g-carousel', Carousel)
 Vue.component('g-carousel-item', CarouselItem)
 Vue.component('g-radio', Radio)
 Vue.component('g-radio-group', RadioGroup)
+Vue.component('g-menu', Menu)
+Vue.component('g-menu-item', MenuItem)
+Vue.component('g-sub-menu', SubMenu)
 
 
 Vue.config.productionTip = false;
