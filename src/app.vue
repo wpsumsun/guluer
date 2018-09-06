@@ -6,7 +6,12 @@
 				<g-sub-menu>
 					<template slot="title">关于</template>
 					<g-menu-item name="culture">文化</g-menu-item>
-					<g-menu-item name="haha">哈哈</g-menu-item>
+					<g-menu-item name="culture2">文化2</g-menu-item>
+					<g-sub-menu>
+						<template slot="title">联系方式</template>
+						<g-menu-item name="wechat">微信</g-menu-item>
+						<g-menu-item name="qq">QQ</g-menu-item>
+					</g-sub-menu>
 				</g-sub-menu>
 				<g-menu-item name="hire">招聘</g-menu-item>
 			</g-menu>

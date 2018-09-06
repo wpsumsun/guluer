@@ -34,6 +34,7 @@
 <style lang="scss" scoped>
 .menu-item {
 	padding: 10px 20px;
+	cursor: pointer;
 	&.active {
 		background: #00a0e9;
 	}
