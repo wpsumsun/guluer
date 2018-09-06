@@ -20,11 +20,13 @@
       }
 	  },
 	  created() {
-      console.log('xxxxxxx', this.root);
       this.root.findChildren(this)
 	  },
 	  methods: {
       onClick() {
+        this.root.namePath = []
+        this.root.namePath.push(this.name)
+        this.$parent.updateNamePath && this.$parent.updateNamePath()
         this.$emit('add:selected', this.name)
       },
 	  },

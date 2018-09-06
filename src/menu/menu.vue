@@ -1,6 +1,7 @@
 <template>
 	<div class="menu">
 		<slot></slot>
+		{{ namePath }}
 	</div>
 </template>
 
@@ -19,7 +20,8 @@
 	  },
 	  data() {
       return {
-        children: []
+        children: [],
+	      namePath: []
       }
 	  },
 	  provide() {
