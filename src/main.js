@@ -29,6 +29,7 @@ import RadioGroup from './radio/radio-group'
 import Menu from './menu/menu'
 import MenuItem from './menu/menu-item'
 import SubMenu from './menu/sub-menu'
+import Switch from './switch/switch'
 
 Vue.use(toast)
 
@@ -60,6 +61,7 @@ Vue.component('g-radio-group', RadioGroup)
 Vue.component('g-menu', Menu)
 Vue.component('g-menu-item', MenuItem)
 Vue.component('g-sub-menu', SubMenu)
+Vue.component('g-switch', Switch)
 
 
 Vue.config.productionTip = false;

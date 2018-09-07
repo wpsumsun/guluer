@@ -1,25 +1,27 @@
 <template>
 	<div id="app">
 		<div class="box">
-			<g-menu :selected.sync="selected">
-				<g-menu-item name="home">首页</g-menu-item>
-				<g-sub-menu name="about">
-					<template slot="title">关于</template>
-					<g-menu-item name="culture">文化</g-menu-item>
-					<g-sub-menu name="connect">
-						<template slot="title">联系方式</template>
-						<g-sub-menu name="connect1">
-							<template slot="title">微信</template>
-							<g-menu-item name="wechat">1111</g-menu-item>
-							<g-menu-item name="qq">2222</g-menu-item>
-						</g-sub-menu>
-						<g-menu-item name="qq">QQ</g-menu-item>
-					</g-sub-menu>
-					<g-menu-item name="culture2">文化2</g-menu-item>
-				</g-sub-menu>
-				<g-menu-item name="hire">招聘</g-menu-item>
-			</g-menu>
-			123
+			<g-switch v-model="value1" @input="print"></g-switch>
+			{{ value1}}
+			<!--<g-menu :selected.sync="selected">-->
+				<!--<g-menu-item name="home">首页</g-menu-item>-->
+				<!--<g-sub-menu name="about">-->
+					<!--<template slot="title">关于</template>-->
+					<!--<g-menu-item name="culture">文化</g-menu-item>-->
+					<!--<g-sub-menu name="connect">-->
+						<!--<template slot="title">联系方式</template>-->
+						<!--<g-sub-menu name="connect1">-->
+							<!--<template slot="title">微信</template>-->
+							<!--<g-menu-item name="wechat">1111</g-menu-item>-->
+							<!--<g-menu-item name="qq">2222</g-menu-item>-->
+						<!--</g-sub-menu>-->
+						<!--<g-menu-item name="qq">QQ</g-menu-item>-->
+					<!--</g-sub-menu>-->
+					<!--<g-menu-item name="culture2">文化2</g-menu-item>-->
+				<!--</g-sub-menu>-->
+				<!--<g-menu-item name="hire">招聘</g-menu-item>-->
+			<!--</g-menu>-->
+			<!--123-->
 		</div>
 	</div>
 </template>
@@ -29,12 +31,16 @@
 	  name: 'app',
 		data() {
 	    return {
-	      selected: ['home']
+	      selected: ['home'],
+		    value1: false
 	    }
 		},
 		created() {
 		},
 		methods: {
+	    print(e) {
+        console.log('sss', e);
+      }
 		},
 	}
 </script>
