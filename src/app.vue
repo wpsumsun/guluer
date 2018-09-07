@@ -8,13 +8,18 @@
 					<g-menu-item name="culture">文化</g-menu-item>
 					<g-sub-menu name="connect">
 						<template slot="title">联系方式</template>
-						<g-menu-item name="wechat">微信</g-menu-item>
+						<g-sub-menu name="connect1">
+							<template slot="title">微信</template>
+							<g-menu-item name="wechat">1111</g-menu-item>
+							<g-menu-item name="qq">2222</g-menu-item>
+						</g-sub-menu>
 						<g-menu-item name="qq">QQ</g-menu-item>
 					</g-sub-menu>
 					<g-menu-item name="culture2">文化2</g-menu-item>
 				</g-sub-menu>
 				<g-menu-item name="hire">招聘</g-menu-item>
 			</g-menu>
+			123
 		</div>
 	</div>
 </template>

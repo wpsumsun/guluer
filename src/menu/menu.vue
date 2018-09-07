@@ -65,7 +65,10 @@
 </script>
 
 <style lang="scss" scoped>
+@import "var";
 .menu {
 	display: flex;
+	border-bottom: 1px solid $gray-light;
+	color: #909399;
 }
 </style>

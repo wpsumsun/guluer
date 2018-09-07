@@ -27,6 +27,7 @@
         this.root.namePath = []
         this.root.namePath.push(this.name)
         this.$parent.updateNamePath && this.$parent.updateNamePath()
+        this.$parent.close && this.$parent.close()
         this.$emit('add:selected', this.name)
       },
 	  },
@@ -34,11 +35,13 @@
 </script>
 
 <style lang="scss" scoped>
+@import "var";
 .menu-item {
 	padding: 10px 20px;
 	cursor: pointer;
 	&.active {
-		background: #00a0e9;
+		border-bottom: 2px solid $blue-light;
+		color: #303133;
 	}
 }
 </style>
