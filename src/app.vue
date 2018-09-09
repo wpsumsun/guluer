@@ -1,7 +1,12 @@
 <template>
 	<div id="app">
 		<div class="box">
-			<g-switch v-model="value1" @input="print"></g-switch>
+			<g-switch
+				v-model="value1"
+				@input="print"
+				inactive-value="按年付费"
+				active-value="按月付费">
+			</g-switch>
 			{{ value1}}
 			<!--<g-menu :selected.sync="selected">-->
 				<!--<g-menu-item name="home">首页</g-menu-item>-->
