@@ -1,5 +1,5 @@
 <template>
-	<div class="g-switch" @click="onClick">
+	<div class="g-switch" @click="onClick" :class="{ disabled }">
 		<input type="checkbox" @change="change" :checked="checked">
 		<span class="inactive-status" :class="{ checked: value === inactiveValue }">{{ inactiveValue }}</span>
 		<span class="switch" :class="{ checked }" ref="switch"></span>
@@ -41,6 +41,11 @@
         return this.value === this.activeValue
       },
 	  },
+	  created() {
+      if ([this.activeValue, this.inactiveValue].indexOf(this.value) < 0) {
+        this.$emit('input', this.value ? this.activeValue : this.inactiveValue);
+      }
+	  },
 	  mounted() {
       this.setBackgroundColor()
 	  },
@@ -57,6 +62,7 @@
       },
       change() {
         this.$emit('input', !this.checked ? this.activeValue : this.inactiveValue)
+        this.$emit('change', !this.checked ? this.activeValue : this.inactiveValue)
       },
       setBackgroundColor() {
         if (this.activeColor || this.inactiveColor) {
@@ -79,6 +85,12 @@
 	box-sizing: border-box;
 	display: inline-flex;
 	align-items: center;
+	&.disabled {
+		opacity: .4;
+		.switch {
+			cursor: not-allowed;
+		}
+	}
 	input[type="checkbox"] {
 		position: absolute;
 		width: 0;

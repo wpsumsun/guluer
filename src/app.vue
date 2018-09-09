@@ -3,7 +3,9 @@
 		<div class="box">
 			<g-switch
 				v-model="value1"
-				@input="print"
+				@change="print"
+				@input="print2"
+				disabled
 				inactive-value="按年付费"
 				active-value="按月付费">
 			</g-switch>
@@ -37,14 +39,17 @@
 		data() {
 	    return {
 	      selected: ['home'],
-		    value1: false
+		    value1: true
 	    }
 		},
 		created() {
 		},
 		methods: {
 	    print(e) {
-        console.log('sss', e);
+        console.log('sdf', e);
+      },
+			print2(e) {
+        console.log('sdf22', e);
       }
 		},
 	}
