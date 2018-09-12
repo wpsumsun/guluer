@@ -1,5 +1,5 @@
 <template>
-	<div class="menu-item" :class="{ active: selected }" @click="onClick">
+	<div class="menu-item" :class="{ active: selected, vertical }" @click="onClick">
 		<slot></slot>
 	</div>
 </template>
@@ -13,7 +13,7 @@
 	      require: true
       }
 	  },
-	  inject: ['root'],
+    inject: ['root', 'vertical'],
 	  data() {
       return {
         selected: false
@@ -42,6 +42,11 @@
 	&.active {
 		border-bottom: 2px solid $blue-light;
 		color: #303133;
+	}
+	&.vertical {
+		&:hover {
+			color: $blue-light;
+		}
 	}
 }
 </style>

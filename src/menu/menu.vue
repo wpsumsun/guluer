@@ -1,5 +1,5 @@
 <template>
-	<div class="menu">
+	<div class="menu" :class="{ vertical }">
 		<slot></slot>
 		{{ namePath }}
 	</div>
@@ -16,6 +16,10 @@
 		  multiple: {
         type: Boolean,
 			  default: false
+		  },
+		  vertical: {
+        type: Boolean,
+			  default: false
 		  }
 	  },
 	  data() {
@@ -26,7 +30,8 @@
 	  },
 	  provide() {
       return {
-        root: this
+        root: this,
+	      vertical: this.vertical
       }
 	  },
 	  mounted() {
@@ -70,5 +75,9 @@
 	display: flex;
 	border-bottom: 1px solid $gray-light;
 	color: #909399;
+	&.vertical {
+		flex-direction: column;
+	}
+
 }
 </style>

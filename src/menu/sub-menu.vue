@@ -1,14 +1,23 @@
 <template>
-	<div class="sub-menu" v-click-outside="close">
+	<div class="sub-menu" v-click-outside="close" :class="{ vertical }">
 		<span class="title" @click="toggle" :class="{ active }">
 			<slot name="title"></slot>
 			<span class="arrow" :class="{ open: visible }">
 				<g-icon name="right" class="icon"></g-icon>
 			</span>
 		</span>
-		<div class="popover" v-show="visible">
-			<slot></slot>
-		</div>
+		<template v-if="vertical">
+			<transition @enter="enter" @leave="leave" @after-leave="afterLeave">
+				<div class="popover" v-show="visible" :class="{ vertical }">
+					<slot></slot>
+				</div>
+			</transition>
+		</template>
+		<template v-else>
+			<div class="popover" v-show="visible">
+				<slot></slot>
+			</div>
+		</template>
 	</div>
 </template>
 
@@ -26,7 +35,7 @@
 	      require: true
       }
 	  },
-	  inject: ['root'],
+	  inject: ['root', 'vertical'],
 	  computed: {
       active() {
         return this.root.namePath.indexOf(this.name) > -1
@@ -46,10 +55,29 @@
         this.$parent.updateNamePath && this.$parent.updateNamePath()
         this.$parent.close && this.$parent.close()
       },
-
 		  close() {
         this.visible = false
 		  },
+      enter(el, done) {
+        const { height } = el.getBoundingClientRect()
+	      el.style.height = '0px'
+	      el.getBoundingClientRect()
+	      el.style.height = `${height}px`
+        console.log(height);
+        el.addEventListener('transitionend', () => {
+          done()
+        })
+      },
+      leave(el, done) {
+        const { height } = el.getBoundingClientRect()
+        el.style.height = '0px'
+        el.addEventListener('transitionend', () => {
+          done()
+        })
+      },
+      afterLeave(el) {
+        el.style.height = 'auto'
+      },
 	  }
   }
 </script>
@@ -68,6 +96,13 @@
 			color: #303133;
 		}
 	}
+	&.vertical {
+		.title {
+			&:hover {
+				color: $blue-light;
+			}
+		}
+	}
 	.arrow {
 		display: none;
 	}
@@ -79,6 +114,19 @@
 		border-radius: 2px;
 		box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
 		color: #909399;
+		&.vertical {
+			position: static;
+			transition: all .4s;
+			/*overflow: hidden;*/
+			border-radius: 0;
+			box-shadow: none;
+			padding-left: 1em;
+			.title {
+				&:hover {
+					color: $blue-light;
+				}
+			}
+		}
 		.title {
 			border: none;
 			min-width: 150px;
@@ -117,6 +165,10 @@
 			left: 100%;
 			top: 0;
 			margin-left: 8px;
+			&.vertical {
+				overflow: hidden;
+				position: static;
+			}
 		}
 	}
 }
