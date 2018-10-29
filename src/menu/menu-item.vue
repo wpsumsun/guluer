@@ -44,8 +44,16 @@
 		color: #303133;
 	}
 	&.vertical {
+		&.active {
+			border: none;
+			color: $blue-light;
+		}
 		&:hover {
 			color: $blue-light;
+			.active {
+				border: none;
+				color: $blue-light;
+			}
 		}
 	}
 }

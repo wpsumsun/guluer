@@ -7,7 +7,7 @@
 			</span>
 		</span>
 		<template v-if="vertical">
-			<transition @enter="enter" @leave="leave" @after-leave="afterLeave">
+			<transition @enter="enter" @leave="leave" @after-leave="afterLeave" :css="false">
 				<div class="popover" v-show="visible" :class="{ vertical }">
 					<slot></slot>
 				</div>
@@ -63,16 +63,19 @@
 	      el.style.height = '0px'
 	      el.getBoundingClientRect()
 	      el.style.height = `${height}px`
-        console.log(height);
         el.addEventListener('transitionend', () => {
+          el.style.height = `auto`
           done()
         })
       },
       leave(el, done) {
         const { height } = el.getBoundingClientRect()
+        el.style.height = `${height}px`
+        el.getBoundingClientRect()
         el.style.height = '0px'
         el.addEventListener('transitionend', () => {
-          done()
+          el.style.height = 'auto'
+	        done()
         })
       },
       afterLeave(el) {
@@ -91,6 +94,10 @@
 		display: inline-block;
 		vertical-align: middle;
 		cursor: pointer;
+		min-width: 80px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: space-between;
 		&.active {
 			border-bottom: 2px solid $blue-light;
 			color: #303133;
@@ -103,8 +110,18 @@
 			}
 		}
 	}
+	/*.arrow {*/
+		/*display: none;*/
+	/*}*/
 	.arrow {
-		display: none;
+		display: inline-flex;
+		transition: all .5s;
+		.icon {
+			fill: #909399;
+		}
+		&.open {
+			transform: rotate(180deg);
+		}
 	}
 	.popover {
 		position: absolute;
@@ -168,6 +185,40 @@
 			&.vertical {
 				overflow: hidden;
 				position: static;
+			}
+		}
+	}
+	&.vertical {
+		overflow: hidden;
+		.title {
+			&.active {
+				border-bottom: none;
+				color: #00a0e9;
+				.icon {
+					fill: #00a0e9;
+				}
+			}
+			&:hover {
+				color: #409eff;
+				.icon {
+					fill: #409eff;
+				}
+			}
+		}
+		.arrow {
+			transform: rotate(-90deg);
+			&.open {
+				transform: rotate(90deg);
+			}
+		}
+		.popover {
+			.title {
+				&:hover {
+					color: #409eff;
+					.icon {
+						fill: #409eff;
+					}
+				}
 			}
 		}
 	}
