@@ -168,4 +168,27 @@ describe("validate", () => {
     }).to.throw()
   })
 
+  it('提供全局注册方法', () => {
+    let data = {
+      email: 'asdf'
+    }
+    let errors
+    let rules = [
+      { key: 'email', pattern: 'email', required: true, maxLength: 10, hasNumber: true }
+    ]
+    let validator1 = new Validator()
+    let validator2 = new Validator()
+    Validator.add('hasNumber', (value) => {
+      if (!/\d/.test(value)) {
+        return '必须含有数字'
+      }
+    })
+    expect(() => {
+      errors = validator1.validate(rules, data)
+    }).to.not.throw()
+    expect(() => {
+      errors = validator2.validate(rules, data)
+    }).to.not.throw()
+  })
+
 })
