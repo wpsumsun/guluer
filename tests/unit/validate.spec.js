@@ -86,9 +86,53 @@ describe("validate", () => {
       { key: 'email', pattern: 'email', required: true, minLength: 6 }
     ]
     let errors = validate(rules, data)
-    console.log(errors);
     expect(errors.email.minLength).to.exist
     expect(errors.email.pattern).to.exist
+  })
+
+  it('maxLength', () => {
+    let data = {
+      email: '123123123123'
+    }
+    let rules = [
+      { key: 'email', pattern: 'email', required: true, maxLength: 10 }
+    ]
+    let errors = validate(rules, data)
+    expect(errors.email.maxLength).to.exist
+  })
+
+  it('自定义 key', () => {
+    let data = {
+      email: '123123123123'
+    }
+    let rules = [
+      { key: 'email', pattern: 'email', required: true, maxLength: 10, hasNumber: true }
+    ]
+    // validate.hasNumber = function()
+    let fn = () => {
+      validate(rules, data)
+    }
+    expect(fn).to.throw('hasNumber校验函数不存在')
+  })
+
+  it('自定义 key&&检验函数', () => {
+    let data = {
+      email: 'asdf'
+    }
+    let error
+    let rules = [
+      { key: 'email', pattern: 'email', required: true, maxLength: 10, hasNumber: true }
+    ]
+    validate.hasNumber = (value) => {
+      if (!/\d/.test(value)) {
+        return '必须含有数字'
+      }
+    }
+    let fn = () => {
+      error = validate(rules, data)
+    }
+    expect(fn).to.not.throw()
+    expect(error.email.hasNumber).to.exist
   })
 
 })
