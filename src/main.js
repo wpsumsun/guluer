@@ -30,6 +30,7 @@ import Menu from './menu/menu'
 import MenuItem from './menu/menu-item'
 import SubMenu from './menu/sub-menu'
 import Switch from './switch/switch'
+import Pagination from './pagination/pagination'
 
 Vue.use(toast)
 
@@ -62,6 +63,7 @@ Vue.component('g-menu', Menu)
 Vue.component('g-menu-item', MenuItem)
 Vue.component('g-sub-menu', SubMenu)
 Vue.component('g-switch', Switch)
+Vue.component('g-pagination', Pagination)
 
 
 Vue.config.productionTip = false;
