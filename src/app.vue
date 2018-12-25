@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-		<g-pagination :total="10" :current-page="4"></g-pagination>
+		<g-pagination :total="20" :current-page="4"></g-pagination>
 	</div>
 </template>
 
