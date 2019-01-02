@@ -1,17 +1,27 @@
 <template>
-  <div class="g-pager">
-    <span class="g-pager-item icon" :class="{ disable: currentPage === 1 }">
+  <div class="g-pager" :class="{ hide: hideOnSinglePage&&total === 1 }">
+    <span 
+      class="g-pager-item icon" 
+      :class="{ disable: currentPage === 1 }"
+      @click="onClickPage(currentPage-1)">
       <g-icon name="left"></g-icon>  
     </span>
-    <template  v-for="pager in pages">
+    <template  v-for="pager in pagers">
       <span class="g-pager-item more" v-if="pager === '...'">
         <g-icon name="more"></g-icon>
       </span>
-      <span v-else class="g-pager-item" :class="{ active: pager === currentPage }">
+      <span 
+        v-else 
+        class="g-pager-item" 
+        :class="{ active: pager === currentPage }"
+        @click="onClickPage(pager)">
         {{ pager }}
       </span> 
     </template>
-    <span class="g-pager-item icon" :class="{ disable: currentPage === total }">
+    <span 
+      class="g-pager-item icon" 
+      :class="{ disable: currentPage === total }"
+      @click="onClickPage(currentPage+1)">
       <g-icon name="right"></g-icon>  
     </span>
   </div>
@@ -39,8 +49,9 @@
     components: {
       GIcon
     },
-    data() {
-      let pages = this.unique([1, 
+    computed: {
+      pagers() {
+        let pagers = this.unique([1, 
                    this.total, 
                    this.currentPage - 2, 
                    this.currentPage - 1, 
@@ -56,11 +67,9 @@
                       
                     }
                     return mulator
-                  }, [])    
-                  console.log(pages)   
-      return {
-        pages
-      }
+                  }, [])   
+        return pagers          
+      },
     },
     methods: {
       unique(arr) {
@@ -69,7 +78,10 @@
           obj[item] = true
         })
         return Object.keys(obj).map(x => parseInt(x, 10))
-      }
+      },
+      onClickPage(pager) {
+        this.$emit('update:currentPage', pager)
+      },
     }
   }
 </script>
@@ -77,6 +89,9 @@
 <style lang="scss" scoped>
   $activeColor: #1890ff;
   .g-pager {
+    &.hide {
+      visibility: hidden;
+    }
     &-item {
       display: inline-flex;
       height: 32px;

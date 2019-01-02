@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-		<g-pagination :total="20" :current-page="1"></g-pagination>
+		<g-pagination :total="1" :current-page.sync="currentPage"></g-pagination>
 	</div>
 </template>
 
@@ -9,8 +9,7 @@
 	  name: 'app',
 		data() {
 	    return {
-	      selected: ['home'],
-		    value1: true
+	      currentPage: 1
 	    }
 		},
 		created() {
