@@ -31,6 +31,7 @@ import MenuItem from './menu/menu-item'
 import SubMenu from './menu/sub-menu'
 import Switch from './switch/switch'
 import Pagination from './pagination/pagination'
+import Upload from './upload/upload'
 
 Vue.use(toast)
 
@@ -64,6 +65,7 @@ Vue.component('g-menu-item', MenuItem)
 Vue.component('g-sub-menu', SubMenu)
 Vue.component('g-switch', Switch)
 Vue.component('g-pagination', Pagination)
+Vue.component('g-upload', Upload)
 
 
 Vue.config.productionTip = false;

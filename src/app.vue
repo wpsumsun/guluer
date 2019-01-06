@@ -1,6 +1,12 @@
 <template>
 	<div id="app">
-		<g-pagination :total="10" :current-page="4"></g-pagination>
+		<g-upload
+			accept="image/*"
+			action="https://tiny-upload-server.herokuapp.com/upload"
+			:parseResponse="parseResponse">
+			<g-button>上传</g-button>
+			<div slot="tips">上传文件说明</div>
+		</g-upload>
 	</div>
 </template>
 
@@ -16,11 +22,9 @@
 		created() {
 		},
 		methods: {
-	    print(e) {
-        console.log('sdf', e);
-      },
-			print2(e) {
-        console.log('sdf22', e);
+      parseResponse(res) {
+        const file = JSON.parse(res)
+	      return `https://tiny-upload-server.herokuapp.com/preview/${file.filename}`
       }
 		},
 	}
