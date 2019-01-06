@@ -15,8 +15,7 @@
 	  name: 'app',
 		data() {
 	    return {
-	      selected: ['home'],
-		    value1: true
+	      currentPage: 1
 	    }
 		},
 		created() {

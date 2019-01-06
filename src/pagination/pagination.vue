@@ -1,12 +1,35 @@
 <template>
-  <div class="g-pagination">
-    <span v-for="(page, index) in pages" :key="index">
-      {{ page }}
+  <div class="g-pager" :class="{ hide: hideOnSinglePage&&total === 1 }">
+    <span 
+      class="g-pager-item icon" 
+      :class="{ disable: currentPage === 1 }"
+      @click="onClickPage(currentPage-1)">
+      <g-icon name="left"></g-icon>  
+    </span>
+    <template  v-for="pager in pagers">
+      <span class="g-pager-item more" v-if="pager === '...'">
+        <g-icon name="more"></g-icon>
+      </span>
+      <span 
+        v-else 
+        class="g-pager-item" 
+        :class="{ active: pager === currentPage }"
+        @click="onClickPage(pager)">
+        {{ pager }}
+      </span> 
+    </template>
+    <span 
+      class="g-pager-item icon" 
+      :class="{ disable: currentPage === total }"
+      @click="onClickPage(currentPage+1)">
+      <g-icon name="right"></g-icon>  
     </span>
   </div>
 </template>
 
 <script>
+  import GIcon from '../icon/icon'
+
   export default {
     name: 'g-pagination',
     props: {
@@ -23,21 +46,30 @@
         default: true
       }
     },
-    data() {
-      let pages = [1, this.total, this.currentPage - 2, this.currentPage - 1, this.currentPage, this.currentPage + 1, this.currentPage + 2]
-      pages = this.unique(pages)
-      pages.sort((a, b) => a - b)
-      pages = pages.reduce((mulator, current, index, array) => {
-        mulator.push(current)
-        if (array[index + 1]&&array[index + 1] - array[index] > 3) {
-          mulator.push('...')
-          
-        }
-        return mulator
-      }, [])       
-      return {
-        pages: pages
-      }
+    components: {
+      GIcon
+    },
+    computed: {
+      pagers() {
+        let pagers = this.unique([1, 
+                   this.total, 
+                   this.currentPage - 2, 
+                   this.currentPage - 1, 
+                   this.currentPage, 
+                   this.currentPage + 1, 
+                   this.currentPage + 2])
+                   .filter(n => n >= 1 && n <= this.total)
+                   .sort((a, b) => a - b)
+                  .reduce((mulator, current, index, array) => {
+                    mulator.push(current)
+                    if (array[index + 1]&&array[index + 1] - array[index] > 3) {
+                      mulator.push('...')
+                      
+                    }
+                    return mulator
+                  }, [])   
+        return pagers          
+      },
     },
     methods: {
       unique(arr) {
@@ -46,95 +78,62 @@
           obj[item] = true
         })
         return Object.keys(obj).map(x => parseInt(x, 10))
-      }
+      },
+      onClickPage(pager) {
+        this.$emit('update:currentPage', pager)
+      },
     }
   }
 </script>
 
 <style lang="scss" scoped>
-  $animation_duration: .3s;
-
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
+  $activeColor: #1890ff;
+  .g-pager {
+    &.hide {
+      visibility: hidden;
     }
-    100% {
-      opacity: 100%;
-    }
-  }
-  @keyframes slide-down {
-    0% {
-      opacity: 0;
-      transform: translateY(-100%);
-    }
-    100% {
-      opacity: 100%;
-      transform: translateY(0);
-    }
-  }
-  @keyframes slide-up {
-    0% {
-      opacity: 0;
-      transform: translateY(100%);
-    }
-    100% {
-      opacity: 100%;
-      transform: translateY(0);
-    }
-  }
-  .wrapper {
-    position: fixed;
-    left: 50%;
-    &.top {
-      top: 0;
-      transform: translateX(-50%);
-      .toast {
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
-        animation: slide-down $animation_duration;
-      }
-    }
-    &.bottom {
-      bottom: 0;
-      transform: translateX(-50%);
-      .toast {
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-        animation: slide-up $animation_duration;
-      }
-    }
-    &.middle {
-      top: 50%;
-      transform: translate(-50%, -50%);
-      .toast {
-        animation: fadeIn $animation_duration;
-      }
-    }
-  }
-  .toast {
-    display: flex;
-    min-height: 40px;
-    max-width: 400px;
-    font-size: 14px;
-    line-height: 1.2;
-    color: #fff;
-    align-items: center;
-    background: rgba(0,0,0,0.74);
-    border-radius: 4px;
-    box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.50);
-    padding: 0 8px;
-    .message {
-      padding: 8px 0;
-    }
-    .close {
+    &-item {
       display: inline-flex;
-      padding-left: 8px;
-      height: 100%;
-      border-left: 1px solid #666;
+      height: 32px;
+      min-width: 32px;
+      border: 1px solid #d9d9d9;
+      border-radius: 4px;
+      justify-content: center;
       align-items: center;
-      margin-left: 8px;
-      flex-shrink: 0;
       cursor: pointer;
+      margin-right: 8px;
+      color: rgba(0, 0, 0, 0.6);
+      &:hover {
+        color: $activeColor;
+        border-color: $activeColor;
+        .more svg {
+          fill: $activeColor;
+        }
+      }
+      &.active {
+        color: $activeColor;
+        border-color: $activeColor;
+      }
+      &.icon {
+        vertical-align: top;
+        svg {
+          fill: rgba(0, 0, 0, 0.6);
+        }
+        &:hover {
+          color: $activeColor;
+          border-color: $activeColor;
+          svg {
+            fill: $activeColor;
+          }
+        }
+      }
+      &.more {
+        border: none;
+      }
+      &.disable {
+        cursor: not-allowed;
+        pointer-events: none;
+      }
     }
   }
 </style>
