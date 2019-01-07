@@ -3,7 +3,8 @@
 		<g-upload
 			accept="image/*"
 			action="https://tiny-upload-server.herokuapp.com/upload"
-			:parseResponse="parseResponse">
+			:parseResponse="parseResponse"
+			:fileList.sync="fileList">
 			<g-button>上传</g-button>
 			<div slot="tips">上传文件说明</div>
 		</g-upload>
@@ -15,16 +16,16 @@
 	  name: 'app',
 		data() {
 	    return {
-	      currentPage: 1
+	      fileList: []
 	    }
 		},
 		created() {
 		},
 		methods: {
-      parseResponse(res) {
-        const file = JSON.parse(res)
-	      return `https://tiny-upload-server.herokuapp.com/preview/${file.filename}`
-      }
+			parseResponse(res) {
+				const file = JSON.parse(res)
+				return `https://tiny-upload-server.herokuapp.com/preview/${file.filename}`
+			}
 		},
 	}
 </script>

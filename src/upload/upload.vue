@@ -8,14 +8,19 @@
     <ul>
       <li v-for="(file, fileIndex) in fileList" :key="fileIndex">
         <img width="100px" :src="file.url">{{ file.name }}
+        <g-icon name="close" @click="onRemoveFile(file)"></g-icon>  
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+  import GIcon from '../icon/icon'
   export default {
     name: 'g-upload',
+    components: {
+      GIcon
+    },
     props: {
       name: {
         type: String,
@@ -43,6 +48,15 @@
       }
     },
     methods: {
+      onRemoveFile(file) {
+        let anwser = window.confirm('确定要删除吗')
+        if (anwser) {
+          const localFileList = [...this.fileList]
+          const index = localFileList.indexOf(file)
+          localFileList.splice(index, 1)
+          this.$emit('update:fileList', localFileList)
+        }
+      },
       onClickUpload() {
         const upload = this.$refs.upload
         upload.click()
@@ -61,7 +75,7 @@
         xhr.onload = () => {
           if(xhr.status == 200){
             const url = this.parseResponse(xhr.response)
-            this.fileList.push({ name, url, size })
+            this.$emit('update:fileList', [...this.fileList, { name, url, size }])
           }
         }
         xhr.send(formData)
