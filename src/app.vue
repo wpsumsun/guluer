@@ -4,6 +4,8 @@
 			accept="image/*"
 			action="https://tiny-upload-server.herokuapp.com/upload"
 			:parseResponse="parseResponse"
+			:before-upload="handleBeforeUpload"
+			:on-success="handleSuccess"
 			:fileList.sync="fileList">
 			<g-button>上传</g-button>
 			<div slot="tips">上传文件说明</div>
@@ -22,6 +24,13 @@
 		created() {
 		},
 		methods: {
+			handleSuccess(res, file, fileList) {
+				file.url =`https://tiny-upload-server.herokuapp.com/preview/${res.filename}`
+			},
+			handleBeforeUpload(file) {
+				console.log('handleBeforeUpload', file)
+				return true
+			},
 			parseResponse(res) {
 				const file = JSON.parse(res)
 				return `https://tiny-upload-server.herokuapp.com/preview/${file.filename}`

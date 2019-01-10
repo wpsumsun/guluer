@@ -3,10 +3,16 @@
     <div class="guluer-upload-trigger" @click="onClickUpload">
       <slot></slot>
     </div>
-    <input type="file" :name="name" :accept="accept" ref="upload" class="guluer-upload-input">
+    <input 
+      type="file" 
+      :name="name" 
+      :accept="accept" 
+      ref="input"
+      @change="handleChange" 
+      class="guluer-upload-input">
     <slot name="tips"></slot>
     <ul>
-      <li v-for="(file, fileIndex) in fileList" :key="fileIndex">
+      <li v-for="file in localFileList" :key="file.uid">
         <img width="100px" :src="file.url">{{ file.name }}
         <g-icon name="close" @click="onRemoveFile(file)"></g-icon>  
         <g-icon name="loading" v-if="file.isUploading"></g-icon>
@@ -17,6 +23,7 @@
 </template>
 
 <script>
+  import ajax from './ajax'
   import GIcon from '../icon/icon'
   export default {
     name: 'g-upload',
@@ -38,21 +45,27 @@
         type: String,
         default: 'POST'
       },
-      parseResponse: {
-        type: Function,
-        require: true
-      },
       fileList: {
         type: Array,
         default() {
           return []
         }
-      }
+      },
+      beforeUpload: Function,
+      onSuccess: Function
     },
     data() {
-      tempIndex: 1
+      return {
+        tempIndex: 1,
+        localFileList: [],
+      }
     },
     methods: {
+      handleChange(e) {
+        const file = e.target.files[0]
+        file && this.uploadFiles(file)
+        this.$refs.input.value = null
+      },
       onRemoveFile(file) {
         let anwser = window.confirm('确定要删除吗')
         if (anwser) {
@@ -63,40 +76,53 @@
         }
       },
       onClickUpload() {
-        const upload = this.$refs.upload
-        upload.click()
-        upload.addEventListener('change', () => {
-          const file = upload.files[0]
-          file && this.updateFile(file)
+        this.$refs.input.click()
+      },
+      uploadFiles(file) {
+        if (!this.beforeUpload) {
+          this.post(file)
+        }
+        const before = this.beforeUpload(file)
+        if (before) {
+          this.post(file)
+        }
+      },
+      post(file) {
+        this.handleStart(file)
+        ajax({
+          file,
+          name: this.name,
+          action: this.action,
+          onSuccess: e => {
+            this.handleSuccess(e, file)
+          }
         })
       },
-      BeforeUpload(file) {
-        const { name, size } = file
-        this.$emit('update:fileList', [...this.fileList, { name, isUploading: true, size }])
-      },
-      updateFile(file) {
-        console.log(file)
-        this.BeforeUpload(file)
-        const { name, size } = file
-        this.$refs.upload.value = null
-        const formData = new FormData()
-        formData.append(this.name, file)
-        const xhr = new XMLHttpRequest()
-        xhr.open(this.method, this.action)
-        xhr.upload.onprogress = function progress(e) {
-          if (e.total > 0) {
-            e.percent = e.loaded / e.total * 100;
-            console.log(e.percent)
-          }
-        };
-        xhr.onload = () => {
-          if(xhr.status == 200){
-            const url = this.parseResponse(xhr.response)
-            this.$emit('update:fileList', [...this.fileList, { name, url, size }])
-          }
+      handleSuccess(res, file) {
+        const _file = this.getFile(file)
+        if (_file) {
+          _file.status = 'finished'
+          _file.response = res
+          this.onSuccess(res, _file, this.localFileList)
+          console.log(this.localFileList)
         }
-        xhr.send(formData)
-      }
+      },
+      getFile(file) {
+        const target = this.localFileList.filter(item => item.uid === file.uid)[0]
+        return target
+      },
+      handleStart(file) {
+        file.uid = Date.now() + this.tempIndex++;
+        const _file = {
+            status: 'uploading',
+            name: file.name,
+            size: file.size,
+            percentage: 0,
+            uid: file.uid,
+            showProgress: true
+        };
+        this.localFileList.push(_file)
+      },
     }
   }
 </script>
