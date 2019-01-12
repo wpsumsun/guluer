@@ -20,8 +20,8 @@ export default function ajax(option) {
   xhr.upload.onprogress = function progress(e) {
     if (e.total > 0) {
       e.percent = e.loaded / e.total * 100;
-      console.log(e.percent)
     }
+    option.onProgress(e)
   };
   xhr.onload = () => {
     if(xhr.status == 200){

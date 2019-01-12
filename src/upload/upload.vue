@@ -15,7 +15,8 @@
       <li v-for="file in localFileList" :key="file.uid">
         <img width="100px" :src="file.url">{{ file.name }}
         <g-icon name="close" @click="onRemoveFile(file)"></g-icon>  
-        <g-icon name="loading" v-if="file.isUploading"></g-icon>
+        <g-icon name="loading" v-if="file.status === 'uploading'"></g-icon>
+        {{ file.prograss }}
       </li>
     </ul>
     <div ref="prograss"></div>
@@ -95,8 +96,15 @@
           action: this.action,
           onSuccess: e => {
             this.handleSuccess(e, file)
+          },
+          onProgress: e => {
+            this.handleProgress(e, file)
           }
         })
+      },
+      handleProgress(e, file) {
+        const _file = this.getFile(file)
+        _file.percentage = e.percent || 0
       },
       handleSuccess(res, file) {
         const _file = this.getFile(file)
@@ -121,6 +129,7 @@
             uid: file.uid,
             showProgress: true
         };
+        _file.url = URL.createObjectURL(file)
         this.localFileList.push(_file)
       },
     }

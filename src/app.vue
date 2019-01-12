@@ -25,7 +25,7 @@
 		},
 		methods: {
 			handleSuccess(res, file, fileList) {
-				file.url =`https://tiny-upload-server.herokuapp.com/preview/${res.filename}`
+				// file.url =`https://tiny-upload-server.herokuapp.com/preview/${res.filename}`
 			},
 			handleBeforeUpload(file) {
 				console.log('handleBeforeUpload', file)
