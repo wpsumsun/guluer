@@ -1,7 +1,6 @@
 <template>
 	<div id="app">
 		<g-upload
-			accept="image/*"
 			action="https://tiny-upload-server.herokuapp.com/upload"
 			:parseResponse="parseResponse"
 			:before-upload="handleBeforeUpload"
@@ -15,15 +14,20 @@
 
 <script>
 	export default {
-	  name: 'app',
-		data() {
-	    return {
-	      fileList: []
-	    }
+    name: 'app',
+    created() {
 		},
-		created() {
-		},
-		methods: {
+    data() {
+      return {
+        fileList: [
+          {
+            name: 'sulm dunk',
+						url: 'https://ss1.baidu.com/-4o3dSag_xI4khGko9WTAnF6hhy/image/h%3D300/sign=c422d4ad98cad1c8cfbbfa274f3f67c4/83025aafa40f4bfb0f815ad60e4f78f0f63618db.jpg'
+          }
+        ]
+      }
+    },
+    methods: {
 			handleSuccess(res, file, fileList) {
 				// file.url =`https://tiny-upload-server.herokuapp.com/preview/${res.filename}`
 			},

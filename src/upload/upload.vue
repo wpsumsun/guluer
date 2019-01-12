@@ -53,7 +53,24 @@
         }
       },
       beforeUpload: Function,
-      onSuccess: Function
+      onSuccess: {
+        type: Function,
+        default() {
+          return {}
+        }
+      },
+      onProgress: {
+        type: Function,
+        default() {
+          return {}
+        }
+      },
+      onError: {
+        type: Function,
+        default() {
+          return {}
+        }
+      },
     },
     data() {
       return {
@@ -68,13 +85,8 @@
         this.$refs.input.value = null
       },
       onRemoveFile(file) {
-        let anwser = window.confirm('确定要删除吗')
-        if (anwser) {
-          const localFileList = [...this.fileList]
-          const index = localFileList.indexOf(file)
-          localFileList.splice(index, 1)
-          this.$emit('update:fileList', localFileList)
-        }
+        const index = this.localFileList.indexOf(file)
+        this.localFileList.splice(index, 1)
       },
       onClickUpload() {
         this.$refs.input.click()
@@ -99,6 +111,9 @@
           },
           onProgress: e => {
             this.handleProgress(e, file)
+          },
+          onError: (error, res) => {
+            this.handleError(error, res, file)
           }
         })
       },
@@ -106,10 +121,17 @@
         const _file = this.getFile(file)
         _file.percentage = e.percent || 0
       },
+      handleError(error, res, file) {
+        const _file = this.getFile(file)
+        const fileList = this.localFileList
+        _file.status = 'fail'
+        fileList.splice(fileList.indexOf(_file), 1);
+        this.onError(error, res, file);
+      },
       handleSuccess(res, file) {
         const _file = this.getFile(file)
         if (_file) {
-          _file.status = 'finished'
+          _file.status = 'success'
           _file.response = res
           this.onSuccess(res, _file, this.localFileList)
           console.log(this.localFileList)
@@ -131,6 +153,19 @@
         };
         _file.url = URL.createObjectURL(file)
         this.localFileList.push(_file)
+      },
+    },
+    watch: {
+      fileList: {
+        immediate: true,
+        handler() {
+          this.localFileList = this.fileList.map(item => {
+            item.status = 'success'
+            item.uid = Date.now() + this.tempIndex++
+            item.percentage = 100
+            return item
+          })
+        }
       },
     }
   }
