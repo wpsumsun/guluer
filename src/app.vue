@@ -5,6 +5,7 @@
 			:parseResponse="parseResponse"
 			:before-upload="handleBeforeUpload"
 			:on-success="handleSuccess"
+			:on-error="handleError"
 			:fileList.sync="fileList">
 			<g-button>上传</g-button>
 			<div slot="tips">上传文件说明</div>
@@ -38,7 +39,12 @@
 			parseResponse(res) {
 				const file = JSON.parse(res)
 				return `https://tiny-upload-server.herokuapp.com/preview/${file.filename}`
-			}
+			},
+      handleError(error, res, file) {
+        console.log('error', error)
+        console.log('res', res)
+        console.log('file', file)
+      }
 		},
 	}
 </script>

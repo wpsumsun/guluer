@@ -134,7 +134,6 @@
           _file.status = 'success'
           _file.response = res
           this.onSuccess(res, _file, this.localFileList)
-          console.log(this.localFileList)
         }
       },
       getFile(file) {

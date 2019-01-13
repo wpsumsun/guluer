@@ -1,3 +1,20 @@
+function getError(action, option, xhr) {
+  let msg;
+  if (xhr.response) {
+    msg = `${xhr.response.error || xhr.response}`
+  } else if (xhr.responseText) {
+    msg = `${xhr.responseText}`
+  } else {
+    msg = `fail to post ${action} ${xhr.status}`
+  }
+
+  const err = new Error(msg)
+  err.status = xhr.status
+  err.method = 'post'
+  err.url = action
+  return err
+}
+
 function getBody(xhr) {
   const text = xhr.responseText || xhr.response;
   if (!text) {
@@ -24,9 +41,14 @@ export default function ajax(option) {
     option.onProgress(e)
   };
   xhr.onload = () => {
-    if(xhr.status == 200){
-      option.onSuccess(getBody(xhr));
+    if (xhr.status < 200 || xhr.status >= 300) {
+      return option.onError(getError(action, option, xhr), getBody(xhr));
     }
+    option.onSuccess(getBody(xhr))
+    // if (Math.random() < 1) {
+    //   return option.onError(getError(action, option, xhr), getBody(xhr));
+    // }
+    // option.onSuccess(getBody(xhr))
   }
   xhr.send(formData)
 }
