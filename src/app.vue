@@ -10,6 +10,10 @@
 			<g-button>上传</g-button>
 			<div slot="tips">上传文件说明</div>
 		</g-upload>
+		<div style="margin: 10px 0">
+			<g-progress :stroke-width="30" :percentage="percentage" :show-text="true"></g-progress>
+		</div>
+		<g-button @click="percentage+=10">add percentage</g-button>
 	</div>
 </template>
 
@@ -20,6 +24,7 @@
 		},
     data() {
       return {
+        percentage: 0,
         fileList: [
           {
             name: 'sulm dunk',

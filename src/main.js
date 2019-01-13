@@ -32,6 +32,7 @@ import SubMenu from './menu/sub-menu'
 import Switch from './switch/switch'
 import Pagination from './pagination/pagination'
 import Upload from './upload/upload'
+import Progress from './progress/progress'
 
 Vue.use(toast)
 
@@ -66,6 +67,7 @@ Vue.component('g-sub-menu', SubMenu)
 Vue.component('g-switch', Switch)
 Vue.component('g-pagination', Pagination)
 Vue.component('g-upload', Upload)
+Vue.component('g-progress', Progress)
 
 
 Vue.config.productionTip = false;
