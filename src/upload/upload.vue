@@ -20,7 +20,7 @@
           </div>
           <span class="file-name">{{ file.name }}</span>
         </div>
-        <g-progress :percentage="file.percentage" :stroke-width="2" :show-text="false"></g-progress>
+        <g-progress v-if="file.status === 'uploading'" :percentage="file.percentage" :stroke-width="2" :show-text="false"></g-progress>
         <g-icon class="close" name="close" @click="onRemoveFile(file)"></g-icon>
       </li>
     </ul>
