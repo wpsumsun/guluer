@@ -46,7 +46,7 @@
 
 <style scoped lang="scss">
 .g-progress {
-	width: 350px;
+	width: 100%;
 	margin-bottom: 15px;
 	display: flex;
 	align-items: center;

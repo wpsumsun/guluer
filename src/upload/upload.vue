@@ -11,25 +11,31 @@
       @change="handleChange" 
       class="guluer-upload-input">
     <slot name="tips"></slot>
-    <ul>
+    <ul class="file-list">
       <li v-for="file in localFileList" :key="file.uid">
-        <img width="100px" :src="file.url">{{ file.name }}
-        <g-icon name="close" @click="onRemoveFile(file)"></g-icon>  
-        <g-icon name="loading" v-if="file.status === 'uploading'"></g-icon>
-        {{ file.prograss }}
+        <div class="file-detail">
+          <div class="icon-wrapper">
+            <g-icon v-if="file.status === 'uploading'" class="loading" name="loading"></g-icon>
+            <g-icon v-else class="attachment" name="attachment"></g-icon>
+          </div>
+          <span class="file-name">{{ file.name }}</span>
+        </div>
+        <g-progress :percentage="file.percentage" :stroke-width="2" :show-text="false"></g-progress>
+        <g-icon class="close" name="close" @click="onRemoveFile(file)"></g-icon>
       </li>
     </ul>
-    <div ref="prograss"></div>
   </div>
 </template>
 
 <script>
   import ajax from './ajax'
   import GIcon from '../icon/icon'
+  import GProgress from '../progress/progress'
   export default {
     name: 'g-upload',
     components: {
-      GIcon
+      GIcon,
+      GProgress
     },
     props: {
       name: {
@@ -174,6 +180,74 @@
   .guluer-upload {
     &-input {
       display: none;
+    }
+    .file-list {
+      list-style: none;
+      width: 100%;
+      padding: 0;
+      >li {
+        height: 22px;
+        display: flex;
+        align-items: center;
+        margin-top: 5px;
+        position: relative;
+        font-size: 14px;
+        color: rgba(0,0,0,0.65);
+        .file-detail {
+          padding: 0 12px 0 20px;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          position: relative;
+          .icon-wrapper {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 100%;
+            display: flex;
+            align-items: center;
+          }
+          .attachment, .loading {
+            fill: rgba(0,0,0,0.45);
+            font-size: 14px;
+          }
+          .loading {
+            animation: spin 1.5s infinite linear;
+          }
+        }
+        .close {
+          position: absolute;
+          right: 5px;
+          top: 50%;
+          transform: translateY(-50%);
+          font-size: 12px;
+          fill: rgba(0, 0, 0, .5);
+          display: none;
+        }
+        &:hover {
+          background: #e6f7ff;
+          cursor: pointer;
+          border-radius: 4px;
+          .close {
+            display: inline-block;
+          }
+        }
+        .g-progress {
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          margin: 0 0 0 22px;
+        }
+      }
+    }
+  }
+  @keyframes spin {
+    0% {
+      transform: rotate(0);
+    }
+    100% {
+      transform: rotate(360deg);
     }
   }
 </style>
