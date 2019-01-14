@@ -6,7 +6,7 @@
 			:before-upload="handleBeforeUpload"
 			:on-success="handleSuccess"
 			:on-error="handleError"
-			:fileList.sync="fileList">
+			:fileLis="fileList">
 			<g-button>上传</g-button>
 			<div slot="tips">上传文件说明</div>
 		</g-upload>

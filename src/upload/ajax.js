@@ -45,10 +45,6 @@ export default function ajax(option) {
       return option.onError(getError(action, option, xhr), getBody(xhr));
     }
     option.onSuccess(getBody(xhr))
-    // if (Math.random() < 1) {
-    //   return option.onError(getError(action, option, xhr), getBody(xhr));
-    // }
-    // option.onSuccess(getBody(xhr))
   }
   xhr.send(formData)
 }

@@ -6,13 +6,14 @@
     <input 
       type="file" 
       :name="name" 
-      :accept="accept" 
+      :accept="accept"
+      :multiple="multiple"
       ref="input"
       @change="handleChange" 
       class="guluer-upload-input">
     <slot name="tips"></slot>
     <ul class="file-list">
-      <li v-for="file in localFileList" :key="file.uid">
+      <li v-for="file in localFileList" :key="file.uid" :class="{ error: file.status === 'fail' }">
         <div class="file-detail">
           <div class="icon-wrapper">
             <g-icon v-if="file.status === 'uploading'" class="loading" name="loading"></g-icon>
@@ -48,9 +49,9 @@
       action: {
         require: true
       },
-      method: {
-        type: String,
-        default: 'POST'
+      multiple: {
+        type: Boolean,
+        default: false
       },
       fileList: {
         type: Array,
@@ -86,8 +87,13 @@
     },
     methods: {
       handleChange(e) {
-        const file = e.target.files[0]
-        file && this.uploadFiles(file)
+        let postFiles = Array.prototype.slice.call(e.target.files)
+        if (!this.multiple) {
+          postFiles = postFiles.slice(0, 1)
+        }
+        postFiles.forEach(file => {
+          this.uploadFiles(file)
+        })
         this.$refs.input.value = null
       },
       onRemoveFile(file) {
@@ -193,6 +199,12 @@
         position: relative;
         font-size: 14px;
         color: rgba(0,0,0,0.65);
+        &.error {
+          color: #f5222d;
+          .attachment, .close {
+            fill: #f5222d;
+          }
+        }
         .file-detail {
           padding: 0 12px 0 20px;
           height: 100%;
