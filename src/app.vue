@@ -14,7 +14,7 @@
 		},
     data() {
       return {
-        selection1: [],
+        selection1: [{ id: 2, name: '辛弃疾', score: 90 }],
         columns: [
 	        { title: '姓名',prop: 'name' },
 	        { title: '分数',prop: 'score' }

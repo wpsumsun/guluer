@@ -5,7 +5,7 @@
 			<tr>
 				<th v-if="selectionVisible">
 					<input
-						:checked="selection.length === dataSource.length"
+						:checked="isAllChecked"
 						ref="allCheck"
 						@change="handleSelectALL"
 						type="checkbox"/>
@@ -71,6 +71,21 @@
 		  selection: {
         type: Array
 		  }
+	  },
+	  computed: {
+      isAllChecked() {
+        const arr1 = this.dataSource.map(v=>v.id).sort((a, b)=>a-b)
+        const arr2 = this.selection.map(v=>v.id).sort((a, b)=>a-b)
+	      if (arr1.length !== arr2.length) { return false }
+	      let equal = true
+	      for (let i = 0; i<arr1.length; i++) {
+	        if(arr1[i] !== arr2[i]) {
+	          equal = false
+		        break
+	        }
+	      }
+	      return equal
+      }
 	  },
 	  watch: {
       selection() {
