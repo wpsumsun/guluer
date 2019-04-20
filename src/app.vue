@@ -1,15 +1,9 @@
 <template>
 	<div id="app">
-		<g-upload
-			action="https://tiny-upload-server.herokuapp.com/upload"
-			:parseResponse="parseResponse"
-			:before-upload="handleBeforeUpload"
-			:on-success="handleSuccess"
-			:on-error="handleError"
-			:fileLis="fileList">
-			<g-button>上传</g-button>
-			<div slot="tips">上传文件说明</div>
-		</g-upload>
+		{{ selection }}
+		<g-table :columns="columns" :data-source="dataSource"></g-table>
+		<br>
+		<g-table @handleSelectChange="handleSelectChange" selection size="small" stripe bordered orderVisible :columns="columns" :data-source="dataSource"></g-table>
 	</div>
 </template>
 
@@ -20,31 +14,25 @@
 		},
     data() {
       return {
-        percentage: 0,
-        fileList: [
-          {
-            name: 'sulm dunk',
-						url: 'https://ss1.baidu.com/-4o3dSag_xI4khGko9WTAnF6hhy/image/h%3D300/sign=c422d4ad98cad1c8cfbbfa274f3f67c4/83025aafa40f4bfb0f815ad60e4f78f0f63618db.jpg'
-          }
-        ]
+        selection: [],
+        columns: [
+	        { title: '姓名',prop: 'name' },
+	        { title: '分数',prop: 'score' }
+        ],
+	      dataSource: [
+		      { name: '醒狮', score: 100 },
+		      { name: '辛弃疾', score: 90 },
+		      { name: '鲤鱼', score: 80 }
+	      ]
       }
     },
     methods: {
-			handleSuccess(res, file, fileList) {
-				// file.url =`https://tiny-upload-server.herokuapp.com/preview/${res.filename}`
-			},
-			handleBeforeUpload(file) {
-				console.log('handleBeforeUpload', file)
-				return true
-			},
-			parseResponse(res) {
-				const file = JSON.parse(res)
-				return `https://tiny-upload-server.herokuapp.com/preview/${file.filename}`
-			},
-      handleError(error, res, file) {
-        console.log('error', error)
-        console.log('res', res)
-        console.log('file', file)
+      handleSelectChange({ checked, item, index }) {
+        if (checked) {
+          this.selection.push(item)
+        } else {
+          this.selection.splice(index, 1)
+        }
       }
 		},
 	}
