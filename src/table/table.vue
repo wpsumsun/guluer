@@ -3,18 +3,29 @@
 		<table class="guluer-table" :class="{ bordered, stripe, small: size === 'small' }">
 			<thead>
 			<tr>
-				<th v-if="selection"><input @change="handleSelectChange" type="checkbox"/></th>
+				<th v-if="selectionVisible">
+					<input
+						:checked="selection.length === dataSource.length"
+						ref="allCheck"
+						@change="handleSelectALL"
+						type="checkbox"/>
+				</th>
 				<th v-if="orderVisible">#</th>
 				<template v-for="column in columns">
-					<th>{{ column.title }}</th>
+					<th :key="column.title">{{ column.title }}</th>
 				</template>
 			</tr>
 			</thead>
 			<tbody>
-			<tr v-for="(item, index) in dataSource">
-				<th v-if="selection"><input @change="handleSelectChange($event, item, index)" type="checkbox"/></th>
+			<tr :key="item.id" v-for="(item, index) in dataSource">
+				<th v-if="selectionVisible">
+					<input
+						:checked="inSelection(item)"
+						@change="handleSelectChange($event, item, index)"
+						type="checkbox"/>
+				</th>
 				<td v-if="orderVisible">{{ index + 1 }}</td>
-				<td v-for="column in columns">
+				<td :key="column.title" v-for="column in columns">
 					{{ item[column.prop] }}
 				</td>
 			</tr>
@@ -33,7 +44,10 @@
       },
 		  dataSource: {
         type: Array,
-			  required: true
+			  required: true,
+        validator(arr) {
+          return !arr.filter(v => v.id === undefined).length
+        }
 		  },
 		  orderVisible: {
         type: Boolean,
@@ -50,15 +64,37 @@
 		  size: {
         type: String
 		  },
-		  selection: {
+		  selectionVisible: {
         type: Boolean,
 			  default: false
+		  },
+		  selection: {
+        type: Array
 		  }
 	  },
-	  methods: {
-      handleSelectChange(e, item, index) {
-        this.$emit('handleSelectChange', { checked: e.target.checked, item, index })
+	  watch: {
+      selection() {
+        const selectionLength = this.selection.length
+	      const total = this.dataSource.length
+        this.$refs.allCheck.indeterminate = selectionLength > 0 && selectionLength < total
       }
+	  },
+	  methods: {
+      handleSelectALL(e) {
+        this.$emit('update:selection', e.target.checked ? this.dataSource : [])
+      },
+      handleSelectChange(e, item, index) {
+        let localSelection = JSON.parse(JSON.stringify(this.selection))
+	      if (e.target.checked) {
+	        localSelection.push(item)
+	      } else {
+          localSelection = localSelection.filter(v => v.id !== item.id)
+	      }
+        this.$emit('update:selection', localSelection)
+      },
+		  inSelection(item) {
+        return !!this.selection.filter(v => v.id === item.id).length
+		  },
 	  }
   }
 </script>
