@@ -11,8 +11,16 @@
 						type="checkbox"/>
 				</th>
 				<th v-if="orderVisible">#</th>
-				<template v-for="column in columns">
-					<th :key="column.title">{{ column.title }}</th>
+				<template v-for="(column, index) in columns">
+					<th :key="column.title">
+						<div class="guluer-table-header">
+							{{ column.title }}
+							<span v-if="column.sortOrder" class="guluer-table-sorter" @click="handleSortChange(column, index)">
+								<g-icon name="ascend" :class="{ active: column.sortOrder === 'ascend' }"></g-icon>
+								<g-icon name="descend" :class="{ active: column.sortOrder === 'descend' }"></g-icon>
+							</span>
+						</div>
+					</th>
 				</template>
 			</tr>
 			</thead>
@@ -35,8 +43,12 @@
 </template>
 
 <script>
+	import gIcon from '../icon/icon'
   export default {
     name: 'guluer-table',
+	  components: {
+      gIcon
+	  },
 	  props: {
       columns: {
         type: Array,
@@ -95,6 +107,14 @@
       }
 	  },
 	  methods: {
+      handleSortChange(column, index) {
+        let copy = JSON.parse(JSON.stringify(this.columns))
+	      const { sortOrder } = column
+	      let newSortOrder = sortOrder === 'ascend' ? 'descend' : 'ascend'
+	      copy[index].sortOrder = newSortOrder
+	      this.$emit('update:columns', copy)
+	      this.$emit('orderChange', copy[index])
+      },
       handleSelectALL(e) {
         this.$emit('update:selection', e.target.checked ? this.dataSource : [])
       },
@@ -143,6 +163,32 @@
 			border-bottom: 1px solid $border-color;
 			padding: 8px;
 			text-align: left;
+		}
+		&-header {
+			display: flex;
+			align-items: center;
+		}
+		&-sorter {
+			display: inline-flex;
+			flex-direction: column;
+			flex-wrap: wrap;
+			cursor: pointer;
+			svg {
+				width: 10px;
+				height: 10px;
+				fill: #bfbfbf;
+				&:first-child {
+					position: relative;
+					bottom: -1px;
+				}
+				&:last-child {
+					position: relative;
+					top: -1px;
+				}
+				&.active {
+					fill: $blue-light;
+				}
+			}
 		}
 	}
 }
