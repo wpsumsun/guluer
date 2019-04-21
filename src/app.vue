@@ -1,9 +1,9 @@
 <template>
 	<div id="app">
 		{{ selection1 }}
-		<!--<g-table height="300" :loading="loading" @orderChange="x":columns.sync="columns" :data-source="dataSource"></g-table>-->
+		<g-table height="300" :loading="loading" @orderChange="x" :columns.sync="columns" :data-source="dataSource"></g-table>
 		<br>
-		<g-table height="300" :selection.sync="selection1" selectionVisible size="small" stripe bordered orderVisible :columns="columns" :data-source="dataSource"></g-table>
+		<g-table :loading="loading" @orderChange="x" height="300" :selection.sync="selection1" selectionVisible size="small" stripe bordered orderVisible :columns="columns" :data-source="dataSource"></g-table>
 	</div>
 </template>
 
@@ -17,7 +17,7 @@
         loading: false,
         selection1: [{ id: 2, name: '辛弃疾', score: 90 }],
         columns: [
-	        { title: '姓名',prop: 'name', sortOrder: 'ascend' },
+	        { title: '姓名',prop: 'name', sortOrder: 'ascend', width: 200 },
 	        { title: '分数',prop: 'score', sortOrder: 'descend'}
         ],
 	      dataSource: [

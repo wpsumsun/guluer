@@ -4,16 +4,16 @@
 			<table ref="table" class="guluer-table" :class="{ bordered, stripe, small: size === 'small' }">
 				<thead>
 				<tr>
-					<th v-if="selectionVisible">
+					<th :style="{ width: '50px' }" v-if="selectionVisible">
 						<input
 							:checked="isAllChecked"
 							ref="allCheck"
 							@change="handleSelectALL"
 							type="checkbox"/>
 					</th>
-					<th v-if="orderVisible">#</th>
+					<th :style="{ width: '50px' }" v-if="orderVisible">#</th>
 					<template v-for="(column, index) in columns">
-						<th :key="column.title">
+						<th :style="{ width: `${column.width}px` }" :key="column.title">
 							<div class="guluer-table-header">
 								{{ column.title }}
 								<span v-if="column.sortOrder" class="guluer-table-sorter" @click="handleSortChange(column, index)">
@@ -27,14 +27,14 @@
 				</thead>
 				<tbody>
 				<tr :key="item.id" v-for="(item, index) in dataSource">
-					<th v-if="selectionVisible">
+					<th :style="{ width: '50px' }" v-if="selectionVisible">
 						<input
 							:checked="inSelection(item)"
 							@change="handleSelectChange($event, item, index)"
 							type="checkbox"/>
 					</th>
-					<td v-if="orderVisible">{{ index + 1 }}</td>
-					<td :key="column.title" v-for="column in columns">
+					<td :style="{ width: '50px' }" v-if="orderVisible">{{ index + 1 }}</td>
+					<td :style="{ width: `${column.width}px` }" :key="column.title" v-for="column in columns">
 						{{ item[column.prop] }}
 					</td>
 				</tr>
@@ -124,33 +124,17 @@
       }
 	  },
 	  mounted() {
-      this.cloneTable = this.$refs.table.cloneNode(true)
+      this.cloneTable = this.$refs.table.cloneNode()
 		  this.cloneTable.classList.add('guluer-table-clone')
-			this.computedHeader()
+      const { height } = this.$refs.table.children[0].getBoundingClientRect()
+		  this.cloneTable.appendChild(this.$refs.table.children[0])
+		  this.$refs.table.style.marginTop = `${height}px`
 		  this.$refs.wrapper.appendChild(this.cloneTable)
-		  this.handleResize = () => { this.computedHeader() }
-		  window.addEventListener('resize',this.handleResize)
 	  },
 	  beforeDestroy() {
-      window.removeEventListener('resize', this.handleResize)
 		  this.cloneTable.remove()
 	  },
 	  methods: {
-      computedHeader() {
-        const tableHeader = Array.from(this.$refs.table.children).filter(node => node.tagName.toLowerCase() === 'thead')[0]
-        let tableHeaderCopy
-        Array.from(this.cloneTable.children).map(node => {
-          if (node.tagName.toLowerCase() === 'tbody') {
-            node.remove()
-          } else {
-            tableHeaderCopy = node
-          }
-        })
-        Array.from(tableHeader.children[0].children).map((th, index) => {
-          const { width } = th.getBoundingClientRect()
-          tableHeaderCopy.children[0].children[index].style.width = `${width}px`
-        })
-      },
       handleSortChange(column, index) {
         let copy = JSON.parse(JSON.stringify(this.columns))
 	      const { sortOrder } = column
@@ -246,6 +230,7 @@
 		align-items: center;
 		justify-content: center;
 		background: rgba(255, 255, 255, 0.7);
+		z-index: 2;
 		svg {
 			animation: spin 1.5s infinite linear;
 			width: 30px;
