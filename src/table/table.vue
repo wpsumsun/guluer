@@ -4,6 +4,7 @@
 			<table ref="table" class="guluer-table" :class="{ bordered, stripe, small: size === 'small' }">
 				<thead>
 				<tr>
+					<th v-if="expandKey" :style="{ width: '50px' }"></th>
 					<th :style="{ width: '50px' }" v-if="selectionVisible">
 						<input
 							:checked="isAllChecked"
@@ -26,18 +27,27 @@
 				</tr>
 				</thead>
 				<tbody>
-				<tr :key="item.id" v-for="(item, index) in dataSource">
-					<th :style="{ width: '50px' }" v-if="selectionVisible">
-						<input
-							:checked="inSelection(item)"
-							@change="handleSelectChange($event, item, index)"
-							type="checkbox"/>
-					</th>
-					<td :style="{ width: '50px' }" v-if="orderVisible">{{ index + 1 }}</td>
-					<td :style="{ width: `${column.width}px` }" :key="column.title" v-for="column in columns">
-						{{ item[column.prop] }}
-					</td>
-				</tr>
+					<template v-for="(item, index) in dataSource">
+						<tr :key="item.id">
+							<th class="guluer-table-expand-wrapper" :style="{ width: '50px' }">
+								<g-icon :class="{ active: inExpandIds(item.id) }" @click="handleExpand(item.id)" name="right" v-if="expandKey && item[expandKey]"></g-icon>
+							</th>
+							<th :style="{ width: '50px' }" v-if="selectionVisible">
+								<input
+									:checked="inSelection(item)"
+									@change="handleSelectChange($event, item, index)"
+									type="checkbox"/>
+							</th>
+							<td :style="{ width: '50px' }" v-if="orderVisible">{{ index + 1 }}</td>
+							<td :style="{ width: `${column.width}px` }" :key="column.title" v-for="column in columns">
+								{{ item[column.prop] }}
+							</td>
+						</tr>
+						<tr class="guluer-table-expand-content" v-if="expandKey && item[expandKey]" v-show="inExpandIds(item.id)">
+							<td></td>
+							<td :colspan="colspanCount">{{ item[expandKey] }}</td>
+						</tr>
+					</template>
 				</tbody>
 			</table>
 		</div>
@@ -94,11 +104,15 @@
 		  },
 		  height: {
         type: [String, Number]
+		  },
+      expandKey: {
+        type: String
 		  }
 	  },
 	  data() {
       return {
-        cloneTable: null
+        cloneTable: null,
+	      expandIds: []
       }
 	  },
 	  computed: {
@@ -114,6 +128,11 @@
 	        }
 	      }
 	      return equal
+      },
+      colspanCount() {
+        const selectCount = this.selectionVisible ? 1 : 0
+        const orderCount = this.orderVisible ? 1 : 0
+	      return this.columns.length + selectCount + orderCount
       }
 	  },
 	  watch: {
@@ -135,6 +154,17 @@
 		  this.cloneTable.remove()
 	  },
 	  methods: {
+      inExpandIds(id) {
+        return this.expandIds.indexOf(id) > -1
+      },
+      handleExpand(id) {
+        const inExpandIdsIndex = this.expandIds.indexOf(id)
+	      if (inExpandIdsIndex > -1) {
+	        this.expandIds.splice(inExpandIdsIndex, 1)
+	      } else {
+	        this.expandIds.push(id)
+	      }
+      },
       handleSortChange(column, index) {
         let copy = JSON.parse(JSON.stringify(this.columns))
 	      const { sortOrder } = column
@@ -217,6 +247,24 @@
 				&.active {
 					fill: $blue-light;
 				}
+			}
+		}
+		&-expand-wrapper {
+			svg {
+				width: 12px;
+				transition: all .5s;
+				&.active {
+					transform: rotate(90deg);
+				}
+			}
+		}
+		&-expand-content {
+			td {
+				border: none !important;
+			}
+			td:last-child {
+				padding-left: 8px;
+				word-break: break-word;
 			}
 		}
 	}

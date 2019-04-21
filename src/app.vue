@@ -1,9 +1,9 @@
 <template>
 	<div id="app">
 		{{ selection1 }}
-		<g-table height="300" :loading="loading" @orderChange="x" :columns.sync="columns" :data-source="dataSource"></g-table>
+		<g-table expand-key="description" height="300" :loading="loading" @orderChange="x" :columns.sync="columns" :data-source="dataSource"></g-table>
 		<br>
-		<g-table :loading="loading" @orderChange="x" height="300" :selection.sync="selection1" selectionVisible size="small" stripe bordered orderVisible :columns="columns" :data-source="dataSource"></g-table>
+		<g-table expand-key="description" :loading="loading" @orderChange="x" height="300" :selection.sync="selection1" selectionVisible size="small" stripe bordered orderVisible :columns="columns" :data-source="dataSource"></g-table>
 	</div>
 </template>
 
@@ -21,10 +21,10 @@
 	        { title: '分数',prop: 'score', sortOrder: 'descend'}
         ],
 	      dataSource: [
-		      { id: 1, name: '醒狮', score: 100 },
+		      { id: 1, name: '醒狮', score: 100, description: 'xxxxxxx' },
 		      { id: 2, name: '辛弃疾', score: 90 },
 		      { id: 3, name: '鲤鱼', score: 80 },
-          { id: 4, name: '醒狮', score: 100 },
+          { id: 4, name: '醒狮', score: 100, description: '阿斯蒂芬阿斯蒂芬' },
           { id: 5, name: '辛弃疾', score: 90 },
           { id: 6, name: '鲤鱼', score: 80 },
           { id: 7, name: '醒狮', score: 100 },
