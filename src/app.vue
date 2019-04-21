@@ -1,7 +1,7 @@
 <template>
 	<div id="app">
 		{{ selection1 }}
-		<g-table @orderChange="x":columns.sync="columns" :data-source="dataSource"></g-table>
+		<g-table :loading="loading" @orderChange="x":columns.sync="columns" :data-source="dataSource"></g-table>
 		<br>
 		<g-table :selection.sync="selection1" selectionVisible size="small" stripe bordered orderVisible :columns="columns" :data-source="dataSource"></g-table>
 	</div>
@@ -14,6 +14,7 @@
 		},
     data() {
       return {
+        loading: false,
         selection1: [{ id: 2, name: '辛弃疾', score: 90 }],
         columns: [
 	        { title: '姓名',prop: 'name', sortOrder: 'ascend' },
@@ -28,15 +29,19 @@
     },
     methods: {
       x(order) {
-        if (order.sortOrder === 'ascend') {
-          this.dataSource.sort((a, b)=>{
-            return a[order.prop] - b[order.prop]
-          })
-        } else {
-          this.dataSource.sort((a, b)=>{
-            return b[order.prop] - a[order.prop]
-          })
-        }
+        this.loading = true
+        setTimeout(() => {
+          if (order.sortOrder === 'ascend') {
+            this.dataSource.sort((a, b)=>{
+              return a[order.prop] - b[order.prop]
+            })
+          } else {
+            this.dataSource.sort((a, b)=>{
+              return b[order.prop] - a[order.prop]
+            })
+          }
+          this.loading = false
+        }, 2000)
       },
 		},
 	}

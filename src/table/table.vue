@@ -39,6 +39,9 @@
 			</tr>
 			</tbody>
 		</table>
+		<div v-if="loading" class="loading-wrapper">
+			<g-icon name="loading"></g-icon>
+		</div>
 	</div>
 </template>
 
@@ -82,6 +85,10 @@
 		  },
 		  selection: {
         type: Array
+		  },
+		  loading: {
+        type: Boolean,
+			  default: false
 		  }
 	  },
 	  computed: {
@@ -137,6 +144,7 @@
 <style scoped lang="scss">
 @import "../styles/var";
 .guluer-table-wrapper {
+	position: relative;
 	.guluer-table {
 		border-collapse: collapse;
 		border-spacing: 0;
@@ -189,6 +197,23 @@
 					fill: $blue-light;
 				}
 			}
+		}
+	}
+	.loading-wrapper {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: rgba(255, 255, 255, 0.7);
+		svg {
+			animation: spin 1.5s infinite linear;
+			width: 30px;
+			height: 30px;
+			fill: $blue-light;
 		}
 	}
 }
