@@ -1,44 +1,46 @@
 <template>
-	<div class="guluer-table-wrapper">
-		<table class="guluer-table" :class="{ bordered, stripe, small: size === 'small' }">
-			<thead>
-			<tr>
-				<th v-if="selectionVisible">
-					<input
-						:checked="isAllChecked"
-						ref="allCheck"
-						@change="handleSelectALL"
-						type="checkbox"/>
-				</th>
-				<th v-if="orderVisible">#</th>
-				<template v-for="(column, index) in columns">
-					<th :key="column.title">
-						<div class="guluer-table-header">
-							{{ column.title }}
-							<span v-if="column.sortOrder" class="guluer-table-sorter" @click="handleSortChange(column, index)">
+	<div class="guluer-table-wrapper" ref="wrapper">
+		<div :style="{ height: `${height}px`, overflow: 'auto' }">
+			<table ref="table" class="guluer-table" :class="{ bordered, stripe, small: size === 'small' }">
+				<thead>
+				<tr>
+					<th v-if="selectionVisible">
+						<input
+							:checked="isAllChecked"
+							ref="allCheck"
+							@change="handleSelectALL"
+							type="checkbox"/>
+					</th>
+					<th v-if="orderVisible">#</th>
+					<template v-for="(column, index) in columns">
+						<th :key="column.title">
+							<div class="guluer-table-header">
+								{{ column.title }}
+								<span v-if="column.sortOrder" class="guluer-table-sorter" @click="handleSortChange(column, index)">
 								<g-icon name="ascend" :class="{ active: column.sortOrder === 'ascend' }"></g-icon>
 								<g-icon name="descend" :class="{ active: column.sortOrder === 'descend' }"></g-icon>
 							</span>
-						</div>
+							</div>
+						</th>
+					</template>
+				</tr>
+				</thead>
+				<tbody>
+				<tr :key="item.id" v-for="(item, index) in dataSource">
+					<th v-if="selectionVisible">
+						<input
+							:checked="inSelection(item)"
+							@change="handleSelectChange($event, item, index)"
+							type="checkbox"/>
 					</th>
-				</template>
-			</tr>
-			</thead>
-			<tbody>
-			<tr :key="item.id" v-for="(item, index) in dataSource">
-				<th v-if="selectionVisible">
-					<input
-						:checked="inSelection(item)"
-						@change="handleSelectChange($event, item, index)"
-						type="checkbox"/>
-				</th>
-				<td v-if="orderVisible">{{ index + 1 }}</td>
-				<td :key="column.title" v-for="column in columns">
-					{{ item[column.prop] }}
-				</td>
-			</tr>
-			</tbody>
-		</table>
+					<td v-if="orderVisible">{{ index + 1 }}</td>
+					<td :key="column.title" v-for="column in columns">
+						{{ item[column.prop] }}
+					</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
 		<div v-if="loading" class="loading-wrapper">
 			<g-icon name="loading"></g-icon>
 		</div>
@@ -89,7 +91,15 @@
 		  loading: {
         type: Boolean,
 			  default: false
+		  },
+		  height: {
+        type: [String, Number]
 		  }
+	  },
+	  data() {
+      return {
+        cloneTable: null
+      }
 	  },
 	  computed: {
       isAllChecked() {
@@ -113,7 +123,34 @@
         this.$refs.allCheck.indeterminate = selectionLength > 0 && selectionLength < total
       }
 	  },
+	  mounted() {
+      this.cloneTable = this.$refs.table.cloneNode(true)
+		  this.cloneTable.classList.add('guluer-table-clone')
+			this.computedHeader()
+		  this.$refs.wrapper.appendChild(this.cloneTable)
+		  this.handleResize = () => { this.computedHeader() }
+		  window.addEventListener('resize',this.handleResize)
+	  },
+	  beforeDestroy() {
+      window.removeEventListener('resize', this.handleResize)
+		  this.cloneTable.remove()
+	  },
 	  methods: {
+      computedHeader() {
+        const tableHeader = Array.from(this.$refs.table.children).filter(node => node.tagName.toLowerCase() === 'thead')[0]
+        let tableHeaderCopy
+        Array.from(this.cloneTable.children).map(node => {
+          if (node.tagName.toLowerCase() === 'tbody') {
+            node.remove()
+          } else {
+            tableHeaderCopy = node
+          }
+        })
+        Array.from(tableHeader.children[0].children).map((th, index) => {
+          const { width } = th.getBoundingClientRect()
+          tableHeaderCopy.children[0].children[index].style.width = `${width}px`
+        })
+      },
       handleSortChange(column, index) {
         let copy = JSON.parse(JSON.stringify(this.columns))
 	      const { sortOrder } = column
@@ -215,6 +252,12 @@
 			height: 30px;
 			fill: $blue-light;
 		}
+	}
+	.guluer-table-clone {
+		position: absolute;
+		left: 0;
+		top: 0;
+		background: #fff;
 	}
 }
 </style>

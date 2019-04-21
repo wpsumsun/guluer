@@ -1,9 +1,9 @@
 <template>
 	<div id="app">
 		{{ selection1 }}
-		<g-table :loading="loading" @orderChange="x":columns.sync="columns" :data-source="dataSource"></g-table>
+		<!--<g-table height="300" :loading="loading" @orderChange="x":columns.sync="columns" :data-source="dataSource"></g-table>-->
 		<br>
-		<g-table :selection.sync="selection1" selectionVisible size="small" stripe bordered orderVisible :columns="columns" :data-source="dataSource"></g-table>
+		<g-table height="300" :selection.sync="selection1" selectionVisible size="small" stripe bordered orderVisible :columns="columns" :data-source="dataSource"></g-table>
 	</div>
 </template>
 
@@ -23,7 +23,22 @@
 	      dataSource: [
 		      { id: 1, name: '醒狮', score: 100 },
 		      { id: 2, name: '辛弃疾', score: 90 },
-		      { id: 3, name: '鲤鱼', score: 80 }
+		      { id: 3, name: '鲤鱼', score: 80 },
+          { id: 4, name: '醒狮', score: 100 },
+          { id: 5, name: '辛弃疾', score: 90 },
+          { id: 6, name: '鲤鱼', score: 80 },
+          { id: 7, name: '醒狮', score: 100 },
+          { id: 8, name: '辛弃疾', score: 90 },
+          { id: 9, name: '鲤鱼', score: 80 },
+          { id: 10, name: '醒狮', score: 100 },
+          { id: 12, name: '辛弃疾', score: 90 },
+          { id: 23, name: '鲤鱼', score: 80 },
+          { id: 21, name: '醒狮', score: 100 },
+          { id: 32, name: '辛弃疾', score: 90 },
+          { id: 43, name: '鲤鱼', score: 80 },
+          { id: 51, name: '醒狮', score: 100 },
+          { id: 222, name: '辛弃疾', score: 90 },
+          { id: 333, name: '鲤鱼', score: 80 }
 	      ]
       }
     },
