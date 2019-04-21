@@ -1,9 +1,15 @@
 <template>
 	<div id="app">
 		{{ selection1 }}
-		<g-table height="300" :loading="loading" @orderChange="x" :columns.sync="columns" :data-source="dataSource"></g-table>
+		<g-table height="300" :loading="loading" @orderChange="x" :columns.sync="columns" :data-source="dataSource">
+		</g-table>
 		<br>
-		<g-table expand-key="description" :loading="loading" @orderChange="x" height="300" :selection.sync="selection1" selectionVisible size="small" stripe bordered orderVisible :columns="columns" :data-source="dataSource"></g-table>
+		<g-table expand-key="description" :loading="loading" @orderChange="x" height="300" :selection.sync="selection1" selectionVisible size="small" stripe bordered orderVisible :columns="columns" :data-source="dataSource">
+			<template slot-scope="scope">
+				<button @click="handleEdit(scope)">编辑</button>
+				<button @click="handleEdit(scope)">删除</button>
+			</template>
+		</g-table>
 	</div>
 </template>
 
@@ -43,6 +49,9 @@
       }
     },
     methods: {
+      handleEdit(scope) {
+        console.log('scope', scope)
+      },
       x(order) {
         this.loading = true
         setTimeout(() => {

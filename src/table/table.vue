@@ -24,6 +24,7 @@
 							</div>
 						</th>
 					</template>
+					<th ref="actionTh" v-if="$scopedSlots.default"></th>
 				</tr>
 				</thead>
 				<tbody>
@@ -41,6 +42,11 @@
 							<td :style="{ width: '50px' }" v-if="orderVisible">{{ index + 1 }}</td>
 							<td :style="{ width: `${column.width}px` }" :key="column.title" v-for="column in columns">
 								{{ item[column.prop] }}
+							</td>
+							<td v-if="$scopedSlots.default">
+								<div ref="action">
+									<slot :item="item"></slot>
+								</div>
 							</td>
 						</tr>
 						<tr class="guluer-table-expand-content" v-if="expandKey && item[expandKey]" v-show="inExpandIds(item.id)">
@@ -143,17 +149,32 @@
       }
 	  },
 	  mounted() {
-      this.cloneTable = this.$refs.table.cloneNode()
-		  this.cloneTable.classList.add('guluer-table-clone')
-      const { height } = this.$refs.table.children[0].getBoundingClientRect()
-		  this.cloneTable.appendChild(this.$refs.table.children[0])
-		  this.$refs.table.style.marginTop = `${height}px`
-		  this.$refs.wrapper.appendChild(this.cloneTable)
+			this.fixedHeader()
+      if (this.$scopedSlots.default) {
+        const div = this.$refs.action[0]
+        const { width } = div.getBoundingClientRect()
+        const parent = div.parentNode
+	      const styles = getComputedStyle(parent)
+	      const paddingLeft = styles.getPropertyValue('padding-left')
+	      const paddingRight = styles.getPropertyValue('padding-right')
+	      const borderLeftWidth = styles.getPropertyValue('border-left-width')
+	      const borderRightWidth = styles.getPropertyValue('border-right-width')
+	      const totalWidth = width + parseInt(paddingLeft) + parseInt(paddingRight) + parseInt(borderLeftWidth) + parseInt(borderRightWidth)
+        this.$refs.actionTh.style.width = `${totalWidth}px`
+      }
 	  },
 	  beforeDestroy() {
 		  this.cloneTable.remove()
 	  },
 	  methods: {
+      fixedHeader() {
+        this.cloneTable = this.$refs.table.cloneNode()
+        this.cloneTable.classList.add('guluer-table-clone')
+        const { height } = this.$refs.table.children[0].getBoundingClientRect()
+        this.cloneTable.appendChild(this.$refs.table.children[0])
+        this.$refs.table.style.marginTop = `${height}px`
+        this.$refs.wrapper.appendChild(this.cloneTable)
+      },
       inExpandIds(id) {
         return this.expandIds.indexOf(id) > -1
       },
