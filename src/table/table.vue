@@ -29,15 +29,15 @@
 				<tbody>
 					<template v-for="(item, index) in dataSource">
 						<tr :key="item.id">
-							<th class="guluer-table-expand-wrapper" :style="{ width: '50px' }">
+							<td v-if="expandKey" class="guluer-table-expand-wrapper" :style="{ width: '50px' }">
 								<g-icon :class="{ active: inExpandIds(item.id) }" @click="handleExpand(item.id)" name="right" v-if="expandKey && item[expandKey]"></g-icon>
-							</th>
-							<th :style="{ width: '50px' }" v-if="selectionVisible">
+							</td>
+							<td :style="{ width: '50px' }" v-if="selectionVisible">
 								<input
 									:checked="inSelection(item)"
 									@change="handleSelectChange($event, item, index)"
 									type="checkbox"/>
-							</th>
+							</td>
 							<td :style="{ width: '50px' }" v-if="orderVisible">{{ index + 1 }}</td>
 							<td :style="{ width: `${column.width}px` }" :key="column.title" v-for="column in columns">
 								{{ item[column.prop] }}
