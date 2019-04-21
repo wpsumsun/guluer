@@ -24,7 +24,7 @@
         selection1: [{ id: 2, name: '辛弃疾', score: 90 }],
         columns: [
 	        { title: '姓名',prop: 'name', sortOrder: 'ascend', width: 200 },
-	        { title: '分数',prop: 'score', sortOrder: 'descend'}
+	        { title: '分数',prop: 'score', sortOrder: 'descend', width: 400 }
         ],
 	      dataSource: [
 		      { id: 1, name: '醒狮', score: 100, description: 'xxxxxxx' },

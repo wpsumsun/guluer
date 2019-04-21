@@ -44,7 +44,7 @@
 								{{ item[column.prop] }}
 							</td>
 							<td v-if="$scopedSlots.default">
-								<div ref="action">
+								<div class="action-wrapper" ref="actions">
 									<slot :item="item"></slot>
 								</div>
 							</td>
@@ -151,7 +151,7 @@
 	  mounted() {
 			this.fixedHeader()
       if (this.$scopedSlots.default) {
-        const div = this.$refs.action[0]
+        const div = this.$refs.actions[0]
         const { width } = div.getBoundingClientRect()
         const parent = div.parentNode
 	      const styles = getComputedStyle(parent)
@@ -161,6 +161,9 @@
 	      const borderRightWidth = styles.getPropertyValue('border-right-width')
 	      const totalWidth = width + parseInt(paddingLeft) + parseInt(paddingRight) + parseInt(borderLeftWidth) + parseInt(borderRightWidth)
         this.$refs.actionTh.style.width = `${totalWidth}px`
+	      this.$refs.actions.map(node => {
+          node.parentNode.style.width = `${totalWidth}px`
+        })
       }
 	  },
 	  beforeDestroy() {
@@ -312,6 +315,9 @@
 		left: 0;
 		top: 0;
 		background: #fff;
+	}
+	.action-wrapper {
+		display: inline-block;
 	}
 }
 </style>
