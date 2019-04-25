@@ -6,16 +6,16 @@
 				<div class="date-picker-app">
 					<div class="date-picker-header">
 						<div class="date-picker-header-left">
-							<span class="prev-year"><g-icon name="left-left"></g-icon></span>
-							<span class="prev-month"><g-icon name="left"></g-icon></span>
+							<span class="prev-year" @click="modifyYear(-1)"><g-icon name="left-left"></g-icon></span>
+							<span class="prev-month" @click="modifyMonth(-1)"><g-icon name="left"></g-icon></span>
 						</div>
 						<div class="date-picker-header-middle">
-							<span class="date-picker-year-select" @click="handleModeChange('year')">{{ year }}年</span>
-							<span class="date-picker-month-select"@click="handleModeChange('month')">{{ month }}月</span>
+							<span class="date-picker-year-select" @click="handleModeChange('year')">{{ display.year }}年</span>
+							<span class="date-picker-month-select"@click="handleModeChange('month')">{{ display.month + 1 }}月</span>
 						</div>
 						<div class="date-picker-header-right">
-							<span class="next-month"><g-icon name="right"></g-icon></span>
-							<span class="next-year"><g-icon name="right-right"></g-icon></span>
+							<span class="next-month" @click="modifyMonth(1)"><g-icon name="right"></g-icon></span>
+							<span class="next-year" @click="modifyYear(-1)"><g-icon name="right-right"></g-icon></span>
 						</div>
 					</div>
 					<div class="date-picker-content">
@@ -78,10 +78,12 @@
       GIcon
 	  },
 	  data() {
+      let [year, month] = getYearMonthDay(this.value)
       return {
         mode: 'day',
         wrapper: null,
-        weekdays: ['一', '二', '三', '四', '五', '六', '日']
+        weekdays: ['一', '二', '三', '四', '五', '六', '日'],
+	      display: { year, month }
       }
 	  },
 	  computed: {
@@ -100,11 +102,10 @@
       visibleDate() {
         const oneDay = 1000 * 60 * 60 * 24
         const total = 7 * 6
-        const date = this.value
+	      const { year, month } = this.display
+        const date = new Date(year, month, 1)
 				const firstDay = getFirstDay(date)
-	      const lastDay = getLastDay(date)
 	      const firstWeekday = firstDay.getDay() || 7
-	      const [year, month, day] = getYearMonthDay(date)
         const Days = []
 	      let start = firstDay - (firstWeekday - 1) * oneDay
         for (let i = 0; i < total; i++) {
@@ -117,9 +118,22 @@
       this.wrapper = this.$refs.wrapper
 	  },
 	  methods: {
+      modifyMonth(diff) {
+        const { year: oldYear, month: oldMonth } = this.display
+        const [ year, month ] = getYearMonthDay(new Date(oldYear, oldMonth + diff))
+        console.log(oldMonth, diff);
+        console.log(new Date(oldYear, oldMonth + diff));
+        this.display = { year, month }
+      },
+      modifyYear(diff) {
+        const { year: oldYear, month: oldMonth } = this.display
+        const [ year, month ] = getYearMonthDay(new Date(oldYear + diff, oldMonth))
+        this.display = { year, month }
+      },
       isCurrentMonth(date) {
+        const { year, month } = this.display
         let [year1, month1] = getYearMonthDay(date)
-	      let [year2, month2] = getYearMonthDay(new Date())
+	      let [year2, month2] = getYearMonthDay(new Date(year, month))
         return year1 === year2 && month1 === month2
       },
       onClickCell(date) {
