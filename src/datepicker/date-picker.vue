@@ -89,6 +89,7 @@
         return this.value.getMonth() + 1
 		  },
       visibleDate() {
+        const oneDay = 1000 * 60 * 60 * 24
         const total = 7 * 6
         const date = this.value
 				const firstDay = getFirstDay(date)
@@ -96,19 +97,11 @@
 	      const firstWeekday = firstDay.getDay() || 7
 	      const [year, month, day] = getYearMonthDay(date)
         const Days = []
-	      const nextDays = []
-	      const prevDays = []
-        for (let i = 1; i <= lastDay.getDate(); i++) {
-          Days.push(new Date(year, month, i))
+	      let start = firstDay - (firstWeekday - 1) * oneDay
+        for (let i = 0; i < total; i++) {
+          Days.push(new Date(start + i * oneDay))
         }
-        for (let i = firstWeekday - 1;i >= 0; i--) {
-          prevDays.push(new Date(year, month, -i))
-        }
-				const remain = total - Days.length - prevDays.length
-	      for (let i = 1; i <= remain; i++) {
-	        nextDays.push(new Date(year, month + 1, i))
-	      }
-        return [...prevDays, ...Days, ...nextDays]
+        return Days
       },
 	  },
 	  mounted() {
@@ -171,6 +164,7 @@
 				color: rgba(0,0,0,0.65);
 				padding: 0 4px;
 				height: 30px;
+				cursor: pointer;
 			}
 			&-cell {
 				width: 22px;
