@@ -30,7 +30,7 @@
     },
     props: {
       value: {
-        type: [String, Number],
+        type: [String, Number, Date],
       },
       disabled: {
         type: Boolean,

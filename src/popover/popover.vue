@@ -1,6 +1,6 @@
 <template>
 	<div class="popover" ref="popover">
-		<div class="content-wrapper" v-if="visible" ref="contentWrapper" :class="{ [`${position}`]: !!position }">
+		<div class="guluer-popover-content-wrapper" v-if="visible" ref="contentWrapper" :class="{ [`${position}`]: !!position }">
 			<slot name="content" :close="close"></slot>
 		</div>
 		<span class="trigger" ref="trigger">
@@ -27,6 +27,9 @@
 			    return ['click', 'hover'].indexOf(value) !== -1
 			  }
 		  },
+		  container: {
+        type: Element
+		  }
 	  },
 	  data() {
       return {
@@ -61,8 +64,8 @@
 	  },
 	  methods: {
       getPosition() {
-	      const { contentWrapper, trigger } = this.$refs
-        document.body.appendChild(contentWrapper)
+	      const { contentWrapper, trigger } = this.$refs;
+	      (this.container || document.body).appendChild(contentWrapper)
         const { left, top, height, width } = trigger.getBoundingClientRect()
         const { height: contentHeight } = contentWrapper.getBoundingClientRect()
 	      const positions = {
@@ -122,7 +125,7 @@
 		display: inline-flex;
 		position: relative;
 	}
-	.content-wrapper {
+	.guluer-popover-content-wrapper {
 		width: 200px;
 		position: absolute;
 		padding: 18px 20px;

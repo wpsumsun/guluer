@@ -34,6 +34,7 @@ import Pagination from './pagination/pagination'
 import Upload from './upload/upload'
 import Progress from './progress/progress'
 import Table from './table/table'
+import DatePicker from './datepicker/date-picker'
 
 Vue.use(toast)
 
@@ -70,6 +71,7 @@ Vue.component('g-pagination', Pagination)
 Vue.component('g-upload', Upload)
 Vue.component('g-progress', Progress)
 Vue.component('g-table', Table)
+Vue.component('g-date-picker', DatePicker)
 
 
 Vue.config.productionTip = false;
