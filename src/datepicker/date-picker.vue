@@ -1,7 +1,7 @@
 <template>
 	<div class="date-picker-wrapper" ref="wrapper">
 		<g-popover position="bottom" :container="wrapper">
-			<g-input :value="value"></g-input>
+			<g-input :value="formatValue"></g-input>
 			<template slot="content">
 				<div class="date-picker-app">
 					<div class="date-picker-header">
@@ -28,7 +28,10 @@
 							<tbody>
 							<tr v-for="rowIndex in range(0, 6)">
 								<td v-for="columnIndex in range(0, 7)">
-									<div class="date-picker-day-table-cell" @click="onClickCell(getVisibleDay(rowIndex, columnIndex))">
+									<div
+										class="date-picker-day-table-cell"
+										:class="{ notCurrentMonth: !isCurrentMonth(getVisibleDay(rowIndex, columnIndex)) }"
+										@click="onClickCell(getVisibleDay(rowIndex, columnIndex))">
 										{{ getVisibleDay(rowIndex, columnIndex).getDate() }}
 									</div>
 								</td>
@@ -82,6 +85,12 @@
       }
 	  },
 	  computed: {
+      formatValue() {
+        let [year, month, day] = getYearMonthDay(this.value)
+        month = month < 10 ? `0${month}` : month
+        day = day < 10 ? `0${day}` : day
+	      return `${year}-${month}-${day}`
+      },
       year() {
         return this.value.getFullYear()
       },
@@ -108,6 +117,11 @@
       this.wrapper = this.$refs.wrapper
 	  },
 	  methods: {
+      isCurrentMonth(date) {
+        let [year1, month1] = getYearMonthDay(date)
+	      let [year2, month2] = getYearMonthDay(new Date())
+        return year1 === year2 && month1 === month2
+      },
       onClickCell(date) {
         this.$emit('input', date)
       },
@@ -173,7 +187,10 @@
 				text-align: center;
 				border: 1px solid transparent;
 				box-sizing: border-box;
-				&:hover {
+				&.notCurrentMonth {
+					color: $gray-color;
+				}
+				&:not(th):hover {
 					background: $hover-ligth-blue;
 				}
 			}
