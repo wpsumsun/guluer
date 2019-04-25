@@ -18,8 +18,8 @@
 							<span class="next-year" @click="modifyYear(-1)"><g-icon name="right-right"></g-icon></span>
 						</div>
 					</div>
-					<div class="date-picker-content">
-						<table v-if="mode === 'day'" class="date-picker-day-table">
+					<div class="date-picker-content" v-show="mode === 'day'">
+						<table class="date-picker-day-table">
 							<thead>
 							<tr>
 								<th class="date-picker-day-table-cell" v-for="weekday in weekdays">{{ weekday }}</th>
@@ -38,14 +38,22 @@
 							</tr>
 							</tbody>
 						</table>
-						<table v-if="mode === 'month'" class="date-picker-day-table">
+					</div>
+					<div class="date-picker-content-month" v-show="mode === 'month'">
+						<table class="date-picker-day-table">
 							<tbody>
-							<tr>
-								<td>月</td>
+							<tr v-for="monthRowIndex in range(0, 4)">
+								<td v-for="monthColIndex in range(0, 3)">
+									<div class="date-picker-month-cell" @click="handleMonthChange(monthRowIndex * 3 + monthColIndex)">
+										{{ monthsMapping[monthRowIndex * 3 + monthColIndex] }}
+									</div>
+								</td>
 							</tr>
 							</tbody>
 						</table>
-						<table v-if="mode === 'year'" class="date-picker-day-table">
+					</div>
+					<div class="date-picker-content-year" v-show="mode === 'year'">
+						<table class="date-picker-day-table">
 							<tbody>
 							<tr>
 								<td>年</td>
@@ -83,6 +91,7 @@
         mode: 'day',
         wrapper: null,
         weekdays: ['一', '二', '三', '四', '五', '六', '日'],
+	      monthsMapping: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
 	      display: { year, month }
       }
 	  },
@@ -118,11 +127,13 @@
       this.wrapper = this.$refs.wrapper
 	  },
 	  methods: {
+      handleMonthChange(index) {
+        this.$set(this.display, 'month', index)
+	      this.mode = 'day'
+      },
       modifyMonth(diff) {
         const { year: oldYear, month: oldMonth } = this.display
         const [ year, month ] = getYearMonthDay(new Date(oldYear, oldMonth + diff))
-        console.log(oldMonth, diff);
-        console.log(new Date(oldYear, oldMonth + diff));
         this.display = { year, month }
       },
       modifyYear(diff) {
@@ -155,6 +166,7 @@
 <style scoped lang="scss">
 @import "../styles/var";
 .date-picker-wrapper {
+	user-select:none;
 	/deep/ .guluer-popover-content-wrapper {
 		padding: 0;
 		width: auto;
@@ -178,12 +190,16 @@
 			}
 			&-middle {
 				margin: 0 auto;
+				>span {
+					cursor: pointer;
+				}
 			}
 		}
 	}
 	.date-picker-content {
 		padding: 8px 12px;
 		.date-picker-day-table {
+			width: 100%;
 			th {
 				color: $color;
 				font-weight: normal;
@@ -207,6 +223,30 @@
 				&:not(th):hover {
 					background: $hover-ligth-blue;
 				}
+			}
+		}
+	}
+	.date-picker-content-month {
+		padding: 8px 12px;
+		width: 226px;
+	}
+	.date-picker-content-year {
+		padding: 8px 12px;
+		width: 226px;
+	}
+	.date-picker-day-table {
+		width: 100%;
+		td {
+			text-align: center;
+		}
+		.date-picker-month-cell {
+			display: inline-flex;
+			line-height: 24px;
+			padding: 4px 8px;
+			cursor: pointer;
+			&:hover {
+				background: $hover-ligth-blue;
+				color: $blue-light;
 			}
 		}
 	}
