@@ -38,7 +38,11 @@
 								<td v-for="columnIndex in range(0, 7)">
 									<div
 										class="date-picker-day-table-cell"
-										:class="{ notCurrentMonth: !isCurrentMonth(getVisibleDay(rowIndex, columnIndex)) }"
+										:class="{
+											notCurrentMonth: !isCurrentMonth(getVisibleDay(rowIndex, columnIndex)),
+											active: isSelected(getVisibleDay(rowIndex, columnIndex)),
+											today: isToday(getVisibleDay(rowIndex, columnIndex))
+										}"
 										@click="onClickCell(getVisibleDay(rowIndex, columnIndex))">
 										{{ getVisibleDay(rowIndex, columnIndex).getDate() }}
 									</div>
@@ -188,6 +192,16 @@
 	      let [year2, month2] = getYearMonthDay(new Date(year, month))
         return year1 === year2 && month1 === month2
       },
+      isSelected(date) {
+        let [year1, month1, day1] = getYearMonthDay(date)
+	      let [year2, month2, day2] = getYearMonthDay(this.value)
+        return year1 === year2 && month1 === month2 && day1 === day2
+      },
+		  isToday(date) {
+        let [year1, month1, day1] = getYearMonthDay(date)
+	      let [year2, month2, day2] = getYearMonthDay(new Date())
+        return year1 === year2 && month1 === month2 && day1 === day2
+      },
       onClickCell(date) {
         this.$emit('input', date)
       },
@@ -259,28 +273,35 @@
 				cursor: pointer;
 			}
 			&-cell {
-				width: 22px;
-				height: 22px;
+				width: 24px;
+				height: 24px;
 				line-height: 22px;
 				text-align: center;
 				border: 1px solid transparent;
 				box-sizing: border-box;
+				border-radius: 50%;
 				&.notCurrentMonth {
 					color: $gray-color;
 				}
 				&:not(th):hover {
 					background: $hover-ligth-blue;
 				}
+				&.active {
+					background: $blue-light;
+				}
+				&.today {
+					border: 1px solid $blue-light;
+				}
 			}
 		}
 	}
 	.date-picker-content-month {
 		padding: 8px 12px;
-		width: 226px;
+		width: 240px;
 	}
 	.date-picker-content-year {
 		padding: 8px 12px;
-		width: 226px;
+		width: 240px;
 		.not-in-range {
 			color: $gray-color;
 		}

@@ -11,7 +11,7 @@
 		},
     data() {
       return {
-        value: new Date()
+        value: new Date(2019, 4, 22)
       }
     },
     methods: {
