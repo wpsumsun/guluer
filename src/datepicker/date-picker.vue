@@ -7,14 +7,22 @@
 					<div class="date-picker-header">
 						<div class="date-picker-header-left">
 							<span class="prev-year" @click="modifyYear(-1)"><g-icon name="left-left"></g-icon></span>
-							<span class="prev-month" @click="modifyMonth(-1)"><g-icon name="left"></g-icon></span>
+							<span v-show="mode === 'day'" class="prev-month" @click="modifyMonth(-1)"><g-icon name="left"></g-icon></span>
 						</div>
 						<div class="date-picker-header-middle">
-							<span class="date-picker-year-select" @click="handleModeChange('year')">{{ display.year }}年</span>
-							<span class="date-picker-month-select"@click="handleModeChange('month')">{{ display.month + 1 }}月</span>
+							<template v-if="mode === 'day'">
+								<span class="date-picker-year-select" @click="handleModeChange('year')">{{ display.year }}年</span>
+								<span class="date-picker-month-select"@click="handleModeChange('month')">{{ display.month + 1 }}月</span>
+							</template>
+							<template v-if="mode === 'year'">
+								<span>{{ startYear }}年 - {{ endYear }}年</span>
+							</template>
+							<template v-if="mode === 'month'">
+								<span @click="handleModeChange('year')">{{ display.year }}年</span>
+							</template>
 						</div>
 						<div class="date-picker-header-right">
-							<span class="next-month" @click="modifyMonth(1)"><g-icon name="right"></g-icon></span>
+							<span v-show="mode === 'day'"  class="next-month" @click="modifyMonth(1)"><g-icon name="right"></g-icon></span>
 							<span class="next-year" @click="modifyYear(1)"><g-icon name="right-right"></g-icon></span>
 						</div>
 					</div>
@@ -164,8 +172,15 @@
       },
       modifyYear(diff) {
         const { year: oldYear, month: oldMonth } = this.display
-        const [ year, month ] = getYearMonthDay(new Date(oldYear + diff, oldMonth))
-        this.display = { year, month }
+        if (this.mode === 'day') {
+          const [ year, month ] = getYearMonthDay(new Date(oldYear + diff, oldMonth))
+          this.display = { year, month }
+        } else if (this.mode === 'year') {
+          const yearDiff = diff > 0 ? 10 : -10
+	        this.$set(this.display, 'year', oldYear + yearDiff)
+        } else {
+          this.$set(this.display, 'year', oldYear + diff)
+        }
       },
       isCurrentMonth(date) {
         const { year, month } = this.display
