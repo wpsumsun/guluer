@@ -15,7 +15,7 @@
 						</div>
 						<div class="date-picker-header-right">
 							<span class="next-month" @click="modifyMonth(1)"><g-icon name="right"></g-icon></span>
-							<span class="next-year" @click="modifyYear(-1)"><g-icon name="right-right"></g-icon></span>
+							<span class="next-year" @click="modifyYear(1)"><g-icon name="right-right"></g-icon></span>
 						</div>
 					</div>
 					<div class="date-picker-content" v-show="mode === 'day'">
@@ -54,11 +54,16 @@
 					</div>
 					<div class="date-picker-content-year" v-show="mode === 'year'">
 						<table class="date-picker-day-table">
-							<tbody>
-							<tr>
-								<td>年</td>
+							<tr v-for="yearRowIndex in range(0, 4)">
+								<td v-for="yearColIndex in range(0, 3)">
+									<div
+										class="date-picker-month-cell"
+										:class="{ 'not-in-range': getVisibleYear(yearRowIndex, yearColIndex) < startYear || getVisibleYear(yearRowIndex, yearColIndex) > endYear }"
+										@click="handleYearChange(getVisibleYear(yearRowIndex, yearColIndex))">
+										{{ getVisibleYear(yearRowIndex, yearColIndex) }}
+									</div>
+								</td>
 							</tr>
-							</tbody>
 						</table>
 					</div>
 				</div>
@@ -96,8 +101,25 @@
       }
 	  },
 	  computed: {
+      visibleYears() {
+        const { year } = this.display
+	      const years = []
+        for (let i = 0; i < 12; i++) {
+          years.push(Math.floor(year / 10) * 10 + i - 1)
+        }
+        return years
+      },
+		  startYear() {
+        const { year } = this.display
+        return Math.floor(year / 10) * 10
+		  },
+		  endYear() {
+        const { year } = this.display
+        return Math.floor(year / 10) * 10 + 9
+		  },
       formatValue() {
         let [year, month, day] = getYearMonthDay(this.value)
+	      month = month + 1
         month = month < 10 ? `0${month}` : month
         day = day < 10 ? `0${day}` : day
 	      return `${year}-${month}-${day}`
@@ -131,6 +153,10 @@
         this.$set(this.display, 'month', index)
 	      this.mode = 'day'
       },
+      handleYearChange(year) {
+        this.$set(this.display, 'year', year)
+	      this.mode = 'month'
+      },
       modifyMonth(diff) {
         const { year: oldYear, month: oldMonth } = this.display
         const [ year, month ] = getYearMonthDay(new Date(oldYear, oldMonth + diff))
@@ -153,6 +179,9 @@
       getVisibleDay(row, col) {
         return this.visibleDate[7*row + col]
       },
+		  getVisibleYear(row, col) {
+        return this.visibleYears[row * 3 + col]
+		  },
       range(begin, end) {
         return range(begin, end)
       },
@@ -192,6 +221,10 @@
 				margin: 0 auto;
 				>span {
 					cursor: pointer;
+					margin: 0 2px;
+					&:hover {
+						color: $blue-light;
+					}
 				}
 			}
 		}
@@ -233,6 +266,9 @@
 	.date-picker-content-year {
 		padding: 8px 12px;
 		width: 226px;
+		.not-in-range {
+			color: $gray-color;
+		}
 	}
 	.date-picker-day-table {
 		width: 100%;
