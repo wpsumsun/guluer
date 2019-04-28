@@ -1,6 +1,6 @@
 <template>
 	<div class="date-picker-wrapper" ref="wrapper">
-		<g-popover position="bottom" :container="wrapper">
+		<g-popover ref="popover" position="bottom" :container="wrapper">
 			<g-input :value="formatValue"></g-input>
 			<template slot="content">
 				<div class="date-picker-app">
@@ -171,6 +171,7 @@
 	  methods: {
       setToday() {
         this.$emit('input', new Date())
+	      this.$refs.popover.close()
       },
       setEmpty() {
         this.$emit('input', null)
@@ -219,6 +220,7 @@
       },
       onClickCell(date) {
         this.$emit('input', date)
+        this.$refs.popover.close()
       },
       getVisibleDay(row, col) {
         return this.visibleDate[7*row + col]
