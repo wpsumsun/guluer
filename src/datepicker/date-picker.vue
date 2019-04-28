@@ -50,6 +50,10 @@
 							</tr>
 							</tbody>
 						</table>
+						<div class="operation-wrapper">
+							<g-button @click="setToday">今天</g-button>
+							<g-button @click="setEmpty">清除</g-button>
+						</div>
 					</div>
 					<div class="date-picker-content-month" v-show="mode === 'month'">
 						<table class="date-picker-day-table">
@@ -89,21 +93,22 @@
 	import GInput from '../input/input'
 	import GPopover from '../popover/popover'
 	import GIcon from '../icon/icon'
+  import GButton from '../button/button'
   export default {
     name: "date-picker",
 	  props: {
       value: {
-        type: Date,
-	      default:() => new Date()
+        type: Date
       }
 	  },
 	  components: {
       GInput,
 		  GPopover,
-      GIcon
+      GIcon,
+      GButton
 	  },
 	  data() {
-      let [year, month] = getYearMonthDay(this.value)
+      let [year, month] = getYearMonthDay(this.value || new Date())
       return {
         mode: 'day',
         wrapper: null,
@@ -130,6 +135,7 @@
         return Math.floor(year / 10) * 10 + 9
 		  },
       formatValue() {
+        if (!this.value) return
         let [year, month, day] = getYearMonthDay(this.value)
 	      month = month + 1
         month = month < 10 ? `0${month}` : month
@@ -137,9 +143,11 @@
 	      return `${year}-${month}-${day}`
       },
       year() {
+        if (!this.value) return
         return this.value.getFullYear()
       },
 		  month() {
+        if (!this.value) return
         return this.value.getMonth() + 1
 		  },
       visibleDate() {
@@ -161,6 +169,12 @@
       this.wrapper = this.$refs.wrapper
 	  },
 	  methods: {
+      setToday() {
+        this.$emit('input', new Date())
+      },
+      setEmpty() {
+        this.$emit('input', null)
+      },
       handleMonthChange(index) {
         this.$set(this.display, 'month', index)
 	      this.mode = 'day'
@@ -193,6 +207,7 @@
         return year1 === year2 && month1 === month2
       },
       isSelected(date) {
+        if (!this.value) return
         let [year1, month1, day1] = getYearMonthDay(date)
 	      let [year2, month2, day2] = getYearMonthDay(this.value)
         return year1 === year2 && month1 === month2 && day1 === day2
@@ -321,6 +336,13 @@
 				color: $blue-light;
 			}
 		}
+	}
+	.operation-wrapper {
+		height: 40px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		border-top: 1px solid $border-color;
 	}
 }
 </style>

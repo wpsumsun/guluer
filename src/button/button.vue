@@ -83,6 +83,9 @@
     .loading {
       animation: spin 1.5s infinite linear;
     }
+    & + & {
+      margin-left: 10px;
+    }
   }
 
 </style>
