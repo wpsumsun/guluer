@@ -106,6 +106,7 @@
         this.close()
 		  },
 		  open() {
+        this.$emit('onOpen')
         this.visible = true
         this.$nextTick(() => {
           this.getPosition()
@@ -113,6 +114,7 @@
         })
 		  },
 		  close() {
+        this.$emit('onClose')
         this.visible = false
         document.removeEventListener('click', this.closeHandler)
 		  }

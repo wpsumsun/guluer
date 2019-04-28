@@ -1,7 +1,7 @@
 <template>
 	<div class="date-picker-wrapper" ref="wrapper">
-		<g-popover ref="popover" position="bottom" :container="wrapper">
-			<g-input :value="formatValue"></g-input>
+		<g-popover @onClose="onClose" ref="popover" position="bottom" :container="wrapper">
+			<g-input ref="input" @input="onInput" @change="onChange" :value="formatValue"></g-input>
 			<template slot="content">
 				<div class="date-picker-app">
 					<div class="date-picker-header">
@@ -169,6 +169,22 @@
       this.wrapper = this.$refs.wrapper
 	  },
 	  methods: {
+      onInput(value) {
+	      const reg = /^\d{4}-\d{2}-\d{2}$/
+	      if (reg.test(value)) {
+          let [year, month, day] = value.split('-')
+		      month = month - 1
+		      year = year - 0
+		      this.display = { year, month }
+		      this.$emit('input', new Date(year, month, day))
+	      }
+      },
+      onChange(value) {
+        this.$refs.input.setRawValue(this.formatValue)
+      },
+      onClose() {
+        this.mode = 'day'
+      },
       setToday() {
         this.$emit('input', new Date())
 	      this.$refs.popover.close()

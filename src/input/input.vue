@@ -1,6 +1,7 @@
 <template>
 <div class="wrapper" :class="{ error: error, tips: tips }">
-  <input 
+  <input
+    ref="input"
     type="text" 
     :value="value" 
     :disabled="disabled" 
@@ -48,6 +49,9 @@
       }
     },
     methods: {
+      setRawValue(value) {
+        this.$refs.input.value = value
+      },
       changeHandler(e) {
         this.$emit('change', e.target.value)
       },
