@@ -64,7 +64,9 @@
     methods: {
       updateLineHeight() {
         this.$nextTick(() => {
-          this.$refs.close.style.height = `${this.$refs.toast.getBoundingClientRect().height}px`
+          if (this.$refs.close) {
+            this.$refs.close.style.height = `${this.$refs.toast.getBoundingClientRect().height}px`
+          }
         })
       }, 
       autoCloseHandler() {
