@@ -34,7 +34,7 @@
   import { getFirstDay, getLastDay, getYearMonthDay, range } from "./utils"
   import GButton from '../button/button'
   export default {
-    name: "date-picker",
+    name: "day-table",
     props: {
       value: {
         type: Date

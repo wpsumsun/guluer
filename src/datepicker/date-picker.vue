@@ -32,19 +32,12 @@
 						v-show="mode === 'day'"
 						@click="onClickCell">
 					</day-table>
-					<div class="date-picker-content-month" v-show="mode === 'month'">
-						<table class="date-picker-day-table">
-							<tbody>
-							<tr v-for="monthRowIndex in range(0, 4)">
-								<td v-for="monthColIndex in range(0, 3)">
-									<div class="date-picker-month-cell" @click="handleMonthChange(monthRowIndex * 3 + monthColIndex)">
-										{{ monthsMapping[monthRowIndex * 3 + monthColIndex] }}
-									</div>
-								</td>
-							</tr>
-							</tbody>
-						</table>
-					</div>
+					<month-table
+						:value="value"
+						:display="display"
+						v-show="mode === 'month'"
+						@monthChange="handleMonthChange">
+					</month-table>
 					<div class="date-picker-content-year" v-show="mode === 'year'">
 						<table class="date-picker-day-table">
 							<tr v-for="yearRowIndex in range(0, 4)">
@@ -71,6 +64,7 @@
 	import GPopover from '../popover/popover'
 	import GIcon from '../icon/icon'
   import dayTable from './day-table'
+  import monthTable from './month-table'
   export default {
     name: "date-picker",
 	  props: {
@@ -82,7 +76,8 @@
       GInput,
 		  GPopover,
       GIcon,
-      dayTable
+      dayTable,
+      monthTable
 	  },
 	  data() {
       let [year, month] = getYearMonthDay(this.value || new Date())
