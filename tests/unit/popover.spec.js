@@ -20,7 +20,7 @@ describe('Popover', () => {
        }
      })
      wrapper.find('button').trigger('click')
-     expect(wrapper.find('.content-wrapper').classes()).contains('bottom')
+     expect(wrapper.find('.guluer-popover-content-wrapper').classes()).contains('bottom')
    })
 
  it('接受 trigger', () => {
@@ -34,8 +34,8 @@ describe('Popover', () => {
        trigger: 'hover'
      }
    })
-   expect(wrapper.find('.content-wrapper').element).to.not.exist
+   expect(wrapper.find('.guluer-popover-content-wrapper').element).to.not.exist
    wrapper.find('.popover').trigger('mouseenter')
-   expect(wrapper.find('.content-wrapper').element).to.exist
+   expect(wrapper.find('.guluer-popover-content-wrapper').element).to.exist
  })
 })
