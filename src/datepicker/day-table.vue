@@ -86,11 +86,10 @@
     },
     methods: {
       setToday() {
-        this.$emit('input', new Date())
-        this.$refs.popover.close()
+        this.$emit('dayChange', new Date())
       },
       setEmpty() {
-        this.$emit('input', null)
+        this.$emit('dayChange', null)
       },
       isCurrentMonth(date) {
         const { year, month } = this.display
@@ -110,7 +109,7 @@
         return year1 === year2 && month1 === month2 && day1 === day2
       },
       onClickCell(date) {
-        this.$emit('click', date)
+        this.$emit('dayChange', date)
       },
       getVisibleDay(row, col) {
         return this.visibleDate[7*row + col]

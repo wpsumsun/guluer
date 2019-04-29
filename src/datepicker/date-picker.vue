@@ -30,7 +30,7 @@
 						:value="value"
 						:display="display"
 						v-show="mode === 'day'"
-						@click="onClickCell">
+						@dayChange="handleDayChange">
 					</day-table>
 					<month-table
 						:value="value"
@@ -200,7 +200,7 @@
 	      let [year2, month2, day2] = getYearMonthDay(new Date())
         return year1 === year2 && month1 === month2 && day1 === day2
       },
-      onClickCell(date) {
+      handleDayChange(date) {
         this.$emit('input', date)
         this.$refs.popover.close()
       },
