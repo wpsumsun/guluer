@@ -26,35 +26,12 @@
 							<span class="next-year" @click="modifyYear(1)"><g-icon name="right-right"></g-icon></span>
 						</div>
 					</div>
-					<div class="date-picker-content" v-show="mode === 'day'">
-						<table class="date-picker-day-table">
-							<thead>
-							<tr>
-								<th class="date-picker-day-table-cell" v-for="weekday in weekdays">{{ weekday }}</th>
-							</tr>
-							</thead>
-							<tbody>
-							<tr v-for="rowIndex in range(0, 6)">
-								<td v-for="columnIndex in range(0, 7)">
-									<div
-										class="date-picker-day-table-cell"
-										:class="{
-											notCurrentMonth: !isCurrentMonth(getVisibleDay(rowIndex, columnIndex)),
-											active: isSelected(getVisibleDay(rowIndex, columnIndex)),
-											today: isToday(getVisibleDay(rowIndex, columnIndex))
-										}"
-										@click="onClickCell(getVisibleDay(rowIndex, columnIndex))">
-										{{ getVisibleDay(rowIndex, columnIndex).getDate() }}
-									</div>
-								</td>
-							</tr>
-							</tbody>
-						</table>
-						<div class="operation-wrapper">
-							<g-button @click="setToday">今天</g-button>
-							<g-button @click="setEmpty">清除</g-button>
-						</div>
-					</div>
+					<day-table
+						:value="value"
+						:display="display"
+						v-show="mode === 'day'"
+						@click="onClickCell">
+					</day-table>
 					<div class="date-picker-content-month" v-show="mode === 'month'">
 						<table class="date-picker-day-table">
 							<tbody>
@@ -93,7 +70,7 @@
 	import GInput from '../input/input'
 	import GPopover from '../popover/popover'
 	import GIcon from '../icon/icon'
-  import GButton from '../button/button'
+  import dayTable from './day-table'
   export default {
     name: "date-picker",
 	  props: {
@@ -105,7 +82,7 @@
       GInput,
 		  GPopover,
       GIcon,
-      GButton
+      dayTable
 	  },
 	  data() {
       let [year, month] = getYearMonthDay(this.value || new Date())
