@@ -38,20 +38,12 @@
 						v-show="mode === 'month'"
 						@monthChange="handleMonthChange">
 					</month-table>
-					<div class="date-picker-content-year" v-show="mode === 'year'">
-						<table class="date-picker-day-table">
-							<tr v-for="yearRowIndex in range(0, 4)">
-								<td v-for="yearColIndex in range(0, 3)">
-									<div
-										class="date-picker-month-cell"
-										:class="{ 'not-in-range': getVisibleYear(yearRowIndex, yearColIndex) < startYear || getVisibleYear(yearRowIndex, yearColIndex) > endYear }"
-										@click="handleYearChange(getVisibleYear(yearRowIndex, yearColIndex))">
-										{{ getVisibleYear(yearRowIndex, yearColIndex) }}
-									</div>
-								</td>
-							</tr>
-						</table>
-					</div>
+					<year-table
+						:value="value"
+						:display="display"
+						v-show="mode === 'year'"
+						@yearChange="handleYearChange">
+					</year-table>
 				</div>
 			</template>
 		</g-popover>
@@ -65,6 +57,7 @@
 	import GIcon from '../icon/icon'
   import dayTable from './day-table'
   import monthTable from './month-table'
+  import yearTable from './year-table'
   export default {
     name: "date-picker",
 	  props: {
@@ -77,7 +70,8 @@
 		  GPopover,
       GIcon,
       dayTable,
-      monthTable
+      monthTable,
+      yearTable
 	  },
 	  data() {
       let [year, month] = getYearMonthDay(this.value || new Date())

@@ -21,6 +21,9 @@
 	  props: {
       value: {
         type: Date
+      },
+      display: {
+        type: Object
       }
 	  },
 	  data() {
@@ -42,111 +45,58 @@
 
 <style scoped lang="scss">
 @import "../styles/var";
-.date-picker-wrapper {
-	user-select:none;
-	/deep/ .guluer-popover-content-wrapper {
-		padding: 0;
-		width: auto;
+.date-picker-day-table {
+	width: 100%;
+	th {
+		color: $color;
+		font-weight: normal;
 	}
-	.date-picker-app {
-		.date-picker-header {
-			line-height: 40px;
-			display: flex;
-			border-bottom: 1px solid $border-color;
-			padding: 0 8px;
-			svg {
-				width: 12px;
-				fill: rgba(0,0,0,0.45);
-				cursor: pointer;
-			}
-			.prev-year {
-				margin-right: 10px;
-			}
-			.next-month {
-				margin-right: 10px;
-			}
-			&-middle {
-				margin: 0 auto;
-				>span {
-					cursor: pointer;
-					margin: 0 2px;
-					&:hover {
-						color: $blue-light;
-					}
-				}
-			}
-		}
+	td {
+		color: rgba(0,0,0,0.65);
+		padding: 0 4px;
+		height: 30px;
+		cursor: pointer;
 	}
-	.date-picker-content {
-		padding: 8px 12px;
-		.date-picker-day-table {
-			width: 100%;
-			th {
-				color: $color;
-				font-weight: normal;
-			}
-			td {
-				color: rgba(0,0,0,0.65);
-				padding: 0 4px;
-				height: 30px;
-				cursor: pointer;
-			}
-			&-cell {
-				width: 24px;
-				height: 24px;
-				line-height: 22px;
-				text-align: center;
-				border: 1px solid transparent;
-				box-sizing: border-box;
-				border-radius: 50%;
-				&.notCurrentMonth {
-					color: $gray-color;
-				}
-				&:not(th):hover {
-					background: $hover-ligth-blue;
-				}
-				&.active {
-					background: $blue-light;
-				}
-				&.today {
-					border: 1px solid $blue-light;
-				}
-			}
-		}
-	}
-	.date-picker-content-month {
-		padding: 8px 12px;
-		width: 240px;
-	}
-	.date-picker-content-year {
-		padding: 8px 12px;
-		width: 240px;
-		.not-in-range {
+	&-cell {
+		width: 24px;
+		height: 24px;
+		line-height: 22px;
+		text-align: center;
+		border: 1px solid transparent;
+		box-sizing: border-box;
+		border-radius: 50%;
+		&.notCurrentMonth {
 			color: $gray-color;
 		}
-	}
-	.date-picker-day-table {
-		width: 100%;
-		td {
-			text-align: center;
+		&:not(th):hover {
+			background: $hover-ligth-blue;
 		}
-		.date-picker-month-cell {
-			display: inline-flex;
-			line-height: 24px;
-			padding: 4px 8px;
-			cursor: pointer;
-			&:hover {
-				background: $hover-ligth-blue;
-				color: $blue-light;
-			}
+		&.active {
+			background: $blue-light;
+		}
+		&.today {
+			border: 1px solid $blue-light;
 		}
 	}
-	.operation-wrapper {
-		height: 40px;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		border-top: 1px solid $border-color;
+}
+.date-picker-content-month {
+	padding: 8px 12px;
+	width: 240px;
+}
+.date-picker-day-table {
+	width: 100%;
+	td {
+		text-align: center;
+	}
+	.date-picker-month-cell {
+		display: inline-flex;
+		line-height: 24px;
+		padding: 4px 8px;
+		cursor: pointer;
+		&:hover {
+			background: $hover-ligth-blue;
+			color: $blue-light;
+		}
 	}
 }
 </style>
