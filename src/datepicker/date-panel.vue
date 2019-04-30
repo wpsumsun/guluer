@@ -1,16 +1,45 @@
 <template>
-	<div class="date-picker-wrapper" :class="{ 'daterange-picker-wrapper': type==='daterange' }" ref="wrapper">
-		<g-popover @onClose="onClose" ref="popover" position="bottom" :container="wrapper">
-			<g-input ref="input" @input="onInput" @change="onChange" :value="formatValue"></g-input>
-			<template slot="content">
-				<date-panel
-					v-if="type==='date'"
-					:value="value"
-					:display.sync="display"
-					@dayChange="handleDayChange">
-				</date-panel>
-			</template>
-		</g-popover>
+	<div class="date-picker-app">
+		<div class="date-picker-header">
+			<div class="date-picker-header-left">
+				<span class="prev-year" @click="modifyYear(-1)"><g-icon name="left-left"></g-icon></span>
+				<span v-show="mode === 'day'" class="prev-month" @click="modifyMonth(-1)"><g-icon name="left"></g-icon></span>
+			</div>
+			<div class="date-picker-header-middle">
+				<template v-if="mode === 'day'">
+					<span class="date-picker-year-select" @click="handleModeChange('year')">{{ display.year }}年</span>
+					<span class="date-picker-month-select"@click="handleModeChange('month')">{{ display.month + 1 }}月</span>
+				</template>
+				<template v-if="mode === 'year'">
+					<span>{{ startYear }}年 - {{ endYear }}年</span>
+				</template>
+				<template v-if="mode === 'month'">
+					<span @click="handleModeChange('year')">{{ display.year }}年</span>
+				</template>
+			</div>
+			<div class="date-picker-header-right">
+				<span v-show="mode === 'day'"  class="next-month" @click="modifyMonth(1)"><g-icon name="right"></g-icon></span>
+				<span class="next-year" @click="modifyYear(1)"><g-icon name="right-right"></g-icon></span>
+			</div>
+		</div>
+		<day-table
+			:value="value"
+			:display="display"
+			v-show="mode === 'day'"
+			@dayChange="handleDayChange">
+		</day-table>
+		<month-table
+			:value="value"
+			:display="display"
+			v-show="mode === 'month'"
+			@monthChange="handleMonthChange">
+		</month-table>
+		<year-table
+			:value="value"
+			:display="display"
+			v-show="mode === 'year'"
+			@yearChange="handleYearChange">
+		</year-table>
 	</div>
 </template>
 
@@ -22,16 +51,14 @@
   import dayTable from './day-table'
   import monthTable from './month-table'
   import yearTable from './year-table'
-  import datePanel from './date-panel'
   export default {
-    name: "date-picker",
+    name: "date",
 	  props: {
       value: {
         type: [Date, String]
       },
-		  type: {
-        type: String,
-			  default: 'date'
+		  display: {
+        type: Object
 		  }
 	  },
 	  components: {
@@ -40,25 +67,16 @@
       GIcon,
       dayTable,
       monthTable,
-      yearTable,
-      datePanel
+      yearTable
 	  },
 	  data() {
-      let [year, month] = getYearMonthDay(this.value || new Date())
       return {
         mode: 'day',
-        wrapper: null,
         weekdays: ['一', '二', '三', '四', '五', '六', '日'],
 	      monthsMapping: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-	      display: { year, month }
       }
 	  },
 	  computed: {
-      nextDisplay() {
-        if (this.type !== 'daterange') return
-        let [year, month] = getYearMonthDay(new Date(this.display.year, this.display.month + 1))
-	      return { year, month }
-      },
       visibleYears() {
         const { year } = this.display
 	      const years = []
@@ -110,19 +128,6 @@
       this.wrapper = this.$refs.wrapper
 	  },
 	  methods: {
-      onInput(value) {
-	      const reg = /^\d{4}-\d{2}-\d{2}$/
-	      if (reg.test(value)) {
-          let [year, month, day] = value.split('-')
-		      month = month - 1
-		      year = year - 0
-		      this.display = { year, month }
-		      this.$emit('input', new Date(year, month, day))
-	      }
-      },
-      onChange(value) {
-        this.$refs.input.setRawValue(this.formatValue)
-      },
       onClose() {
         this.mode = 'day'
       },
@@ -134,7 +139,9 @@
         this.$emit('input', null)
       },
       handleMonthChange(index) {
-        this.$set(this.display, 'month', index)
+        const displayCopy = JSON.parse(JSON.stringify(this.display))
+        displayCopy.month = index
+        this.$emit('update:display', displayCopy)
 	      this.mode = 'day'
       },
       handleYearChange(year) {
@@ -144,19 +151,21 @@
       modifyMonth(diff) {
         const { year: oldYear, month: oldMonth } = this.display
         const [ year, month ] = getYearMonthDay(new Date(oldYear, oldMonth + diff))
-        this.display = { year, month }
+        this.$emit('update:display', { year, month })
       },
       modifyYear(diff) {
         const { year: oldYear, month: oldMonth } = this.display
+	      let displayCopy = JSON.parse(JSON.stringify(this.display))
         if (this.mode === 'day') {
           const [ year, month ] = getYearMonthDay(new Date(oldYear + diff, oldMonth))
-          this.display = { year, month }
+          displayCopy = { year, month }
         } else if (this.mode === 'year') {
           const yearDiff = diff > 0 ? 10 : -10
-	        this.$set(this.display, 'year', oldYear + yearDiff)
+	        displayCopy.year = oldYear + yearDiff
         } else {
-          this.$set(this.display, 'year', oldYear + diff)
+          displayCopy.year = oldYear + diff
         }
+        this.$emit('update:display', displayCopy)
       },
       isCurrentMonth(date) {
         const { year, month } = this.display
@@ -176,8 +185,7 @@
         return year1 === year2 && month1 === month2 && day1 === day2
       },
       handleDayChange(date) {
-        this.$emit('input', date)
-        this.$refs.popover.close()
+        this.$emit('dayChange', date)
       },
       getVisibleDay(row, col) {
         return this.visibleDate[7*row + col]
