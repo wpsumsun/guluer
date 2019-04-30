@@ -20,7 +20,7 @@
     name: "month-table",
 	  props: {
       value: {
-        type: Date
+        type: [Date, String]
       },
       display: {
         type: Object

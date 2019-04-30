@@ -26,7 +26,7 @@
     name: "date-picker",
 	  props: {
       value: {
-        type: Date
+        type: [Date, String]
       },
       display: {
         type: Object

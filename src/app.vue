@@ -1,6 +1,7 @@
 <template>
 	<div id="app">
 		<g-date-picker :value="value" @input="value=$event"></g-date-picker>
+		<g-date-picker type="daterange" :value="value2" @input="value2=$event"></g-date-picker>
 	</div>
 </template>
 
@@ -11,7 +12,8 @@
 		},
     data() {
       return {
-        value: new Date(2019, 4, 22)
+        value: new Date(2019, 4, 22),
+	      value2: ''
       }
     },
     methods: {

@@ -11,10 +11,12 @@
 				<td v-for="columnIndex in range(0, 7)">
 					<div
 						class="date-picker-day-table-cell"
+						@mouseover="handleMouseOver(getVisibleDay(rowIndex, columnIndex))"
 						:class="{
 											notCurrentMonth: !isCurrentMonth(getVisibleDay(rowIndex, columnIndex)),
 											active: isSelected(getVisibleDay(rowIndex, columnIndex)),
-											today: isToday(getVisibleDay(rowIndex, columnIndex))
+											today: isToday(getVisibleDay(rowIndex, columnIndex)),
+											'in-range': isInHoverRange(getVisibleDay(rowIndex, columnIndex))
 										}"
 						@click="onClickCell(getVisibleDay(rowIndex, columnIndex))">
 						{{ getVisibleDay(rowIndex, columnIndex).getDate() }}
@@ -23,7 +25,7 @@
 			</tr>
 			</tbody>
 		</table>
-		<div class="operation-wrapper">
+		<div class="operation-wrapper" v-if="type === 'date'">
 			<g-button @click="setToday">今天</g-button>
 			<g-button @click="setEmpty">清除</g-button>
 		</div>
@@ -37,11 +39,22 @@
     name: "day-table",
     props: {
       value: {
-        type: Date
+        type: [Date, String]
       },
 	    display: {
         type: Object
-	    }
+	    },
+	    type: {
+        type: String,
+		    default: 'date'
+	    },
+      dateRange: {
+        type: Array,
+	      default: () => []
+      },
+      hoverDate: {
+        type: [Date, String]
+      }
     },
     components: {
       GButton
@@ -49,7 +62,7 @@
     data() {
       return {
         weekdays: ['一', '二', '三', '四', '五', '六', '日'],
-        monthsMapping: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
+        monthsMapping: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
       }
     },
     computed: {
@@ -85,6 +98,9 @@
       },
     },
     methods: {
+      handleMouseOver(date) {
+        this.$emit('update:hoverDate', date)
+      },
       setToday() {
         this.$emit('dayChange', new Date())
       },
@@ -97,11 +113,32 @@
         let [year2, month2] = getYearMonthDay(new Date(year, month))
         return year1 === year2 && month1 === month2
       },
+	    isInHoverRange(date) {
+        if (!this.dateRange.length || !this.hoverDate) { return false }
+        const timeStamp1 = this.dateRange[0].getTime()
+        const timeStamp2 = this.hoverDate.getTime()
+        const timeStamp3 = date.getTime()
+		    if ((timeStamp3 >= timeStamp1 && timeStamp3 <= timeStamp2) || timeStamp3 >= timeStamp2 && timeStamp3 <= timeStamp1) {
+		      return true
+		    } else {
+		      return false
+		    }
+	    },
       isSelected(date) {
-        if (!this.value) return
-        let [year1, month1, day1] = getYearMonthDay(date)
-        let [year2, month2, day2] = getYearMonthDay(this.value)
-        return year1 === year2 && month1 === month2 && day1 === day2
+        if (this.type === 'date') {
+          if (!this.value) return
+          let [year1, month1, day1] = getYearMonthDay(date)
+          let [year2, month2, day2] = getYearMonthDay(this.value)
+          return year1 === year2 && month1 === month2 && day1 === day2
+        } else if (this.type === 'daterange') {
+          if (!this.dateRange.length) return
+          let [year1, month1, day1] = getYearMonthDay(date)
+          let range = this.dateRange.map((date) => {
+            let [year, month, day] = getYearMonthDay(date)
+            return { year, month, day }
+          })
+          return !!range.filter(item => item.year === year1 && item.month === month1 && item.day === day1).length
+        }
       },
       isToday(date) {
         let [year1, month1, day1] = getYearMonthDay(date)
@@ -152,7 +189,10 @@
 					background: $hover-ligth-blue;
 				}
 				&.active {
-					background: $blue-light;
+					background: $blue-light !important;
+				}
+				&.in-range {
+					background: lighten($blue-light, 30%);
 				}
 				&.today {
 					border: 1px solid $blue-light;
