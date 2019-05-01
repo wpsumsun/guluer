@@ -82,7 +82,7 @@
 	  },
 	  data() {
       return {
-        dateRange: [],
+        dateRange: this.value ? this.value : [],
 	      hoverDate: '',
       }
 	  },
@@ -138,9 +138,6 @@
         return Days
       },
 	  },
-	  mounted() {
-      this.wrapper = this.$refs.wrapper
-	  },
 	  methods: {
       modifyMonth(diff) {
         const { year: oldYear, month: oldMonth } = this.display
@@ -165,10 +162,13 @@
         // this.$emit('dayChange', date)
 	      if (!this.dateRange.length) {
 	        this.dateRange.push(date)
-	      } else {
+	      } else if (this.dateRange.length === 1){
           this.dateRange.push(date)
 		      this.dateRange.sort((a, b) => a.getTime() - b.getTime())
           this.$emit('dayChange', this.dateRange)
+	      } else if (this.dateRange.length === 2) {
+	        this.dateRange = []
+          this.dateRange.push(date)
 	      }
       }
 	  }

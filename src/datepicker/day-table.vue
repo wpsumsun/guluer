@@ -114,9 +114,9 @@
         return year1 === year2 && month1 === month2
       },
 	    isInHoverRange(date) {
-        if (!this.dateRange.length || !this.hoverDate) { return false }
+        if ((!this.dateRange.length || !this.hoverDate) && this.dateRange.length !== 2) { return false }
         const timeStamp1 = this.dateRange[0].getTime()
-        const timeStamp2 = this.hoverDate.getTime()
+        const timeStamp2 = this.dateRange[1] ? this.dateRange[1].getTime() : this.hoverDate.getTime()
         const timeStamp3 = date.getTime()
 		    if ((timeStamp3 >= timeStamp1 && timeStamp3 <= timeStamp2) || timeStamp3 >= timeStamp2 && timeStamp3 <= timeStamp1) {
 		      return true

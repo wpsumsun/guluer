@@ -53,7 +53,7 @@
       dateRangePanel
 	  },
 	  data() {
-      let [year, month] = getYearMonthDay(this.value || new Date())
+      let [year, month] = getYearMonthDay(this.value ? (this.value instanceof Array ? (this.value[0] ? this.value[0] : new Date()) : this.value ) : new Date())
       return {
         mode: 'day',
         wrapper: null,

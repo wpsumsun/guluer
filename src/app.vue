@@ -13,7 +13,7 @@
     data() {
       return {
         value: new Date(2019, 4, 22),
-	      value2: ''
+	      value2: [new Date(2019, 3, 11), new Date(2019, 5, 22)]
       }
     },
     methods: {
