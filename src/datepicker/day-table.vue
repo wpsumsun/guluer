@@ -13,9 +13,12 @@
 						class="date-picker-day-table-cell"
 						@mouseover="handleMouseOver(getVisibleDay(rowIndex, columnIndex))"
 						:class="{
+											disabled:	!isCurrentMonth(getVisibleDay(rowIndex, columnIndex)) && type === 'daterange',
 											notCurrentMonth: !isCurrentMonth(getVisibleDay(rowIndex, columnIndex)),
-											active: isSelected(getVisibleDay(rowIndex, columnIndex)),
-											today: isToday(getVisibleDay(rowIndex, columnIndex)),
+											active: isSelected(getVisibleDay(rowIndex, columnIndex)) && type !== 'daterange',
+											'range-active': isSelected(getVisibleDay(rowIndex, columnIndex)) && isCurrentMonth(getVisibleDay(rowIndex, columnIndex)) && type === 'daterange',
+											today: isToday(getVisibleDay(rowIndex, columnIndex)) && type !== 'daterange',
+											'range-today': isToday(getVisibleDay(rowIndex, columnIndex)) && isCurrentMonth(getVisibleDay(rowIndex, columnIndex)) && type !== 'daterange',
 											'in-range': isInHoverRange(getVisibleDay(rowIndex, columnIndex))&&isCurrentMonth(getVisibleDay(rowIndex, columnIndex))
 										}"
 						@click="onClickCell(getVisibleDay(rowIndex, columnIndex))">
@@ -99,6 +102,7 @@
     },
     methods: {
       handleMouseOver(date) {
+        if (!this.isCurrentMonth(date)) { return }
         this.$emit('update:hoverDate', date)
       },
       setToday() {
@@ -191,11 +195,17 @@
 				&.active {
 					background: $blue-light !important;
 				}
+				&.range-active {
+					background: $blue-light !important;
+				}
 				&.in-range {
 					background: lighten($blue-light, 30%);
 				}
 				&.today {
 					border: 1px solid $blue-light;
+				}
+				&.disabled {
+					pointer-events: none;
 				}
 			}
 		}
