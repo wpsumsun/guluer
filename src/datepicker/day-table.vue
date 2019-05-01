@@ -16,7 +16,7 @@
 											notCurrentMonth: !isCurrentMonth(getVisibleDay(rowIndex, columnIndex)),
 											active: isSelected(getVisibleDay(rowIndex, columnIndex)),
 											today: isToday(getVisibleDay(rowIndex, columnIndex)),
-											'in-range': isInHoverRange(getVisibleDay(rowIndex, columnIndex))
+											'in-range': isInHoverRange(getVisibleDay(rowIndex, columnIndex))&&isCurrentMonth(getVisibleDay(rowIndex, columnIndex))
 										}"
 						@click="onClickCell(getVisibleDay(rowIndex, columnIndex))">
 						{{ getVisibleDay(rowIndex, columnIndex).getDate() }}
@@ -39,7 +39,7 @@
     name: "day-table",
     props: {
       value: {
-        type: [Date, String]
+        type: [Date, String, Array]
       },
 	    display: {
         type: Object

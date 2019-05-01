@@ -63,7 +63,7 @@
     name: "date",
 	  props: {
       value: {
-        type: [Date, String]
+        type: [Date, String, Array]
       },
 		  display: {
         type: Object

@@ -35,7 +35,7 @@
     name: "date-picker",
 	  props: {
       value: {
-        type: [Date, String]
+        type: [Date, String, Array]
       },
 		  type: {
         type: String,
