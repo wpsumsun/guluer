@@ -1,7 +1,23 @@
 <template>
 	<div id="app">
-		<g-date-picker :value="value" @input="value=$event"></g-date-picker>
-		<g-date-picker type="daterange" :value="value2" @input="value2=$event"></g-date-picker>
+		{{ selection1 }}
+		<g-table height="300" :loading="loading" @orderChange="x" :data-source="dataSource">
+			<g-table-column
+				prop="name"
+				title="姓名"
+				width="100">
+			</g-table-column>
+			<g-table-column
+				prop="score"
+				title="分数"
+				width="200">
+				<template slot-scope="scope">
+					<a href="#">{{ scope.value }}</a>
+				</template>
+			</g-table-column>
+		</g-table>
+		<br>
+		<!--<g-table expand-key="description" :loading="loading" @orderChange="x" height="300" :selection.sync="selection1" selectionVisible size="small" stripe bordered orderVisible :columns="columns" :data-source="dataSource"></g-table>-->
 	</div>
 </template>
 
@@ -9,17 +25,55 @@
   export default {
     name: 'app',
     created() {
-		},
+    },
     data() {
       return {
-        value: new Date(2019, 4, 22),
-	      value2: [new Date(2019, 3, 11), new Date(2019, 5, 22)]
+        loading: false,
+        selection1: [{ id: 2, name: '辛弃疾', score: 90 }],
+        columns: [
+          { title: '姓名',prop: 'name', sortOrder: 'ascend', width: 200 },
+          { title: '分数',prop: 'score', sortOrder: 'descend'}
+        ],
+        dataSource: [
+          { id: 1, name: '醒狮', score: 100, description: 'xxxxxxx' },
+          { id: 2, name: '辛弃疾', score: 90 },
+          { id: 3, name: '鲤鱼', score: 80 },
+          { id: 4, name: '醒狮', score: 100, description: '阿斯蒂芬阿斯蒂芬' },
+          { id: 5, name: '辛弃疾', score: 90 },
+          { id: 6, name: '鲤鱼', score: 80 },
+          { id: 7, name: '醒狮', score: 100 },
+          { id: 8, name: '辛弃疾', score: 90 },
+          { id: 9, name: '鲤鱼', score: 80 },
+          { id: 10, name: '醒狮', score: 100 },
+          { id: 12, name: '辛弃疾', score: 90 },
+          { id: 23, name: '鲤鱼', score: 80 },
+          { id: 21, name: '醒狮', score: 100 },
+          { id: 32, name: '辛弃疾', score: 90 },
+          { id: 43, name: '鲤鱼', score: 80 },
+          { id: 51, name: '醒狮', score: 100 },
+          { id: 222, name: '辛弃疾', score: 90 },
+          { id: 333, name: '鲤鱼', score: 80 }
+        ]
       }
     },
     methods: {
-
-    }
-	}
+      x(order) {
+        this.loading = true
+        setTimeout(() => {
+          if (order.sortOrder === 'ascend') {
+            this.dataSource.sort((a, b)=>{
+              return a[order.prop] - b[order.prop]
+            })
+          } else {
+            this.dataSource.sort((a, b)=>{
+              return b[order.prop] - a[order.prop]
+            })
+          }
+          this.loading = false
+        }, 2000)
+      },
+    },
+  }
 </script>
 
 <style lang="scss" scoped>

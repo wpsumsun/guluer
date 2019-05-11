@@ -41,7 +41,12 @@
 							</td>
 							<td :style="{ width: '50px' }" v-if="orderVisible">{{ index + 1 }}</td>
 							<td :style="{ width: `${column.width}px` }" :key="column.title" v-for="column in columns">
-								{{ item[column.prop] }}
+								<template v-if="column.render">
+									<vnodes :vnodes="column.render({ value: item[column.prop] })"/>
+								</template>
+								<template v-else>
+									{{ item[column.prop] }}
+								</template>
 							</td>
 							<td v-if="$scopedSlots.default">
 								<div class="action-wrapper" ref="actions">
@@ -68,13 +73,13 @@
   export default {
     name: 'guluer-table',
 	  components: {
-      gIcon
+      gIcon,
+      Vnodes: {
+        functional: true,
+        render: (h, ctx) => ctx.props.vnodes
+      }
 	  },
 	  props: {
-      columns: {
-        type: Array,
-	      required: true
-      },
 		  dataSource: {
         type: Array,
 			  required: true,
@@ -118,7 +123,8 @@
 	  data() {
       return {
         cloneTable: null,
-	      expandIds: []
+	      expandIds: [],
+	      columns: [],
       }
 	  },
 	  computed: {
@@ -149,7 +155,14 @@
       }
 	  },
 	  mounted() {
-			this.fixedHeader()
+      this.columns = this.$slots.default.map(slot => {
+        if (slot.componentOptions.tag === 'g-table-column') {
+          const { prop, title, width } = slot.componentOptions.propsData
+          const render = slot.data.scopedSlots&&slot.data.scopedSlots.default
+          return { prop, title, width, render }
+        }
+      })
+      this.fixedHeader()
       if (this.$scopedSlots.default) {
         const div = this.$refs.actions[0]
         const { width } = div.getBoundingClientRect()
