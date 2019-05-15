@@ -41,11 +41,14 @@
 							</td>
 							<td :style="{ width: '50px' }" v-if="orderVisible">{{ index + 1 }}</td>
 							<td :style="{ width: `${column.width}px` }" :key="column.title" v-for="column in columns">
+								<template v-if="column.slot">
+									<table-slot :row="item" :column="column"></table-slot>
+								</template>
 								<template v-if="column.render">
 									<!--<vnodes :vnodes="column.render({ value: item[column.prop] })"/>-->
 									<table-cell :row="item" :column="column" :render="column.render"></table-cell>
 								</template>
-								<template v-else>
+								<template v-if="!column.slot&&!column.render">
 									{{ item[column.prop] }}
 								</template>
 							</td>
@@ -72,14 +75,21 @@
 <script>
 	import gIcon from '../icon/icon'
 	import tableCell from './cell'
+	import tableSlot from './slot'
   export default {
     name: 'guluer-table',
 	  components: {
       gIcon,
 		  tableCell,
+      tableSlot,
       Vnodes: {
         functional: true,
         render: (h, ctx) => ctx.props.vnodes
+      }
+	  },
+	  provide() {
+      return {
+        tableRoot: this
       }
 	  },
 	  props: {

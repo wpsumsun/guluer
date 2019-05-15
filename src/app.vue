@@ -1,20 +1,11 @@
 <template>
 	<div id="app">
 		{{ selection1 }}
-		<g-table height="300" :loading="loading" @orderChange="x" :data-source="dataSource">
-			<g-table-column
-				prop="name"
-				title="姓名"
-				width="100">
-			</g-table-column>
-			<g-table-column
-				prop="score"
-				title="分数"
-				width="200">
-				<template slot-scope="scope">
-					<a href="#">{{ scope.value }}</a>
-				</template>
-			</g-table-column>
+		<g-button>xxx</g-button>
+		<g-table :columns="columns" height="300" :loading="loading" @orderChange="x" :data-source="dataSource">
+			<template slot-scope="{ row }" slot="name">
+				<g-button>{{ row.name }}</g-button>
+			</template>
 		</g-table>
 		<br>
 		<!--<g-table expand-key="description" :loading="loading" @orderChange="x" height="300" :selection.sync="selection1" selectionVisible size="small" stripe bordered orderVisible :columns="columns" :data-source="dataSource"></g-table>-->
@@ -31,8 +22,34 @@
         loading: false,
         selection1: [{ id: 2, name: '辛弃疾', score: 90 }],
         columns: [
-          { title: '姓名',prop: 'name', sortOrder: 'ascend', width: 200 },
-          { title: '分数',prop: 'score', sortOrder: 'descend'}
+          { title: '姓名',prop: 'name', sortOrder: 'ascend', width: 200, slot: 'name' },
+          {
+            title: '分数',
+	          prop: 'score',
+	          sortOrder: 'descend',
+            render: (h, params) => {
+              return h('div', [
+                h('strong', this.xx())
+              ]);
+            }
+          },
+	        {
+	          title: '操作',
+		        width: 200,
+		        render: (h, params) => {
+	            return h('div', [
+	                h('g-button',
+			                {
+                        on: {
+                          click: () => console.log('params', params)
+                        }
+			                },
+			                '编辑'
+	                ),
+	                h('g-button', '删除')
+	            ])
+		        }
+	        }
         ],
         dataSource: [
           { id: 1, name: '醒狮', score: 100, description: 'xxxxxxx' },
@@ -57,6 +74,9 @@
       }
     },
     methods: {
+      xx() {
+        return 'xx'
+      },
       x(order) {
         this.loading = true
         setTimeout(() => {
