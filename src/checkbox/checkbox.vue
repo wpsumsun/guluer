@@ -1,16 +1,24 @@
 <template>
-	<label class="guluer-checkbox-wrapper" :class="{ disabled }">
+	<label class="guluer-checkbox-wrapper" :class="{ disabled: isDisabled }">
 		<span
 			class="guluer-checkbox-icon"
-			:class="{ checked: value, disabled }">
+			:class="{ checked: value || model, disabled: isDisabled }">
 		</span>
 		<input
+			v-if="group"
+			type="checkbox"
+			hidden
+			:checked="model"
+			:disabled="disabled"
+			@change="onChange">
+		<input
+			v-else
 			type="checkbox"
 			hidden
 			:checked="value"
 			:disabled="disabled"
 			@change="onChange">
-		<span class="guluer-checkbox-label" :class="{ checked: value, disabled }">
+		<span class="guluer-checkbox-label" :class="{ checked: value || model, disabled: isDisabled }">
 			<slot></slot>
       <template v-if="!$slots.default">{{ label }}</template>
 		</span>
@@ -20,6 +28,11 @@
 <script>
 	export default {
 	  name: 'guluer-checkbox',
+		inject: {
+      eventBus: {
+        default: null
+      }
+		},
 		props: {
       checked: {
         type: Boolean
@@ -35,16 +48,40 @@
 				default: false
 			}
 		},
+		computed: {
+	    model: {
+	      get() {
+          return this.group ? this.$parent.value.indexOf(this.label) > -1 : ''
+	      },
+	      set(val) {
+          this.currentValue = val
+	      }
+	    },
+			isDisabled() {
+	      return this.group ? this.$parent.disabled || this.disabled : this.disabled
+			}
+		},
 		data() {
 			return {
+        parent: null,
+				group: false,
+				currentValue: this.value
 			}
 		},
 		mounted() {
-      console.log(this)
+      this.parent = this.$parent
+			if (this.parent.$options.name === 'guluer-checkbox-group') {
+			  this.group = true
+      }
     },
 		methods: {
       onChange(e) {
-        this.$emit('input', e.target.checked)
+        if (!this.group) {
+          this.$emit('input', e.target.checked)
+          this.$emit('change', e.target.checked)
+        } else {
+          this.eventBus && this.eventBus.$emit('change', this.label)
+        }
       }
 		}
 	}
