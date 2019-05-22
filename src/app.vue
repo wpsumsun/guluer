@@ -2,10 +2,8 @@
 	<div id="app">
 		{{ selection1 }}
 		<g-button>xxx</g-button>
-		<g-table :columns="columns" height="300" :loading="loading" @orderChange="x" :data-source="dataSource">
-			<template slot-scope="{ row }" slot="name">
-				<g-button>{{ row.name }}</g-button>
-			</template>
+		<g-table @selectionChange="selectionChange" :selection.sync="selection1" selectionVisible :columns="columns" height="300" :loading="loading" @orderChange="x" :data-source="dataSource">
+			<template slot-scope="{ row }" slot="name">{{ row.name }}</template>
 		</g-table>
 		<br>
 		<!--<g-table expand-key="description" :loading="loading" @orderChange="x" height="300" :selection.sync="selection1" selectionVisible size="small" stripe bordered orderVisible :columns="columns" :data-source="dataSource"></g-table>-->
@@ -74,6 +72,9 @@
       }
     },
     methods: {
+      selectionChange() {
+        console.log(this.selection1)
+      },
       xx() {
         return 'xx'
       },

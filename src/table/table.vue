@@ -6,11 +6,11 @@
 				<tr>
 					<th v-if="expandKey" :style="{ width: '50px' }"></th>
 					<th :style="{ width: '50px' }" v-if="selectionVisible">
-						<input
-							:checked="isAllChecked"
+						<g-checkbox
+							:value="isAllChecked"
 							ref="allCheck"
-							@change="handleSelectALL"
-							type="checkbox"/>
+							@change="handleSelectALL">
+						</g-checkbox>
 					</th>
 					<th :style="{ width: '50px' }" v-if="orderVisible">#</th>
 					<template v-for="(column, index) in columns">
@@ -34,10 +34,10 @@
 								<g-icon :class="{ active: inExpandIds(item.id) }" @click="handleExpand(item.id)" name="right" v-if="expandKey && item[expandKey]"></g-icon>
 							</td>
 							<td :style="{ width: '50px' }" v-if="selectionVisible">
-								<input
-									:checked="inSelection(item)"
-									@change="handleSelectChange($event, item, index)"
-									type="checkbox"/>
+								<g-checkbox
+									:value="inSelection(item)"
+									@change="handleSelectChange($event, item, index)">
+								</g-checkbox>
 							</td>
 							<td :style="{ width: '50px' }" v-if="orderVisible">{{ index + 1 }}</td>
 							<td :style="{ width: `${column.width}px` }" :key="column.title" v-for="column in columns">
@@ -76,12 +76,14 @@
 	import gIcon from '../icon/icon'
 	import tableCell from './cell'
 	import tableSlot from './slot'
+	import gCheckbox from '../checkbox/checkbox'
   export default {
     name: 'guluer-table',
 	  components: {
       gIcon,
 		  tableCell,
       tableSlot,
+      gCheckbox,
       Vnodes: {
         functional: true,
         render: (h, ctx) => ctx.props.vnodes
@@ -124,7 +126,8 @@
 			  default: false
 		  },
 		  selection: {
-        type: Array
+        type: Array,
+			  default: () => []
 		  },
 		  loading: {
         type: Boolean,
@@ -228,16 +231,18 @@
 	      this.$emit('orderChange', copy[index])
       },
       handleSelectALL(e) {
-        this.$emit('update:selection', e.target.checked ? this.dataSource : [])
+        this.$emit('update:selection', e ? this.dataSource : [])
+        this.$emit('selectionChange', e ? this.dataSource : [])
       },
       handleSelectChange(e, item, index) {
         let localSelection = JSON.parse(JSON.stringify(this.selection))
-	      if (e.target.checked) {
+	      if (e) {
 	        localSelection.push(item)
 	      } else {
           localSelection = localSelection.filter(v => v.id !== item.id)
 	      }
         this.$emit('update:selection', localSelection)
+        this.$emit('selectionChange', localSelection)
       },
 		  inSelection(item) {
         return !!this.selection.filter(v => v.id === item.id).length

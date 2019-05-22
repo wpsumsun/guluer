@@ -36,6 +36,8 @@ import Progress from './progress/progress'
 import Table from './table/table'
 import TableColumn from './table/table-column'
 import DatePicker from './datepicker/date-picker'
+import Checkbox from './checkbox/checkbox'
+import CheckboxGroup from './checkbox/checkbox-group'
 
 Vue.use(toast)
 
@@ -74,6 +76,8 @@ Vue.component('g-progress', Progress)
 Vue.component('g-table', Table)
 Vue.component('g-table-column', TableColumn)
 Vue.component('g-date-picker', DatePicker)
+Vue.component('g-checkbox', Checkbox)
+Vue.component('g-checkbox-group', CheckboxGroup)
 
 
 Vue.config.productionTip = false;
