@@ -87,7 +87,7 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	@import "~@/styles/var.scss";
 	.guluer-checkbox-wrapper {
 		display: inline-flex;
