@@ -4,6 +4,10 @@ import Toast from './toast/toast.vue'
 let currentToast
 const eventHubs = []
 
+function isBrowser() {
+  return typeof document === 'object'
+}
+
 export default {
   install(Vue, options) {
     Vue.prototype.$toast = (message, toastOptions) => {
@@ -37,7 +41,7 @@ const onClickDocument = (e) => {
     }
   })
 }
-document.addEventListener('click', onClickDocument)
+isBrowser() && document.addEventListener('click', onClickDocument)
 
 
 function createToast({ Vue, message, propsData, onClose }) {
@@ -45,7 +49,7 @@ function createToast({ Vue, message, propsData, onClose }) {
   const toast = new Constructor({ propsData })
   toast.$slots.default = [message]
   toast.$mount()
-  document.body.appendChild(toast.$el)
+  isBrowser() && document.body.appendChild(toast.$el)
   toast.$on('close', onClose)
   return toast
 }

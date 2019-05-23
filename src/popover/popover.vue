@@ -28,7 +28,7 @@
 			  }
 		  },
 		  container: {
-        type: Element
+        type: typeof document === 'object' ? Element : ''
 		  }
 	  },
 	  data() {

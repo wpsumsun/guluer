@@ -20,12 +20,17 @@ showToast(position) {
 
 <script>
 export default {
+  mounted() {
+    import('../../src/toast').then(module => {
+      // use code
+    })
+  },
   methods: {
-      showToast(position) {
-          this.$toast('独钓寒江雪', {
-            position
-          })
-      }
+    showToast(position) {
+      this.$toast('独钓寒江雪', {
+        position
+      })
+    }
   }
 }
 </script>
