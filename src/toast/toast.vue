@@ -125,6 +125,7 @@
   .guluer-toast-wrapper {
     position: fixed;
     left: 50%;
+    z-index: 2000;
     &.top {
       top: 0;
       transform: translateX(-50%);
@@ -163,6 +164,7 @@
     border-radius: 4px;
     box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.50);
     padding: 0 8px;
+    z-index: 2000;
     .message {
       padding: 8px 0;
     }

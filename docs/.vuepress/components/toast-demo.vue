@@ -29,7 +29,7 @@
 	  methods: {
       showToast(position) {
         this.$toast('独钓寒江雪', {
-          position,
+          position
         })
 		  }
 	  }
