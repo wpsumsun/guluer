@@ -137,6 +137,7 @@
 		max-width: 20em;
 		word-break: break-all;
 		background: #fff;
+		z-index: 2000;
 		&:before {
 			content: '';
 			display: inline-block;

@@ -14,6 +14,9 @@ import TabsHead from '@/tab/tabs-head'
 import TabsItem from '@/tab/tabs-item'
 import TabsBody from '@/tab/tabs-body'
 import TabsPane from '@/tab/tabs-pane'
+import Popover from '@/popover/popover'
+import Collapse from '@/collapse/collapse'
+import CollapseItem from '@/collapse/collapse-item'
 
 export default ({
   Vue // VuePress 正在使用的 Vue 构造函数
@@ -33,4 +36,7 @@ export default ({
   Vue.component('g-tabs-item', TabsItem)
   Vue.component('g-tabs-body', TabsBody)
   Vue.component('g-tabs-pane', TabsPane)
+  Vue.component('g-popover', Popover)
+  Vue.component('g-collapse', Collapse)
+  Vue.component('g-collapse-item', CollapseItem)
 }
