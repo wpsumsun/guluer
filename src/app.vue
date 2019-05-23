@@ -1,6 +1,16 @@
 <template>
 	<div id="app">
 		{{ selection1 }}
+		<g-tabs :selected.sync="current">
+			<g-tabs-head>
+				<g-tabs-item name="male">male</g-tabs-item>
+				<g-tabs-item name="female">female</g-tabs-item>
+			</g-tabs-head>
+			<g-tabs-body>
+				<g-tabs-pane name="male">male content</g-tabs-pane>
+				<g-tabs-pane name="female">female content</g-tabs-pane>
+			</g-tabs-body>
+		</g-tabs>
 		<g-button>xxx</g-button>
 		<g-table @selectionChange="selectionChange" :selection.sync="selection1" selectionVisible :columns="columns" height="300" :loading="loading" @orderChange="x" :data-source="dataSource">
 			<template slot-scope="{ row }" slot="name">{{ row.name }}</template>
@@ -18,6 +28,7 @@
     data() {
       return {
         loading: false,
+	      current: 'male',
         selection1: [{ id: 2, name: '辛弃疾', score: 90 }],
         columns: [
           { title: '姓名',prop: 'name', sortOrder: 'ascend', width: 200, slot: 'name' },

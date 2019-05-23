@@ -1,5 +1,5 @@
 <template>
-	<div class="menu" :class="{ vertical }">
+	<div class="guluer-menu" :class="{ vertical }">
 		<slot></slot>
 		{{ namePath }}
 	</div>
@@ -71,7 +71,7 @@
 
 <style lang="scss" scoped>
 @import "var";
-.menu {
+.guluer-menu {
 	display: flex;
 	border-bottom: 1px solid $gray-light;
 	color: #909399;

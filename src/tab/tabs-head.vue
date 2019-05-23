@@ -1,5 +1,5 @@
 <template>
-	<div class="tabs-head">
+	<div class="guluer-tabs-head">
 		<slot></slot>
 		<div class="active-line" ref="line"></div>
 		<div class="actions-wrapper">
@@ -14,9 +14,10 @@
 		inject: ['eventBus'],
 		mounted() {
 	    this.eventBus.$on('update:selected', (selected, vm) => {
-		    const { width, left } = vm.$el.getBoundingClientRect()
-		    this.$refs.line.style.width = `${width}px`
-		    this.$refs.line.style.left = `${left}px`
+        const tabsHeadLeft = this.$el.getBoundingClientRect().left
+        const { width, left } = vm.$el.getBoundingClientRect()
+        this.$refs.line.style.width = `${width}px`
+		    this.$refs.line.style.left = `${left-tabsHeadLeft}px`
 	    })
 		},
 	}
@@ -24,7 +25,7 @@
 
 <style lang="scss" scoped>
 	@import "~@/styles/var";
-	.tabs-head {
+	.guluer-tabs-head {
 		display: flex;
 		height: $tabs-height;
 		justify-content: flex-start;

@@ -1,5 +1,5 @@
 <template>
-	<div class="tabs-item" @click="change" :class="classList" :data-name="name">
+	<div class="guluer-tabs-item" @click="change" :class="classList" :data-name="name">
 		<slot></slot>
 	</div>
 </template>
@@ -48,7 +48,7 @@
 </script>
 
 <style lang="scss" scoped>
-	.tabs-item {
+	.guluer-tabs-item {
 		padding: 0 3em;
 		flex-shrink: 0;
 		height: 100%;

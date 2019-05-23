@@ -1,5 +1,5 @@
 <template>
-	<div class="wrap">
+	<div class="tabs-wrap">
 		<div class="box">
 			<g-tabs :selected.sync="current">
 				<g-tabs-head>

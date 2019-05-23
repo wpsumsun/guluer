@@ -1,5 +1,5 @@
 <template>
-	<div class="tabs-pane" :class="classList" v-if="active">
+	<div class="guluer-tabs-pane" :class="classList" v-if="active">
 		<slot></slot>
 	</div>
 </template>
@@ -36,7 +36,7 @@
 </script>
 
 <style lang="scss" scoped>
-.tabs-pane {
+.guluer-tabs-pane {
 	padding: 1em;
 	&.active {
 	}

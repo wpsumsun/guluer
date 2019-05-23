@@ -1,5 +1,5 @@
 <template>
-	<div class="tabs-body">
+	<div class="guluer-tabs-body">
 		<slot></slot>
 	</div>
 </template>
