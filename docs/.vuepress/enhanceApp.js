@@ -17,6 +17,7 @@ import TabsPane from '@/tab/tabs-pane'
 import Popover from '@/popover/popover'
 import Collapse from '@/collapse/collapse'
 import CollapseItem from '@/collapse/collapse-item'
+import Icon from '@/icon/icon'
 
 export default ({
   Vue // VuePress 正在使用的 Vue 构造函数
@@ -39,4 +40,5 @@ export default ({
   Vue.component('g-popover', Popover)
   Vue.component('g-collapse', Collapse)
   Vue.component('g-collapse-item', CollapseItem)
+  Vue.component('g-icon', Icon)
 }
