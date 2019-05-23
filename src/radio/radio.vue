@@ -79,7 +79,7 @@
 </script>
 
 <style lang="scss" scoped>
-@import "var";
+@import "~@/styles/var";
 .radio-wrapper {
 	color: #606266;
 	line-height: 1;

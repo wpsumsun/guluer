@@ -25,6 +25,9 @@ module.exports = {
           'components/tab.md',
           'components/popover.md',
           'components/collapse.md',
+          'components/progress.md',
+          'components/radio.md',
+          'components/checkbox.md',
         ]
       }
     ]

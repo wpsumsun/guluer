@@ -18,6 +18,11 @@ import Popover from '@/popover/popover'
 import Collapse from '@/collapse/collapse'
 import CollapseItem from '@/collapse/collapse-item'
 import Icon from '@/icon/icon'
+import Progress from '@/progress/progress'
+import Radio from '@/radio/radio'
+import RadioGroup from '@/radio/radio-group'
+import Checkbox from '@/checkbox/checkbox'
+import CheckboxGroup from '@/checkbox/checkbox-group'
 
 export default ({
   Vue // VuePress 正在使用的 Vue 构造函数
@@ -41,4 +46,9 @@ export default ({
   Vue.component('g-collapse', Collapse)
   Vue.component('g-collapse-item', CollapseItem)
   Vue.component('g-icon', Icon)
+  Vue.component('g-progress', Progress)
+  Vue.component('g-radio', Radio)
+  Vue.component('g-radio-group', RadioGroup)
+  Vue.component('g-checkbox', Checkbox)
+  Vue.component('g-checkbox-group', CheckboxGroup)
 }
