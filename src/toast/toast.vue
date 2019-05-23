@@ -1,6 +1,6 @@
 <template>
-  <div class="wrapper" :class="toastClass">
-    <div class="toast" ref="toast">
+  <div class="guluer-toast-wrapper" :class="toastClass">
+    <div class="guluer-toast" ref="toast">
       <div class="message">
         <slot v-if="!enableHtml"></slot>
         <div v-else v-html="$slots.default"></div>
@@ -122,13 +122,13 @@
       transform: translateY(0);
     }
   }
-  .wrapper {
+  .guluer-toast-wrapper {
     position: fixed;
     left: 50%;
     &.top {
       top: 0;
       transform: translateX(-50%);
-      .toast {
+      .guluer-toast {
         border-top-left-radius: 0;
         border-top-right-radius: 0;
         animation: slide-down $animation_duration;
@@ -137,7 +137,7 @@
     &.bottom {
       bottom: 0;
       transform: translateX(-50%);
-      .toast {
+      .guluer-toast {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
         animation: slide-up $animation_duration;
@@ -146,12 +146,12 @@
     &.middle {
       top: 50%;
       transform: translate(-50%, -50%);
-      .toast {
+      .guluer-toast {
         animation: fadeIn $animation_duration;
       }
     }
   }
-  .toast {
+  .guluer-toast {
     display: flex;
     min-height: 40px;
     max-width: 400px;

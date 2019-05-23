@@ -1,5 +1,5 @@
 <template>
-  <div class="layout" :class="layoutClass">
+  <div class="guluer-layout" :class="layoutClass">
     <slot></slot>
   </div>
 </template>
@@ -25,7 +25,7 @@
 </script>
 
 <style lang="scss" scoped>
-  .layout {
+  .guluer-layout {
     display: flex;
     flex-direction: column;
     flex-grow: 1;

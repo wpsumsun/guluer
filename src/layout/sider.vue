@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div class="sider" v-show="isVisible">
+    <div class="guluer-layout-sider" v-show="isVisible">
       <slot></slot>
       <Icon name="close" class="close" @click="isVisible=false"></Icon>
     </div>
@@ -25,7 +25,7 @@
 </script>
 
 <style lang="scss" scoped>
-  .sider {
+  .guluer-layout-sider {
     position: relative;
     &>.close {
       fill: #fff;

@@ -123,10 +123,10 @@
 		.box {
 			margin: 15px 0 0 0;
 		}
-		.row {
+		.guluer-row {
 			height: 50px;
 			margin-top: 15px;
-			.col {
+			.guluer-col {
 				&:nth-child(odd) {
 					background: rgba(0, 160, 233, 0.7);
 				}
@@ -136,7 +136,7 @@
 			}
 		}
 		.gutter-box {
-			.col {
+			.guluer-col {
 				background: #fff !important;
 			}
 			.content {

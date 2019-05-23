@@ -32,7 +32,7 @@
 
 <style lang="scss" scoped>
 	.text {
-		display: block;
+		display: flex;
 		margin-top: 15px;
 	}
 </style>

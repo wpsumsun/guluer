@@ -105,20 +105,20 @@
 	}
 	.wrap {
 		.box {
-			.layout {
+			.guluer-layout {
 				height: 250px;
 			}
 			margin-top: 20px;
-			.header,.footer {
+			.guluer-layout-header,.guluer-layout-footer {
 				background: #7dbcea;
 				height: 50px;
 			}
-			.content {
+			.guluer-layout-content {
 				background: rgba(16, 142, 233, 1);
 				margin: 0;
 				padding: 0;
 			}
-			.sider {
+			.guluer-layout-sider {
 				background: #3ba0e9;
 				width: 100px;
 			}

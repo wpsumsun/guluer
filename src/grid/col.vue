@@ -1,6 +1,6 @@
 <template>
   <div 
-    class="col" 
+    class="guluer-col"
     :class="colClass"
     :style="colStyle">
     <slot></slot>
@@ -86,7 +86,7 @@
 </script>
 
 <style lang="scss" scoped>
-  .col {
+  .guluer-col {
     width: 50%;
 
     $classprefix: col-;

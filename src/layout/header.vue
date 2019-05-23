@@ -1,5 +1,5 @@
 <template>
-  <div class="header">
+  <div class="guluer-layout-header">
     <slot></slot>
   </div>
 </template>

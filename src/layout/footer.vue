@@ -1,5 +1,5 @@
 <template>
-  <div class="footer">
+  <div class="guluer-layout-footer">
     <slot></slot>
   </div>
 </template>

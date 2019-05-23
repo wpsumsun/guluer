@@ -1,5 +1,5 @@
 <template>
-<div class="wrapper" :class="{ error: error, tips: tips }">
+<div class="guluer-input-wrapper" :class="{ error: error, tips: tips }">
   <input
     ref="input"
     type="text" 
@@ -70,7 +70,7 @@
 
 <style lang="scss" scoped>
   @import "~@/styles/var.scss";
-  .wrapper {
+  .guluer-input-wrapper {
     display: inline-flex;
     align-items: center;
     > *:not(:last-child) {

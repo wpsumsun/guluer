@@ -1,5 +1,5 @@
 <template>
-  <div class="row" :style="rowStyle" :class="rowClass">
+  <div class="guluer-row" :style="rowStyle" :class="rowClass">
     <slot></slot>
   </div>
 </template>
@@ -35,7 +35,7 @@
 </script>
 
 <style lang="scss" scoped>
-  .row {
+  .guluer-row {
     display: flex;
     flex-wrap: wrap;
     &.align-center {
