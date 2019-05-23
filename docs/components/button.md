@@ -3,7 +3,16 @@ title: Button
 ---
 ### 按钮
 
-<ClientOnly>
-  <button-demo></button-demo>
-</ClientOnly>
+<g-button>默认</g-button>
+<g-button icon="settings">带有icon</g-button>
+<g-button icon="settings" iconPosition="right">选择icon位置</g-button>
+<g-button loading>带有loading</g-button>
+<g-button disable>禁用</g-button>
+```
+<g-button>默认</g-button>
+<g-button icon="settings">带有icon</g-button>
+<g-button icon="settings" iconPosition="right">选择icon位置</g-button>
+<g-button loading>带有loading</g-button>
+<g-button disable>禁用</g-button>
+```
 
