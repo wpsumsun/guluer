@@ -259,6 +259,7 @@
 		border-collapse: collapse;
 		border-spacing: 0;
 		width: 100%;
+		display: table;
 		&.bordered {
 			border: 1px solid $border-color;
 			td, th {
@@ -350,6 +351,7 @@
 		left: 0;
 		top: 0;
 		background: #fff;
+		margin: 0;
 	}
 	.action-wrapper {
 		display: inline-block;

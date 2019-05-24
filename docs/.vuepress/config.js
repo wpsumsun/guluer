@@ -32,6 +32,9 @@ module.exports = {
           'components/carousel.md',
           'components/cascader.md',
           'components/menu.md',
+          'components/table.md',
+          'components/pagination.md',
+          'components/datepicker.md',
         ]
       }
     ]

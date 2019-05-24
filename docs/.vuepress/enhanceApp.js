@@ -31,6 +31,10 @@ import Menu from '@/menu/menu'
 import MenuItem from '@/menu/menu-item'
 import SubMenu from '@/menu/sub-menu'
 import Switch from '@/switch/switch'
+import Table from '@/table/table'
+import TableColumn from '@/table/table-column'
+import Pagination from '@/pagination/pagination'
+import DatePicker from '@/datepicker/date-picker'
 
 export default ({
   Vue // VuePress 正在使用的 Vue 构造函数
@@ -67,4 +71,8 @@ export default ({
   Vue.component('g-menu-item', MenuItem)
   Vue.component('g-sub-menu', SubMenu)
   Vue.component('g-switch', Switch)
+  Vue.component('g-table', Table)
+  Vue.component('g-table-column', TableColumn)
+  Vue.component('g-pagination', Pagination)
+  Vue.component('g-date-picker', DatePicker)
 }
