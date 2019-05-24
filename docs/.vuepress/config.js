@@ -28,8 +28,10 @@ module.exports = {
           'components/progress.md',
           'components/radio.md',
           'components/checkbox.md',
+          'components/switch.md',
           'components/carousel.md',
           'components/cascader.md',
+          'components/menu.md',
         ]
       }
     ]

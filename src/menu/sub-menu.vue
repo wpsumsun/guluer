@@ -86,7 +86,7 @@
 </script>
 
 <style lang="scss" scoped>
-@import "var";
+@import "~@/styles/var";
 .sub-menu {
 	position: relative;
 	.title {
@@ -94,7 +94,6 @@
 		display: inline-block;
 		vertical-align: middle;
 		cursor: pointer;
-		min-width: 80px;
 		display: inline-flex;
 		align-items: center;
 		justify-content: space-between;
@@ -131,6 +130,8 @@
 		border-radius: 2px;
 		box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
 		color: #909399;
+		z-index: 2000;
+		background: #fff;
 		&.vertical {
 			position: static;
 			transition: all .4s;

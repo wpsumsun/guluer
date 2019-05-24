@@ -35,7 +35,7 @@
 </script>
 
 <style lang="scss" scoped>
-@import "var";
+@import "~@/styles/var";
 .menu-item {
 	padding: 10px 20px;
 	cursor: pointer;

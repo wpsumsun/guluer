@@ -23,15 +23,6 @@ title: Cascader
 	</g-carousel-item>
 </g-carousel>
 ```
-
-
-
-| 参数        | 说明           | 类型  |  可选值  | 默认值 |
-| ------------- |:-------------:| -----:|-----:|-----:|
-| selected      | 当前显示页面 | String |   |  |    |
-| autoPlay      | 自动播放      |   Boolean |   |  true |
-| duration      | 轮播时间间隔      |   Number， String |   |  5 |
-| arrow | 箭头出现方式  |  always, never, hover |   | always |
 <script>
 export default {
   data() {

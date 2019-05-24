@@ -27,6 +27,10 @@ import Carousel from '@/carousel/carousel'
 import CarouselItem from '@/carousel/carousel-item'
 import Cascader from '@/cascader/cascader'
 import CascaderItem from '@/cascader/cascader-item'
+import Menu from '@/menu/menu'
+import MenuItem from '@/menu/menu-item'
+import SubMenu from '@/menu/sub-menu'
+import Switch from '@/switch/switch'
 
 export default ({
   Vue // VuePress 正在使用的 Vue 构造函数
@@ -59,4 +63,8 @@ export default ({
   Vue.component('g-carousel-item', CarouselItem)
   Vue.component('g-cascader', Cascader)
   Vue.component('g-cascader-item', CascaderItem)
+  Vue.component('g-menu', Menu)
+  Vue.component('g-menu-item', MenuItem)
+  Vue.component('g-sub-menu', SubMenu)
+  Vue.component('g-switch', Switch)
 }

@@ -1,6 +1,6 @@
 <template>
-	<div class="g-switch" @click="onClick" :class="{ disabled }">
-		<input type="checkbox" @change="change" :checked="checked">
+	<div class="guluer-switch" @click="onClick" :class="{ disabled }">
+		<input hidden type="checkbox" @change="change" :checked="checked">
 		<span class="inactive-status" :class="{ checked: value === inactiveValue }">{{ inactiveValue }}</span>
 		<span class="switch" :class="{ checked }" ref="switch"></span>
 		<span class="active-status" :class="{  checked: value === activeValue  }">{{ activeValue }}</span>
@@ -76,8 +76,8 @@
 </script>
 
 <style lang="scss" scoped>
-@import "var";
-.g-switch {
+@import "~@/styles/var";
+.guluer-switch {
 	font-size: 14px;
 	line-height: 20px;
 	height: 20px;
@@ -87,6 +87,7 @@
 	align-items: center;
 	&.disabled {
 		opacity: .4;
+		cursor: not-allowed;
 		.switch {
 			cursor: not-allowed;
 		}
