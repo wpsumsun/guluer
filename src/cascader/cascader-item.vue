@@ -1,26 +1,26 @@
 <template>
-	<div class="cascader-item">
-		<div class="left wrapper">
-			<div class="content">
+	<div class="guluer-cascader-item">
+		<div class="guluer-cascader-item-left guluer-cascader-item-wrapper">
+			<div class="guluer-cascader-item-content">
 				<div
-					class="row"
+					class="guluer-cascader-item-row"
 					:class="{ active: selected[level]&&selected[level].label === option.label }"
 					v-for="(option, index) in options"
 					@click="select(option)"
 					:key="index">
 					{{ option.label }}
-					<g-icon name="loading" class="loading" v-if="loadingItem.label === option.label"></g-icon>
+					<g-icon name="loading" class="guluer-cascader-item-loading" v-if="loadData&&loadingItem.label === option.label"></g-icon>
 					<template v-else>
 						<g-icon
 							v-if="showRightArrow(option)"
 							name="right"
-							class="icon">
+							class="guluer-cascader-item-icon">
 						</g-icon>
 					</template>
 				</div>
 			</div>
 		</div>
-		<div class="right wrapper" v-if="nextLevel&&nextLevel.length">
+		<div class="guluer-cascader-item-right guluer-cascader-item-wrapper" v-if="nextLevel&&nextLevel.length">
 			<g-cascader-item
 				:options="nextLevel"
 				:selected="selected"
@@ -91,46 +91,46 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-	@import "var";
-	.cascader-item {
+	@import "~@/styles/var";
+	.guluer-cascader-item {
 		display: flex;
 		flex-direction: row;
 		overflow: hidden;
-	}
-	.wrapper {
-		display: inline-flex;
-		min-width: 160px;
-		height: 200px;
-		border-radius: 2px;
-		flex-direction: column;
-		overflow-x: hidden;
-		overflow-y: auto;
-		border-left: 1px solid #e4e7ed;
-		.content {
-			padding: 6px 0;
-		}
-		.row {
-			padding: 8px 20px;
-			color: #606266;
-			cursor: pointer;
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			flex-shrink: 0;
-			&.active {
-				background: $gray-light;
-				color: $blue-light;
+		.guluer-cascader-item-wrapper {
+			display: inline-flex;
+			min-width: 160px;
+			height: 200px;
+			border-radius: 2px;
+			flex-direction: column;
+			overflow-x: hidden;
+			overflow-y: auto;
+			border-left: 1px solid #e4e7ed;
+			.guluer-cascader-item-content {
+				padding: 6px 0;
 			}
-			.icon {
-				width: 12px;
-				fill: #bfcbd9;
-			}
-			.loading {
-				fill: #bfcbd9;
-				animation: spin 1.5s infinite linear;
-			}
-			&:hover {
-				background: $gray-light;
+			.guluer-cascader-item-row {
+				padding: 8px 20px;
+				color: #606266;
+				cursor: pointer;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				flex-shrink: 0;
+				&.active {
+					background: $gray-light;
+					color: $blue-light;
+				}
+				.guluer-cascader-item-icon {
+					width: 12px;
+					fill: #bfcbd9;
+				}
+				.guluer-cascader-item-loading {
+					fill: #bfcbd9;
+					animation: spin 1.5s infinite linear;
+				}
+				&:hover {
+					background: $gray-light;
+				}
 			}
 		}
 	}

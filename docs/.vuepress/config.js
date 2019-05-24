@@ -17,17 +17,19 @@ module.exports = {
       {
         title: '组件',
         children: [
-          'components/button.md',
-          'components/text.md',
           'components/grid.md',
           'components/layout.md',
           'components/toast.md',
           'components/tab.md',
+          'components/button.md',
+          'components/text.md',
           'components/popover.md',
           'components/collapse.md',
           'components/progress.md',
           'components/radio.md',
           'components/checkbox.md',
+          'components/carousel.md',
+          'components/cascader.md',
         ]
       }
     ]

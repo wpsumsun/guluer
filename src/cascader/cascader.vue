@@ -1,9 +1,9 @@
 <template>
-	<div class="cascader" ref="cascader" v-click-outside="close">
-		<div class="trigger" @click="toggle" ref="trigger">
+	<div class="guluer-cascader" ref="cascader" v-click-outside="close">
+		<div class="guluer-cascader-trigger" @click="toggle" ref="trigger">
 			{{ result }}
 		</div>
-		<div class="popover" ref="popover" v-if="visible">
+		<div class="guluer-cascader-popover" ref="popover" v-if="visible">
 			<cascaderItem
 				:options="options"
 				:selected="selected"
@@ -99,16 +99,19 @@
           this.loadData && this.loadData(lastSelected, updateOptions)
 	        this.loadingItem = lastSelected
         }
-	    },
+        if (!lastSelected.children || !lastSelected.children.length) {
+          this.close()
+        }
+      },
 		},
 	}
 </script>
 
 <style lang="scss" scoped>
-	.cascader {
+	.guluer-cascader {
 		position: relative;
 		display: inline-block;
-		.trigger {
+		.guluer-cascader-trigger {
 			width: 200px;
 			height: 32px;
 			border: 1px solid #dcdfe6;
@@ -120,7 +123,7 @@
 			white-space: nowrap;
 			text-overflow: ellipsis;
 		}
-		.popover {
+		.guluer-cascader-popover {
 			display: inline-flex;
 			overflow: hidden;
 			border: 1px solid #e4e7ed;
@@ -131,7 +134,7 @@
 			top: 100%;
 			margin-top: 8px;
 			background: #fff;
-			z-index: 1;
+			z-index: 2000;
 		}
 	}
 </style>

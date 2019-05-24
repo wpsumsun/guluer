@@ -1,6 +1,6 @@
 <template>
 	<div
-		class="g-carousel"
+		class="guluer-carousel"
 		@mouseenter="mouseHandler('enter')"
 		@mouseleave="mouseHandler('leave')"
 		@touchstart="onTouchStart"
@@ -98,10 +98,12 @@ export default {
   },
 	methods: {
     onClickPre() {
+      this.timerId = null
       this.isArrowOperate = true
       this.select(this.selectedIndex - 1)
     },
     onClickNext() {
+      this.timerId = null
       this.isArrowOperate = true
       this.select(this.selectedIndex + 1)
     },
@@ -142,6 +144,9 @@ export default {
 			this.timerId = null
 		},
     playAutomatically() {
+      if (!this.autoPlay) {
+        return
+      }
       if (this.timerId) {
         return
       }
@@ -191,7 +196,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.g-carousel {
+.guluer-carousel {
 	width: 100%;
 	height: 100%;
 	display: flex;

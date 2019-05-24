@@ -23,6 +23,10 @@ import Radio from '@/radio/radio'
 import RadioGroup from '@/radio/radio-group'
 import Checkbox from '@/checkbox/checkbox'
 import CheckboxGroup from '@/checkbox/checkbox-group'
+import Carousel from '@/carousel/carousel'
+import CarouselItem from '@/carousel/carousel-item'
+import Cascader from '@/cascader/cascader'
+import CascaderItem from '@/cascader/cascader-item'
 
 export default ({
   Vue // VuePress 正在使用的 Vue 构造函数
@@ -51,4 +55,8 @@ export default ({
   Vue.component('g-radio-group', RadioGroup)
   Vue.component('g-checkbox', Checkbox)
   Vue.component('g-checkbox-group', CheckboxGroup)
+  Vue.component('g-carousel', Carousel)
+  Vue.component('g-carousel-item', CarouselItem)
+  Vue.component('g-cascader', Cascader)
+  Vue.component('g-cascader-item', CascaderItem)
 }

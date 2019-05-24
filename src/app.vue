@@ -1,6 +1,11 @@
 <template>
 	<div id="app">
 		{{ selection1 }}
+		<g-cascader
+			:options.sync="options"
+			:selected="selected"
+			@update:selected="updateSelected">
+		</g-cascader>
 		<g-tabs :selected.sync="current">
 			<g-tabs-head>
 				<g-tabs-item name="male">male</g-tabs-item>
@@ -27,6 +32,28 @@
     },
     data() {
       return {
+        selected: [],
+        options: [
+          {
+            value: 'shagnhai',
+            label: '上海',
+            children: [
+              { value: 'xuhui', label: '徐汇' },
+              { value: 'putuo', label: '普陀' },
+              { value: 'pudong', label: '浦东' },
+              { value: 'chongming', label: '崇明' }
+            ]
+          },
+          {
+            value: 'beijing',
+            label: '北京',
+            children: [
+              { value: 'chaoyang', label: '朝阳' },
+              { value: 'tongzhou', label: '通州' },
+              { value: 'dongcheng', label: '东城' }
+            ]
+          },
+        ],
         loading: false,
 	      current: 'male',
         selection1: [{ id: 2, name: '辛弃疾', score: 90 }],
