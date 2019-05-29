@@ -8,7 +8,8 @@
     "test:unit": "vue-cli-service test:unit",
     "test": "karma start --single-run",
     "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "docs:build": "vuepress build docs",
+    "docs:deploy": "sh deploy.sh"
   },
   "dependencies": {
     "vue": "^2.5.17"
