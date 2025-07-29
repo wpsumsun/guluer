@@ -31,7 +31,7 @@
     "sinon": "^6.3.5",
     "sinon-chai": "^3.3.0",
     "vue-template-compiler": "^2.5.17",
-    "vuepress": "^0.14.2"
+    "vuepress": "^1.9.10"
   },
   "postcss": {
     "plugins": {
